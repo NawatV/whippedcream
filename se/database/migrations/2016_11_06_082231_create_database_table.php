@@ -30,7 +30,7 @@ class CreateDatabaseTable extends Migration
 
         Schema::create('patient', function (Blueprint $table) {
             $table->integer('patientId')->unsigned();
-            $table->char('bloodType',2);
+            $table->char('bloodType',2)->nullable();
             $table->string('allergen');
             $table->string('hn')->unique();
             $table->primary('patientId');
@@ -125,9 +125,9 @@ class CreateDatabaseTable extends Migration
             $table->integer('patientId')->unsigned();
             $table->integer('nurseId')->unsigned();
             $table->date('vitalSignDataDate');
-            $table->integer('height')->unsigned();
-            $table->integer('weight')->unsigned();
-            $table->integer('temperature')->unsigned();
+            $table->float('height')->unsigned();
+            $table->float('weight')->unsigned();
+            $table->float('temperature')->unsigned();
             $table->integer('pulse')->unsigned();
             $table->integer('systolic')->unsigned();
             $table->integer('diastolic')->unsigned();

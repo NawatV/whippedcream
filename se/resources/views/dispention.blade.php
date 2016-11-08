@@ -44,7 +44,7 @@
             </div>
             <div class="top-menu">
             	<ul class="nav pull-right top-menu">
-                    <a href="index.html" class="logo" postion ="right" ><i class="fa fa-user"></i>  Mr. Someone&emsp;</a>
+                    <li><a href="index.html" class="logo" postion ="right" ><i class="fa fa-user"></i>  Mr. Someone</a><li>
                     <li><a class="logout" href="login.html">Logout</a></li>
             	</ul>
             </div>

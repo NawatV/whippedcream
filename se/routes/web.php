@@ -32,3 +32,13 @@ Route::get('/diagnosis', function () {
 Route::get('/diagnosisnext', function () {
     return view('diagnosisnext');
 });
+Route::get('/blank', function () {
+    return view('blank');
+});
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::get('/vitalsign', 'TreatmentController@getVitalSignForm');
+
+Route::post('/vitalsign', 'TreatmentController@save');

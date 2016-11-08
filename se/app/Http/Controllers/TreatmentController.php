@@ -26,23 +26,24 @@ class TreatmentController extends Controller
       $systolic = $request->input('systolic');
       $diastolic = $request->input('diastolic');
 
-       $patient = Patient::select('patientId')->where('hn',$hn)->get();
-       return get_class($patient);
-      // $patientId;
-      // foreach ($patient as $p) {
-      //   $patientId = $p->patientId;
-      // }
-      $patient = Patient::find(1);
+      $patient = Patient::where('hn',$hn)->first();
 
-      $nurse = Nurse::find(2);
-      $vitalSignData = new VitalSignData;
-      $vitalSignData->weight = $weight;
-      $vitalSignData->height = $height;
-      $vitalSignData->temperature = $temperature;
-      $vitalSignData->pulse = $pulse;
-      $vitalSignData->systolic = $systolic;
-      $vitalSignData->diastolic = $diastolic;
-      $vitalSignData->vitalSignDataDate = date('Y-m-d');
+      if(count($patient) <= 0)
+      {
+          return redirect('vitalsign')->with('errors','ไม่มีรายชื่อผู้ป่วยภายในระบบ');
+      }
+
+      $nurse = Nurse::find(3);
+
+      $vitalSignData = new VitalSignData([
+        'weight' => $weight,
+        'height' => $height,
+        'temperature' => $temperature,
+        'pulse' => $pulse,
+        'systolic' => $systolic,
+        'diastolic' => $diastolic,
+        'vitalSignDataDate' => date('Y-m-d')
+      ]);
 
       $vitalSignData->Patient()->associate($patient);
       $vitalSignData->Nurse()->associate($nurse);

@@ -15,6 +15,9 @@
     <!-- Custom styles for this template -->
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/style-responsive.css" rel="stylesheet">
+
+    @yield('css')
+
   </head>
 
   <body>
@@ -55,22 +58,14 @@
 
       <section id="main-content">
           <section class="wrapper pl">
-            <div class="row mt">
-              <div class="col-lg-12">
-                  <div class="form-panel">
-                    <div class="container-fluid">
-                      @yield('content')
-                    </div>
-                  </div>
-              </div>
-            </div>
+            @yield('content')
           </section><! --/wrapper -->
-        </section><!-- /MAIN CONTENT -->
+      </section><!-- /MAIN CONTENT -->
 
 
            <!--main content end-->
       <!--footer start-->
-
+        @yield('special-content')
       <!--footer end-->
 
     </section>
@@ -99,6 +94,8 @@
 	 <script type="text/javascript" src="assets/js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
 
 	 <script src="assets/js/form-component.js"></script>
+
+   @yield('script')
 
   </body>
 </html>

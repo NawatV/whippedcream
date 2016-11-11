@@ -17,6 +17,11 @@ class Doctor extends Model
     return $this->belongsTo('App\Model\User', 'doctorId', 'userId');
   }
 
+  public function department()
+  {
+    return $this->belongsTo('App\Model\Department', 'departmentId', 'departmentId');
+  }
+
   public function schedule()
   {
     return $this->hasOne('App\Model\Schedule', 'doctorId', 'doctorId');
@@ -40,11 +45,6 @@ class Doctor extends Model
   public function diagnosis()
   {
     return $this->hasMany('App\Model\Diagnosis', 'doctorId', 'doctorId');
-  }
-
-  public function department()
-  {
-    return $this->belongsToMany('App\Model\Department', 'doctor_department', 'doctorId', 'departmentId');
   }
 
 }

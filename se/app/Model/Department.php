@@ -13,12 +13,12 @@ class Department extends Model
 
   public function doctor()
   {
-    return $this->belongsToMany('App\Model\Doctor');
+    return $this->hasMany('App\Model\Doctor', 'departmentId', 'departmentId');
   }
 
   public function nurse()
   {
-    return $this->belongsToMany('App\Model\Nurse');
+    return $this->hasMany('App\Model\Nurse', 'departmentId', 'departmentId');
   }
 
 }

@@ -26,9 +26,7 @@ Route::get('/schedule', function () {
 Route::get('/dispention', function () {
     return view('dispention');
 });
-Route::get('/diagnosis', function () {
-    return view('diagnosis');
-});
+
 Route::get('/diagnosisnext', function () {
     return view('diagnosisnext');
 });
@@ -39,6 +37,10 @@ Route::get('/login', function () {
     return view('login');
 });
 
+Route::get('/diagnosis', 'TreatmentController@getDiagnosisForm');
+
+Route::post('/diagnosis', 'TreatmentController@saveDiagnosisForm');
+
 Route::get('/vitalsign', 'TreatmentController@getVitalSignForm');
 
-Route::post('/vitalsign', 'TreatmentController@save');
+Route::post('/vitalsign', 'TreatmentController@saveVitalSignForm');

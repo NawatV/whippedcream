@@ -44,3 +44,5 @@ Route::post('/diagnosis', 'TreatmentController@saveDiagnosisForm');
 Route::get('/vitalsign', 'TreatmentController@getVitalSignForm');
 
 Route::post('/vitalsign', 'TreatmentController@saveVitalSignForm');
+
+Route::resource('/appointment', 'AppointmentController');

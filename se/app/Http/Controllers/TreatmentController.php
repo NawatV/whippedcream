@@ -18,9 +18,21 @@ use App\Model\Drug;
 class TreatmentController extends Controller
 {
 
-    public function getVitalSignForm()
+
+    public function login_temp(Request $request)
     {
-      return view('vitalsign');
+      $request->session()->put([
+        'userId' => 3,
+        'userType' => 'doctor',
+        'name' => 'นายแพทย์คนหนึ่ง'
+      ]);
+      return view('welcome');
+    }
+
+
+    public function getVitalSignForm(Request $request)
+    {
+      return view('vitalsign')->with('name', $request->session()->get('name'));
     }
 
     public function saveVitalSignForm(VitalSignRequest $request)
@@ -40,7 +52,7 @@ class TreatmentController extends Controller
           return redirect()->back()->withInput()->withErrors(['ไม่มีรายชื่อผู้ป่วยภายในระบบ']);
       }
 
-      $nurse = Nurse::find(4);
+      $nurse = Nurse::find($request->session()->get('userId'));
 
       $vitalSignData = new VitalSignData([
         'weight' => $weight,
@@ -58,14 +70,13 @@ class TreatmentController extends Controller
       return redirect('vitalsign');
     }
 
-    public function getDiagnosisForm()
+    public function getDiagnosisForm(Request $request)
     {
-      return view('diagnosis');
+      return view('diagnosis')->with('name', $request->session()->get('name'));
     }
 
     public function saveDiagnosisForm(DiagnosisRequest $request)
     {
-      return redirect('diagnosis');
       $diagnosisForm = $request->except(['_token','firstname','lastname']);
 
       $patient = Patient::where('hn',$diagnosisForm['hn'])->first();
@@ -74,8 +85,32 @@ class TreatmentController extends Controller
       {
           return redirect()->back()->withInput()->withErrors(['ไม่มีรายชื่อผู้ป่วยภายในระบบ']);
       }
+      else if(count($diagnosisForm) > 3)
+      {
+        $num = (count($diagnosisForm) - 3)/3;
 
-      $doctor = Doctor::find(5);
+        for($i = 1; $i <= $num; $i++)
+        {
+          if(empty($diagnosisForm['quantity'.$i]) && empty($diagnosisForm['usage'.$i]))
+          {
+            return redirect()->back()->withInput()->withErrors(['โปรดระบุปริมาณและวิธีใช้ยา '.$diagnosisForm['drug'.$i]]);
+          }
+          else if(empty($diagnosisForm['quantity'.$i]))
+          {
+            return redirect()->back()->withInput()->withErrors(['โปรดระบุปริมาณยา '.$diagnosisForm['drug'.$i]]);
+          }
+          else if(!is_numeric($diagnosisForm['quantity'.$i]))
+          {
+            return redirect()->back()->withInput()->withErrors(['โปรดระบุปริมาณยา '.$diagnosisForm['drug'.$i].' เป็นตัวเลข']);
+          }
+          else if(empty($diagnosisForm['usage'.$i]))
+          {
+            return redirect()->back()->withInput()->withErrors(['โปรดระบุวิธีใช้ยา '.$diagnosisForm['drug'.$i]]);
+          }
+        }
+      }
+
+      $doctor = Doctor::find($request->session()->get('userId'));
 
       $diagnosis = new Diagnosis([
         'diagnosisDate' => date('Y-m-d'),
@@ -110,6 +145,37 @@ class TreatmentController extends Controller
       }
 
       return redirect('diagnosis');
+    }
+
+    public function getDispensationPage(Request $request)
+    {
+      $prescriptions = Prescription::where('prescriptionDate', date('Y-m-d'))->get();
+
+
+      $dispense_list_wait = [];
+      $dispense_list_other = [];
+
+      foreach($prescriptions as $prescription)
+      {
+        $prescriptionId = $prescription->prescriptionId;
+        $approved = $prescription->isApproved;
+        $firstname = $prescription->diagnosis->patient->user->firstname;
+        $lastname = $prescription->diagnosis->patient->user->lastname;
+        $patient_name = $firstname." ".$lastname;
+
+        $data = [
+          'index' => $prescriptionId,
+          'status' => $approved,
+          'name' => $patient_name
+        ];
+
+        if(is_null($approved)) array_push($dispense_list_wait, $data);
+        else array_push($dispense_list_other, $data);
+      }
+
+      $dispense_list = array_merge($dispense_list_wait, $dispense_list_other);
+
+      return view('dispensation', compact('dispense_list'))->with('name', $request->session()->get('name'));
     }
 
 }

@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'TreatmentController@login_temp');
+
 Route::get('/appoint', function () {
     return view('appoint');
 });
@@ -23,19 +22,15 @@ Route::get('/regis', function () {
 Route::get('/schedule', function () {
     return view('schedule');
 });
-Route::get('/dispention', function () {
-    return view('dispention');
-});
 
-Route::get('/diagnosisnext', function () {
-    return view('diagnosisnext');
-});
 Route::get('/blank', function () {
     return view('blank');
 });
 Route::get('/login', function () {
     return view('login');
 });
+
+Route::get('/dispensation', 'TreatmentController@getDispensationPage');
 
 Route::get('/diagnosis', 'TreatmentController@getDiagnosisForm');
 

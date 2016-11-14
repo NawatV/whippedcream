@@ -1,5 +1,5 @@
 @extends('layouts.theme')
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 @section('name')
   นายแพทย์
 @endsection
@@ -70,5 +70,4 @@
     </table>
     <a href = "{{url('appointment/create')}}" class="btn btn-primary">เพิ่มข้อมูล</a>
   </div>
-  
 @endsection

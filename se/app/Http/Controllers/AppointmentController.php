@@ -103,4 +103,16 @@ class AppointmentController extends Controller
     {
         //
     }
+
+    public function queryDoctor(Request $request)
+    {
+        $alldoctor = Doctor::where('departmentId', '=', $request->id)->get(); 
+        $doctors = array();
+        foreach ($alldoctor as $doctor) {
+            $doctorTmp = Doctor::find($doctor->doctorId);
+            $tmp = array($doctorTmp->doctorId, $doctorTmp->user->firstname, $doctorTmp->user->lastname);
+            array_push($doctors, $tmp);
+        }
+        return $doctors;
+    } 
 }

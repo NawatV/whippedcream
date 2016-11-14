@@ -1,4 +1,5 @@
 @extends('layouts.theme')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 @section('name')
   นายแพทย์
@@ -51,36 +52,37 @@
             <div class="panel panel-default">
                 <div class="panel-heading">New Appointment</div>
 
+                <select id = "department">
+                      <option selected disabled>Choose Department</option>
+                      @foreach ($departments as $department)
+                          <option value="{{$department -> departmentId}}">{{$department -> departmentName}}</option>
+                      @endforeach  
+                </select>
+
                 <div class = "panel-body">
                     {!! Form::open(['url' => 'appointment']) !!}
                        {{csrf_field()}}
-                    
-                       <select>
-                             @foreach ($departments as $department)
-                                <option value="{{$department -> departmentName}}">{{$department -> departmentName}}</option>
-                            @endforeach
-                        </select>
 
-                        <div class = "form-group">
-                            <div class = "col-xs-4">
-                                {{ Form::label('symptom', 'อาการ') }}
-                                {{ Form::text('symptom', null, ["class" => "form-control"]) }}
+                        <div class="form-group">
+                              <label class="col-sm-2 control-label">อาการ</label>
+                              <input type="text" class="form-control" name="symptom">
                             </div>
                         </div>
 
-                        <div class = "form-group">
-                            <div class = "col-xs-4">
-                                {{ Form::label('doctorId', 'เลขหมอ') }}
-                                {{ Form::text('doctorId', null, ["class" => "form-control"]) }}
-                            </div>
-                        </div>  
+<div class = "form-group">
+  <div id = "doctor">
+  <input type="radio" name="doctorId" value="2"> 1<br>
+  <input type="radio" name="doctorId" value="3"> 2<br>
+  <input type="radio" name="doctorId" value="5"> 3
+  </div>
+</div>
 
                         <div class = "form-group">
                             <div class = "col-sm-10">
-                                {{ form::submit('บันทึก', ["class" => 'btn btn-primary'])  }} 
+                                <input type="submit" class="btn btn-primary pull-right" value="บันทึก">
                                 <a href = "{{url('appointment')}}" class="btn btn-primary">back</a>
                             </div>
-                        </div>                      
+                        </div>               
                     {!! Form::close() !!}
 
                     
@@ -89,5 +91,32 @@
         </div>
     </div>
 </div>
-  
+  <script>
+var tmp;
+
+
+  $(document).ready(function(){
+    $("select").change(function(){
+        $.ajax({
+          url: "/queryDoctor",
+          data: {
+            id: $('#department :selected').val()
+          },
+          success: function( result ) {
+            console.log(result)
+            $("#doctor").empty();
+            $("#doctor").append('<input type="radio" name="doctorId" value="0"> random<br>');
+            //ocument.getElementById("demo").innerHTML = result;
+            for (i = 0; i < result.length; i++) {
+                tmp = '<input type="radio" name="doctorId" value="' + result[i][0] + '">' + result[i][1] + " " 
+                + result[i][2] + '<br>';
+                
+                $("#doctor").append(tmp);
+            }
+          }
+        });
+    });
+  });
+</script>
+
 @endsection

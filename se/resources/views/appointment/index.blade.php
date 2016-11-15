@@ -68,6 +68,6 @@
             </tr>
         @endforeach
     </table>
-    <a href = "{{url('appointment/create')}}" class="btn btn-primary">เพิ่มข้อมูล</a>
+    <a href = "{{url('appointmentcreate')}}" class="btn btn-primary">เพิ่มข้อมูล</a>
   </div>
 @endsection

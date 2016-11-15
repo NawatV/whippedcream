@@ -46,6 +46,7 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
+        return dd($request->all());
         $appointment = new Appointment();
         $appointment -> appDate = date("2016-11-19");
         $appointment -> appTime = date('H:m:s', time())  ;

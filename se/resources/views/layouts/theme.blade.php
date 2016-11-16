@@ -7,14 +7,14 @@
     <title>Hospital OPD System</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="{{ url('assets/css/bootstrap.css')}}" rel="stylesheet">
     <!--external css-->
-    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="{{ url('assets/font-awesome/css/font-awesome.css')}}" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Kanit:400,700" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link href="assets/css/style-responsive.css" rel="stylesheet">
+    <link href="{{ url('assets/css/style.css')}}" rel="stylesheet">
+    <link href="{{ url('assets/css/style-responsive.css')}}" rel="stylesheet">
 
     @yield('css')
 
@@ -72,28 +72,28 @@
 
 
     <!-- js placed at the end of the document so the pages load faster -->
-    <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="{{ url('assets/js/jquery.js')}}"></script>
+    <script src="{{ url('assets/js/bootstrap.min.js')}}"></script>
     <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="assets/js/jquery.scrollTo.min.js"></script>
-    <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="{{ url('assets/js/jquery.scrollTo.min.js')}}"></script>
+    <script src="{{ url('assets/js/jquery.nicescroll.js')}}" type="text/javascript"></script>
 
     <!--common script for all pages-->
-    <script src="assets/js/common-scripts.js"></script>
+    <script src="{{ url('assets/js/common-scripts.js')}}"></script>
 
     <!--script for this page-->
-    <script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="{{ url('assets/js/jquery-ui-1.9.2.custom.min.js')}}"></script>
 
 	 <!--custom switch-->
-	 <script src="assets/js/bootstrap-switch.js"></script>
+	 <script src="{{ url('assets/js/bootstrap-switch.js')}}"></script>
 
 	 <!--custom tagsinput-->
-	 <script src="assets/js/jquery.tagsinput.js"></script>
+	 <script src="{{ url('assets/js/jquery.tagsinput.js')}}"></script>
 
 	 <!--custom checkbox & radio-->
-	 <script type="text/javascript" src="assets/js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+	 <script type="text/javascript" src="{{ url('assets/js/bootstrap-inputmask/bootstrap-inputmask.min.js')}}"></script>
 
-	 <script src="assets/js/form-component.js"></script>
+	 <script src="{{ url('assets/js/form-component.js')}}"></script>
 
    @yield('script')
 

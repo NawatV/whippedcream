@@ -48,7 +48,9 @@ Route::post('/vitalsign', 'TreatmentController@saveVitalSignForm');
 Route::resource('/appointment', 'AppointmentController');
 Route::get('/queryDoctor', 'AppointmentController@queryDoctor');
 Route::get('/test1', function () { return "hello i am ton"; });
-Route::get('/appointment/testtest', function () { return view('appointment.testtest'); });
+Route::get('/democreate', function () { 
+    return view('appointment.democreate'); 
+});
 //Route::get('/appointment', 'AppointmentController@index');
 //Route::get('/appointmentcreate', 'AppointmentController@create');
 //Route::post('/appointment', 'AppointmentController@store');

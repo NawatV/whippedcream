@@ -25,6 +25,10 @@ class CreateDatabaseTable extends Migration
             $table->string('address');
             $table->string('userType');
         });
+        Schema::create('department', function (Blueprint $table) {
+            $table->increments('departmentId');
+            $table->string('departmentName');
+        });
         Schema::create('patient', function (Blueprint $table) {
             $table->integer('patientId')->unsigned();
             $table->char('bloodType',2)->nullable();
@@ -33,10 +37,7 @@ class CreateDatabaseTable extends Migration
             $table->primary('patientId');
             $table->foreign('patientId')->references('userId')->on('user');
         });
-        Schema::create('department', function (Blueprint $table) {
-            $table->increments('departmentId');
-            $table->string('departmentName');
-        });
+
         Schema::create('doctor', function (Blueprint $table) {
             $table->integer('doctorId')->unsigned();
             $table->integer('departmentId')->unsigned();

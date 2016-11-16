@@ -46,7 +46,7 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        return dd($request->all());
+        //return dd($request->all());
         $appointment = new Appointment();
         $appointment -> appDate = date("2016-11-19");
         $appointment -> appTime = date('H:m:s', time())  ;
@@ -107,7 +107,7 @@ class AppointmentController extends Controller
 
     public function queryDoctor(Request $request)
     {
-        $alldoctor = Doctor::where('departmentId', '=', $request->id)->get(); 
+        $alldoctor = Doctor::where('departmentId', '=', $request->id)->get();
         $doctors = array();
         foreach ($alldoctor as $doctor) {
             $doctorTmp = Doctor::find($doctor->doctorId);
@@ -115,5 +115,5 @@ class AppointmentController extends Controller
             array_push($doctors, $tmp);
         }
         return $doctors;
-    } 
+    }
 }

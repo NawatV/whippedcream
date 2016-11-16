@@ -45,14 +45,18 @@ class AppointmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
         //return dd($request->all());12345
         $appointment = new Appointment();
         $appointment -> appDate = date("2016-11-19");
         $appointment -> appTime = date('H:m:s', time())  ;
         $appointment -> symptom = $request -> symptom;
         $appointment -> patientId = "4";
-        $appointment -> doctorId = $request -> doctorId;
+        if ($t == "0") {
+            //$appointment -> doctorId = $request -> doctorId;
+        } else {
+            $appointment -> doctorId = $request -> doctorId;
+        }
         $appointment -> save();
         return redirect() -> action('AppointmentController@index');
     }

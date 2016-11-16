@@ -52,37 +52,41 @@
             <div class="panel panel-default">
                 <div class="panel-heading">New Appointment</div>
 
-                <select id = "department">
-                      <option selected disabled>Choose Department</option>
-                      @foreach ($departments as $department)
-                          <option value="{{$department -> departmentId}}">{{$department -> departmentName}}</option>
-                      @endforeach  
-                </select>
+                        <!-- Open Form -->
+                        <div class = "panel-body">
+                            <form class="form-horizontal style-form" method="post" action="{{url('/appointment')}}">
+                              <input type="hidden" name="_token" value="{{csrf_token()}}">
 
-                <div class = "panel-body">
-                    <form class="form-horizontal style-form" method="post" action="{{url('/appointment')}}">
-                      <input type="hidden" name="_token" value="{{csrf_token()}}">
+                              <div class="form-group">
+                                    <label class="col-sm-2 control-label">SSN/HN</label>
+                                    <input type="text" class="form-control" name="symptom">
+                              </div>
 
-                      <div class="form-group">
-                            <label class="col-sm-2 control-label">อาการ</label>
-                            <input type="text" class="form-control" name="symptom">
-                      </div>
+                              <div class="form-group">
+                                    <label class="col-sm-2 control-label">อาการ</label>
+                                    <input type="text" class="form-control" name="symptom">
+                              </div>
+                              
+                              <select id = "department">
+                                    <option selected disabled>Choose Department</option>
+                                    @foreach ($departments as $department)
+                                        <option value="{{$department -> departmentId}}">{{$department -> departmentName}}</option>
+                                    @endforeach  
+                              </select>
 
-                      <div class = "form-group">
-                        <div id = "doctor">
-                          <input type="radio" name="doctorId" value="2"> 1<br>
-                          <input type="radio" name="doctorId" value="3"> 2<br>
-                          <input type="radio" name="doctorId" value="5"> 3
+                              <div class = "form-group">
+                                <div id = "doctor">
+                                </div>
+                              </div>
+
+                              <div class = "form-group">
+                                  <div class = "col-sm-10">
+                                      <input type="submit" class="btn btn-primary pull-right" value="บันทึก">
+                                      <a href = "{{url('appointment')}}" class="btn btn-primary">back</a>
+                                  </div>
+                              </div>               
+                          </form>
                         </div>
-                      </div>
-
-                      <div class = "form-group">
-                          <div class = "col-sm-10">
-                              <input type="submit" class="btn btn-primary pull-right" value="บันทึก">
-                              <a href = "{{url('appointment')}}" class="btn btn-primary">back</a>
-                          </div>
-                      </div>               
-                  </form>
                 </div>
             </div>
         </div>

@@ -46,14 +46,21 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     { 
-        //return dd($request->all());12345
+        //return dd($request->all());
         $appointment = new Appointment();
         $appointment -> appDate = date("2016-11-19");
         $appointment -> appTime = date('H:m:s', time())  ;
         $appointment -> symptom = $request -> symptom;
-        $appointment -> patientId = "4";
-        if ($t == "0") {
-            //$appointment -> doctorId = $request -> doctorId;
+        $appointment -> patientId = "4";//wait for user login
+        if ($request -> doctorId == "0") {
+            $department = Department::find($request -> departmentId);
+            $countDoctor = $department -> doctor -> count();
+            for ($x = 0; $x < $countDoctor; $x++) {
+                if($department -> doctor[$x]->appointment->count()<16){
+                    $appointment -> doctorId = $department -> doctor[$x] -> doctorId;
+                    break;
+                }
+            } 
         } else {
             $appointment -> doctorId = $request -> doctorId;
         }

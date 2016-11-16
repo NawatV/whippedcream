@@ -67,12 +67,14 @@
                                     <input type="text" class="form-control" name="symptom">
                               </div>
                               
-                              <select id = "department">
+                              <div class="form-group">
+                              <select id = "department" name = "departmentId">
                                     <option selected disabled>Choose Department</option>
                                     @foreach ($departments as $department)
                                         <option value="{{$department -> departmentId}}">{{$department -> departmentName}}</option>
                                     @endforeach  
                               </select>
+                              </div>
 
                               <div class = "form-group">
                                 <div id = "doctor">
@@ -99,25 +101,25 @@ var tmp;
   $(document).ready(function(){
     $("select").change(function(){
         $.ajax({
-          url: "/queryDoctor",
-          data: {
-            id: $('#department :selected').val()
-          },
-          success: function( result ) {
-            console.log(result)
-            $("#doctor").empty();
-            $("#doctor").append('<input type="radio" name="doctorId" value="0"> random<br>');
-            //ocument.getElementById("demo").innerHTML = result;
-            for (i = 0; i < result.length; i++) {
-                tmp = '<input type="radio" name="doctorId" value="' + result[i][0] + '">' + result[i][1] + " " 
-                + result[i][2] + '<br>';
-                
-                $("#doctor").append(tmp);
+            url: "/queryDoctor",
+            data: {
+              id: $('#department :selected').val()
+            },
+            success: function( result ) {
+              console.log(result)
+              $("#doctor").empty();
+              $("#doctor").append('<input type="radio" name="doctorId" value="0"> random<br>');
+              //ocument.getElementById("demo").innerHTML = result;
+              for (i = 0; i < result.length; i++) {
+                  tmp = '<input type="radio" name="doctorId" value="' + result[i][0] + '">' + result[i][1] + " " 
+                  + result[i][2] + '<br>';
+                  
+                  $("#doctor").append(tmp);
+              }
             }
-          }
-        });
-    });
-  });
+          });
+     });
+   });
 </script>
 
 @endsection

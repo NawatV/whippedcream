@@ -11,9 +11,28 @@
 |
 */
 
+//Before login ========================================
+//Before login ========================================
+
+//Landing
 Route::get('/', function () {
-    return view('welcome');
+    return view('landingPage');
 });
+
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::get('/register', function () {
+    return view('regis');
+});
+
+
+
+
+//After login ==========================================
+//After login ==========================================
+
 Route::get('/appoint', function () {
     return view('appoint');
 });
@@ -35,9 +54,7 @@ Route::get('/diagnosisnext', function () {
 Route::get('/blank', function () {
     return view('blank');
 });
-Route::get('/login', function () {
-    return view('login');
-});
+
 
 Route::get('/vitalsign', 'TreatmentController@getVitalSignForm');
 

@@ -1,5 +1,8 @@
 @extends('layouts.theme')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link href="{{ url('assets/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet">
+
+
 
 @section('name')
   นายแพทย์
@@ -68,16 +71,27 @@
                               </div>
                               
                               <div class="form-group">
-                              <select id = "department" name = "departmentId">
-                                    <option selected disabled>Choose Department</option>
-                                    @foreach ($departments as $department)
-                                        <option value="{{$department -> departmentId}}">{{$department -> departmentName}}</option>
-                                    @endforeach  
-                              </select>
+                                <select id = "department" name = "departmentId">
+                                      <option selected disabled>Choose Department</option>
+                                      @foreach ($departments as $department)
+                                          <option value="{{$department -> departmentId}}">{{$department -> departmentName}}</option>
+                                      @endforeach  
+                                </select>
                               </div>
 
                               <div class = "form-group">
                                 <div id = "doctor">
+                                </div>
+                              </div>
+
+                              <div class = "form-group">
+                                <div id = "date">
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control" value="12-02-2012">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
                                 </div>
                               </div>
 
@@ -94,7 +108,8 @@
         </div>
     </div>
 </div>
-  <script>
+
+<script>
 var tmp; 
 
 
@@ -106,12 +121,12 @@ var tmp;
               id: $('#department :selected').val()
             },
             success: function( result ) {
-              console.log(result)
+              //console.log(result)
               $("#doctor").empty();
-              $("#doctor").append('<input type="radio" name="doctorId" value="0"> random<br>');
+              $("#doctor").append('<input type="radio" name="doctorId" value="0" onclick="if(this.checked){queryDoctorDateTime()}"> random<br>');
               //ocument.getElementById("demo").innerHTML = result;
               for (i = 0; i < result.length; i++) {
-                  tmp = '<input type="radio" name="doctorId" value="' + result[i][0] + '">' + result[i][1] + " " 
+                  tmp = '<input type="radio" name="doctorId" value="' + result[i][0] + '"' + 'onclick="if(this.checked){queryDoctorDateTime()}">' + result[i][1] + " " 
                   + result[i][2] + '<br>';
                   
                   $("#doctor").append(tmp);
@@ -120,6 +135,31 @@ var tmp;
           });
      });
    });
+
+   function queryDoctorDateTime() {
+        //console.log($('input[name=doctorId]:checked', '#doctor').val());
+        $.ajax({
+            url: "/queryDoctorDateTime",
+            data: {
+              id: $('input[name=doctorId]:checked', '#doctor').val()
+            },
+            success: function( result ) {
+                console.log(result)
+                $("#date").empty();
+                  for (i = 0; i < result.length; i++) {
+                    if (result != 0) {
+                        console.log("ok")
+                        //$("#date").append('<input type="date" value="' + '2016-11-17' + '" name="appDate" min="2016-11-16">');
+                        $("#date").append('<input data-provide="datepicker">');
+                        break;
+                    }
+                 }
+
+                
+            }
+          });
+   
+   }
 </script>
 
 @endsection

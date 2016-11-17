@@ -54,13 +54,7 @@ class AppointmentController extends Controller
         $appointment -> patientId = "4";//wait for user login
         if ($request -> doctorId == "0") {
             $department = Department::find($request -> departmentId);
-            $countDoctor = $department -> doctor -> count();
-            for ($x = 0; $x < $countDoctor; $x++) {
-                if($department -> doctor[$x]->appointment->count()<16){
-                    $appointment -> doctorId = $department -> doctor[$x] -> doctorId;
-                    break;
-                }
-            } 
+            $appointment -> doctorId = $department -> doctor[0] -> doctorId; 
         } else {
             $appointment -> doctorId = $request -> doctorId;
         }
@@ -126,5 +120,20 @@ class AppointmentController extends Controller
             array_push($doctors, $tmp);
         }
         return $doctors;
+    }
+
+    public function queryDoctorDateTime(Request $request)
+    {
+        $doctor = Doctor::find($request->id);
+        $schedules = $doctor -> schedule;
+        $scheduleArray = array();
+        array_push($scheduleArray, $schedules->sunPeriod);
+        array_push($scheduleArray, $schedules->monPeriod);
+        array_push($scheduleArray, $schedules->tuePeriod);
+        array_push($scheduleArray, $schedules->wedPeriod);
+        array_push($scheduleArray, $schedules->thuPeriod);
+        array_push($scheduleArray, $schedules->friPeriod);
+        array_push($scheduleArray, $schedules->satPeriod);
+        return $scheduleArray;
     }
 }

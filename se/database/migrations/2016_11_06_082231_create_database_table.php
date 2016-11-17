@@ -75,7 +75,7 @@ class CreateDatabaseTable extends Migration
         Schema::create('schedule', function (Blueprint $table) {
             $table->increments('scheduleId');
             $table->integer('doctorId')->unsigned();
-            $table->char('sunPeriod',1);
+            $table->char('sunPeriod',1);//0ไม่ว่าง 1ว่างเช้า 2ว่างบ่าย 3ว่างทั้งเช้าเเละบ่าย
             $table->char('monPeriod',1);
             $table->char('tuePeriod',1);
             $table->char('wedPeriod',1);

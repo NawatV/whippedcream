@@ -46,6 +46,7 @@ Route::get('/vitalsign', 'TreatmentController@getVitalSignForm');
 Route::post('/vitalsign', 'TreatmentController@saveVitalSignForm');
 
 Route::resource('/appointment', 'AppointmentController');
+Route::get('/queryDoctorDateTime', 'AppointmentController@queryDoctorDateTime');
 Route::get('/queryDoctor', 'AppointmentController@queryDoctor');
 Route::get('/test1', function () { return "hello i am ton"; });
 Route::get('/democreate', function () { 

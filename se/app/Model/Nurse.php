@@ -17,14 +17,14 @@ class Nurse extends Model
     return $this->belongsTo('App\Model\User', 'nurseId', 'userId');
   }
 
+  public function department()
+  {
+    return $this->belongsTo('App\Model\Department', 'departmentId', 'departmentId');
+  }
+
   public function vitalSignData()
   {
     return $this->hasMany('App\Model\VitalSignData', 'nurseId', 'nurseId');
-  }
-
-  public function department()
-  {
-    return $this->belongsToMany('App\Model\Department', 'nurse_department', 'nurseId', 'departmentId');
   }
 
 }

@@ -41,7 +41,7 @@ class VitalSignRequest extends FormRequest
         return [
           'hn.required' => 'โปรดระบุค่า HN',
           'firstname.required' => 'โปรดระบุชื่อของผู้ป่วย',
-          'lastname.required' => 'โปรดระบุค่านามสกุลของผู้ป่วย',
+          'lastname.required' => 'โปรดระบุนามสกุลของผู้ป่วย',
           'weight.required' => 'โปรดระบุค่าน้ำหนัก',
           'weight.numeric' => 'โปรดระบุค่าน้ำหนักเป็นตัวเลข',
           'height.required' => 'โปรดระบุค่าส่วนสูง',
@@ -51,9 +51,9 @@ class VitalSignRequest extends FormRequest
           'pulse.required' => 'โปรดระบุค่าชีพจร',
           'pulse.numeric' => 'โปรดระบุค่าชีพจรเป็นตัวเลข',
           'systolic.required' => 'โปรดระบุค่าความดันโลหิต Systolic',
-          'systolic.numeric' => 'โปรดระบุุค่าความดันโลหิต Systolic เป็นตัวเลข',
-          'diastolic.required' => 'โปรดระบุุค่าความดันโลหิต Diastolic',
-          'diastolic.numeric' => 'โปรดระบุุค่าความดันโลหิต Diastolic เป็นตัวเลข',
+          'systolic.numeric' => 'โปรดระบุค่าความดันโลหิต Systolic เป็นตัวเลข',
+          'diastolic.required' => 'โปรดระบุค่าความดันโลหิต Diastolic',
+          'diastolic.numeric' => 'โปรดระบุค่าความดันโลหิต Diastolic เป็นตัวเลข',
         ];
     }
 }

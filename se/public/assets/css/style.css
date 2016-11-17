@@ -2242,4 +2242,137 @@ label {
     min-height: 900px;
 }
 
+/*admin*/
+.mt2 {
+    margin-top: 10px;
+}
 
+.mr {
+    margin-right: 5px;
+}
+
+.search-form-panel {
+    background: #ffffff;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 10px;
+    box-shadow: 0px 3px 2px #aab2bd;
+    text-align: left;
+}
+
+.hide {
+    display: none;
+}
+
+.search-form-group {
+    border-bottom: 1px solid #eff2f7;
+    height: 45px;
+    margin-top: 10px;
+}
+
+.account-list-area {
+    padding-right: 25px;
+    padding-left: 25px;
+    padding-bottom: 25px;
+    padding-top: 25px;
+}
+.account-list-panel {
+    position: relative;
+    top: -20px;
+    height: 500px;
+    border: 1px solid white; 
+    padding-top: 10px;
+    background-color: #ffffff;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    box-shadow: 0px 3px 2px #aab2bd;
+}
+.account-list-header {
+    position: relative;
+    top: -10px;
+    border-left: 1px solid;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #aab2bd;
+    color: #ffffff;
+    font-size: 16px;
+}
+.account-excerpt {
+    padding-left: 4px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+}
+.account-detail {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    margin-left: 4px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e3e6ea;
+}
+.last-column {
+    border-right: 1px solid;  
+}
+.selected_account {
+    padding-top: 5px;
+    padding-bottom: 3px;
+    background-color: #e3e6ea;
+}
+.account-list-panel::-webkit-scrollbar {
+    width: 4px;
+}
+.scroll::-webkit-scrollbar-track {
+}
+.account-list-panel::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+.admin-popup-position{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.7);
+    width: 100%;
+    height: 100%;
+}
+.admin-popup-position-dont-hide{
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.7);
+    width: 100%;
+    height: 100%;
+}
+#admin-popup-wrapper{
+    width: 500px;
+    margin: 280px auto;
+    text-align: left;
+}
+#admin-error-popup-wrapper{
+    width: 380px;
+    margin: 280px auto;
+    text-align: left;
+}
+#admin-popup-container{
+    background-color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+}
+#admin-error-popup-container{
+    background-color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 10px;
+}

@@ -3,6 +3,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+
 @section('name')
   นายแพทย์
 @endsection
@@ -85,26 +86,21 @@
                                 <div class = "form-group">
                                       <label class="col-sm-2 control-label">เลือกหมอ</label>
                                       <div id = "doctor" class="col-sm-10">
-                                        <span class="input-group-addon">
+                                        <span class="input-group">
                                           <div class="col-sm-4">
-                                            <img src="https://image.freepik.com/free-icon/question-mark_318-52837.jpg" class="img-responsive center-block"  ><br />
-                                            <input type="radio" name="doctorId" value="0"> random &nbsp;&nbsp;
+                                            <input type="radio" name="doctorId" value="0"> random
                                           </div>
                                           <div class="col-sm-4">
-                                            <img src="http://orientalbalance.com/wp-content/uploads/2014/08/doctor.jpg" class="img-responsive center-block"  ><br />
-                                            <input type="radio" name="doctorId" value="0"> Dr. A &nbsp;&nbsp;
+                                            <input type="radio" name="doctorId" value="0"> Dr. A
                                           </div>
                                           <div class="col-sm-4">
-                                            <img src="http://pngimg.com/upload/doctor_PNG15959.png" class="img-responsive center-block"  ><br />
-                                            <input type="radio" name="doctorId" value="0"> Dr. B &nbsp;&nbsp;
+                                            <input type="radio" name="doctorId" value="0"> Dr. B
                                           </div>
                                           <div class="col-sm-4">
-                                            <img src="http://www.apollonion.com/assets/image/imagesplashdoc/women-img0001.png" class="img-responsive center-block"  ><br />
-                                            <input type="radio" name="doctorId" value="0"> Dr. C &nbsp;&nbsp;
+                                            <input type="radio" name="doctorId" value="0"> Dr. C
                                           </div>
                                           <div class="col-sm-4">
-                                            <img src="http://ichef-1.bbci.co.uk/news/660/media/images/76055000/jpg/_76055361_482566485.jpg" class="img-responsive center-block"  ><br />
-                                            <input type="radio" name="doctorId" value="0"> Dr. D &nbsp;&nbsp;
+                                            <input type="radio" name="doctorId" value="0"> Dr. D
                                           </div>
                                         </span><!-- /input-group -->
                                       </div>
@@ -113,7 +109,7 @@
                                 <div class="form-group">
                                   <label class="col-sm-2 control-label">เลือกวัน</label>
                                   <div class="col-sm-10">
-                                    <input class="form-control" type="text" id="datepicker">
+                                    <input class="form-control" type="text" id="datepicker" >
                                   </div>
 
                                 </div>
@@ -143,9 +139,29 @@
 </div>
 
 <script>
-$( function() {
-  $( "#datepicker" ).datepicker();
-} );
+
+$(function() {
+  $( "#datepicker" ).datepicker({
+              dateFormat: 'dd-mm-yy'
+          }).val(getTodaysDate(0));
+    })
+    function getTodaysDate (val) {
+    var t = new Date, day, month, year = t.getFullYear();
+    if (t.getDate() < 10) {
+        day = "0" + t.getDate();
+    }
+    else {
+        day = t.getDate();
+    }
+    if ((t.getMonth() + 1) < 10) {
+        month = "0" + (t.getMonth() + 1 - val);
+    }
+    else {
+        month = t.getMonth() + 1 - val;
+    }
+
+    return (day + '/' + month + '/' + year);
+   }
 </script>
 
 @endsection

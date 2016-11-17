@@ -16,7 +16,8 @@
 
 //Landing
 Route::get('/', function () {
-    return view('landingPage');
+//    return view('landingPage');
+    return view('login');
 });
 
 Route::get('/login', function () {
@@ -32,6 +33,26 @@ Route::get('/register', function () {
 
 //After login ==========================================
 //After login ==========================================
+
+//แก้ไขประวัติการสั่งยา
+Route::get('/editPrescriptionHistory', 'PrescriptionHistoryController@editPrescriptionHistory');
+
+//แก้ไขประวัติคำวินิจฉัย
+Route::get('/editDiagnosisHistory', 'DiagnosisHistoryController@editDiagnosisHistory');
+Route::post('findPatientFromHnIdName', 'DiagnosisHistoryController@findPatientFromHnIdName');
+//Route::post('findPatientFromHnIdName', function(){echo 'adfasdf';});
+
+//ดูประวัติการสั่งยาของแพทย์
+Route::get('/viewPrescriptionHistory', 'PrescriptionHistoryController@viewPrescriptionHistory');
+
+//ดูประวัติคำวินิจฉัย
+Route::get('/viewDiagnosisHistory', 'DiagnosisHistoryController@viewDiagnosisHistory');
+
+
+
+
+
+
 
 Route::get('/appoint', function () {
     return view('appoint');

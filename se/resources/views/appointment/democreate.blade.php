@@ -1,5 +1,7 @@
 @extends('layouts.theme')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 @section('name')
   นายแพทย์
@@ -64,7 +66,7 @@
                                 <div class="form-group">
                                       <label class="col-sm-2 control-label">อาการ</label>
                                       <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="symptom">
+                                        <textarea class="form-control" rows="5" name="symptom"></textarea>
                                       </div>
                                 </div>
 
@@ -84,25 +86,25 @@
                                       <label class="col-sm-2 control-label">เลือกหมอ</label>
                                       <div id = "doctor" class="col-sm-10">
                                         <span class="input-group-addon">
-                                          <div class="col-sm-3">
-                                            <img src="http://www.w3schools.com/images/w3schools_green.jpg"><br />
+                                          <div class="col-sm-4">
+                                            <img src="https://image.freepik.com/free-icon/question-mark_318-52837.jpg" class="img-responsive center-block"  ><br />
                                             <input type="radio" name="doctorId" value="0"> random &nbsp;&nbsp;
                                           </div>
-                                          <div class="col-sm-3">
-                                            <img src="http://www.w3schools.com/images/w3schools_green.jpg"><br />
-                                            <input type="radio" name="doctorId" value="0"> random &nbsp;&nbsp;
+                                          <div class="col-sm-4">
+                                            <img src="http://orientalbalance.com/wp-content/uploads/2014/08/doctor.jpg" class="img-responsive center-block"  ><br />
+                                            <input type="radio" name="doctorId" value="0"> Dr. A &nbsp;&nbsp;
                                           </div>
-                                          <div class="col-sm-3">
-                                            <img src="http://www.w3schools.com/images/w3schools_green.jpg"><br />
-                                            <input type="radio" name="doctorId" value="0"> random &nbsp;&nbsp;
+                                          <div class="col-sm-4">
+                                            <img src="http://pngimg.com/upload/doctor_PNG15959.png" class="img-responsive center-block"  ><br />
+                                            <input type="radio" name="doctorId" value="0"> Dr. B &nbsp;&nbsp;
                                           </div>
-                                          <div class="col-sm-3">
-                                            <img src="http://www.w3schools.com/images/w3schools_green.jpg"><br />
-                                            <input type="radio" name="doctorId" value="0"> random &nbsp;&nbsp;
+                                          <div class="col-sm-4">
+                                            <img src="http://www.apollonion.com/assets/image/imagesplashdoc/women-img0001.png" class="img-responsive center-block"  ><br />
+                                            <input type="radio" name="doctorId" value="0"> Dr. C &nbsp;&nbsp;
                                           </div>
-                                          <div class="col-sm-3">
-                                            <img src="http://www.w3schools.com/images/w3schools_green.jpg"><br />
-                                            <input type="radio" name="doctorId" value="0"> random &nbsp;&nbsp;
+                                          <div class="col-sm-4">
+                                            <img src="http://ichef-1.bbci.co.uk/news/660/media/images/76055000/jpg/_76055361_482566485.jpg" class="img-responsive center-block"  ><br />
+                                            <input type="radio" name="doctorId" value="0"> Dr. D &nbsp;&nbsp;
                                           </div>
                                         </span><!-- /input-group -->
                                       </div>
@@ -110,7 +112,10 @@
 
                                 <div class="form-group">
                                   <label class="col-sm-2 control-label">เลือกวัน</label>
-                                  <input type="date" value="2013-01-08" name="bday">
+                                  <div class="col-sm-10">
+                                    <input class="form-control" type="text" id="datepicker">
+                                  </div>
+
                                 </div>
 
                                 <div class="form-group">
@@ -136,4 +141,11 @@
       </div>
   </div>
 </div>
+
+<script>
+$( function() {
+  $( "#datepicker" ).datepicker();
+} );
+</script>
+
 @endsection

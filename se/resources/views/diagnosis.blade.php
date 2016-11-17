@@ -1,216 +1,187 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Dashboard">
-    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+@extends('layouts.theme')
 
-    <title>Hospital OPD System</title>
+@section('css')
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+@endsection
 
-    <!-- Bootstrap core CSS -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <!--external css-->
-    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="assets/js/bootstrap-datepicker/css/datepicker.css" />
-    <link rel="stylesheet" type="text/css" href="assets/js/bootstrap-daterangepicker/daterangepicker.css" />
+@section('name')
+  MR.SOMEONE
+@endsection
 
-    <!-- Custom styles for this template -->
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link href="assets/css/style-responsive.css" rel="stylesheet">
+@section('leftnav')
+  <li class="sub-menu">
+    <a href="javascript:;" >
+      <i class="fa fa-calendar"></i><span>ตารางวันและเวลาออกตรวจ</span>
+    </a>
+  </li>
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
+  <li class="sub-menu">
+    <a  href="javascript:;" >
+      <i class="fa fa-calendar-check-o"></i><span>รายการนัดหมาย</span>
+    </a>
+  </li>
 
-  <body>
+  <li class="sub-menu">
+    <a class = "active"  href="{{url('diagnosis')}}" >
+      <i class="fa fa-pencil-square-o"></i><span>บันทึกคำวินิจฉัยและสั่งยา</span>
+    </a>
+  </li>
 
-  <section id="container" >
-      <!-- **********************************************************************************************************************************************************
-      TOP BAR CONTENT & NOTIFICATIONS
-      *********************************************************************************************************************************************************** -->
-      <!--header start-->
-      <header class="header black-bg">
+  <li class="sub-menu">
+    <a  href="javascript:;" >
+      <i class="fa fa-info-circle"></i><span>ข้อมูลผู้ป่วย</span>
+    </a>
+  </li>
+@endsection
 
-            <!--logo start-->
-            <a href="index.html" class="logo"><b>Whipped Cream</b></a>
-            <!--logo end-->
-            <div class="nav notify-row" id="top_menu">
 
+@section('content')
+  <div class="row mt">
+    <div class="col-lg-12">
+      <div class="form-panel">
+        <div class="container-fluid">
+          <h4 class="mb"><i class="fa fa-angle-right"></i> &nbsp;บันทึกคำวินิจฉัยและสั่งยา</h4>
+
+          <form class="form-horizontal style-form" method="post" action="{{url('/diagnosis')}}">
+            <input type="hidden" name="_token" value="{{csrf_token()}}">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">HN</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" name="hn">
+              </div>
             </div>
-            <div class="top-menu">
-            	<ul class="nav pull-right top-menu">
-              <a href="index.html" class="logo" postion ="right" ><i class="fa fa-user"></i>  Mr. Someone&emsp;</a>
-                    <li><a class="logout" href="login.html">Logout</a></li>
-            	</ul>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label">ชื่อ</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" name="firstname">
+              </div>
+              <label class="col-sm-2 control-label">นามสกุล</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" name="lastname">
+              </div>
             </div>
-        </header>
-      <!--header end-->
 
-     <!-- **********************************************************************************************************************************************************
-      MAIN SIDEBAR MENU
-      *********************************************************************************************************************************************************** -->
-       <!--sidebar start-->
-      <aside>
-          <div id="sidebar"  class="nav-collapse ">
-              <!-- sidebar menu start-->
-              <ul class="sidebar-menu" id="nav-accordion">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">รหัสโรค</label>
+              <div class="col-sm-4">
+                <select class="form-control" name="symptomcode">
+                  <option selected>ICD10</option>
+                  <option>SNOWMED</option>
+                  <option>DRG</option>
+                </select>
+              </div>
+            </div>
 
+            <div class="form-group">
+              <label class="col-sm-2 control-label">รายละเอียดการวินิจฉัย</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" rows="5" style="resize:vertical" name="details"></textarea>
+              </div>
+            </div>
 
+            <div class="form-group drugGroup1">
+              <label class="col-sm-2 control-label">ยา</label>
+              <div class="col-sm-4">
+                <select class="form-control" id="drug1" name="drug1">
+                  <option disabled selected>-- Select Medicine --</option>
+                  <option>Aspirin</option>
+                  <option>Chlorpheniramine Maleate</option>
+                  <option>Dimenhydrinate</option>
+                  <option>Mebendazole</option>
+                  <option>Paracetamol</option>
+                  <option>Ponstan</option>
+                </select>
+              </div>
 
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-calendar"></i>
-                          <span>Schedule</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="blank.html">Edit Schedule</a></li>
+              <label class="col-sm-2 control-label">ปริมาณ</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="quantity1" name="quantity1" disabled>
+              </div>
+            </div>
 
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a  href="javascript:;" >
-                          <i class="fa fa-pencil-square"></i>
-                          <span>Appointment</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="form_component.html">Make Appointment</a></li>
-                          <li><a  href="blank.html">Cancle Appointment</a></li>
-                          <li><a  href="login.html">Edit Appointment</a></li>
-                      </ul>
-                  </li>
-                   <li class="sub-menu">
-                      <a class = "active"  href="javascript:;" >
-                          <i class="fa fa-heart"></i>
-                          <span>Diagnosis and Prescription</span>
-                      </a>
+            <div class="form-group drugGroup1">
+              <label class="col-sm-2 control-label">วิธีใช้</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" rows="5" style="resize:vertical" id="usage1" name="usage1" disabled></textarea>
+              </div>
+            </div>
 
-                  </li>
-                   <li class="sub-menu">
-                      <a  href="javascript:;" >
-                          <i class="fa fa-group"></i>
-                          <span>Patient Information</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="form_component.html">Make Appointment</a></li>
-                          <li><a  href="blank.html">Cancle Appointment</a></li>
-                          <li><a  href="login.html">Edit Appointment</a></li>
-                      </ul>
-                  </li>
+            <div class="form-group" id="inc-dec">
+              <div class="col-sm-12">
+                <button type="button" class="btn btn-danger pull-right ml" id="decrease">
+                  <i class="fa fa-minus" aria-hidden="true"></i>&nbsp;&nbsp;ลดยา
+                </button>
 
-              </ul>
-              <!-- sidebar menu end-->
-          </div>
-      </aside>
-      <!--sidebar end-->
+                <button type="button" class="btn btn-info pull-right" id="increase">
+                  <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;เพิ่มยา
+                </button>
+              </div>
+            </div>
 
+            <div class="mt">
+              <input type="submit" class="btn btn-primary pull-right" value="บันทึก">
+            </div>
 
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+@endsection
 
-      <!-- **********************************************************************************************************************************************************
-      MAIN CONTENT
-      *********************************************************************************************************************************************************** -->
-      <!--main content start-->
-      <section id="main-content">
-          <section class="wrapper">
-
-
-          	<!-- BASIC FORM ELELEMNTS -->
-          	<div class="row mt">
-          		<div class="col-lg-12">
-                  <div class="form-panel">
-                  	  <h4 class="mb"><i class="fa fa-angle-right"></i> Diagnosis</h4>
-                      <form class="form-horizontal style-form" method="get">
-                          <div class="form-group">
-                              <label class="col-sm-2 col-sm-2 control-label">HN</label>
-                              <div class="col-sm-6">
-                                  <input type="text" class="form-control">
-                              </div>
-                              <button type="button" class="btn  btn-theme04">Search</button>
-                          </div>
-                          <div class="form-group">
-                              <label class="col-sm-2 col-sm-2 control-label">SSN</label>
-                              <div class="col-sm-6">
-                                  <input type="text" class="form-control">
-                              </div>
-                              <button type="button" class="btn  btn-theme04">Search</button>
-                          </div>
-                          <div class="form-group">
-                              <label class="col-sm-2 col-sm-2 control-label">Name</label>
-                              <div class="col-sm-3">
-                                  <input type="text" class="form-control">
-                              </div>
-                              <label class="col-sm-2 col-sm-2 control-label">Surname</label>
-                              <div class="col-sm-3">
-                                  <input type="text" class="form-control">
-                              </div>
-                              <button type="button" class="btn  btn-theme04">Search</button>
-                          </div>
-
-
-
-
-                          </form>
-
-                      </div>
-                      </div>
-                      </div>
-
-
-
-		</section><! --/wrapper -->
-
-      </section><!-- /MAIN CONTENT -->
-
-      <!--main content end-->
-      <!--footer start-->
-
-      <!--footer end-->
-  </section>
-
-    <!-- js placed at the end of the document so the pages load faster -->
-    <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="assets/js/jquery.scrollTo.min.js"></script>
-    <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
-
-
-    <!--common script for all pages-->
-    <script src="assets/js/common-scripts.js"></script>
-
-    <!--script for this page-->
-    <script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
-
-	<!--custom switch-->
-	<script src="assets/js/bootstrap-switch.js"></script>
-
-	<!--custom tagsinput-->
-	<script src="assets/js/jquery.tagsinput.js"></script>
-
-	<!--custom checkbox & radio-->
-
-	<script type="text/javascript" src="assets/js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-	<script type="text/javascript" src="assets/js/bootstrap-daterangepicker/date.js"></script>
-	<script type="text/javascript" src="assets/js/bootstrap-daterangepicker/daterangepicker.js"></script>
-
-	<script type="text/javascript" src="assets/js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
-
-
-	<script src="assets/js/form-component.js"></script>
-
-
+@section('script')
   <script>
-      //custom select box
+    $(document).ready(function(){
 
-      $(function(){
-          $('select.styled').customSelect();
+      $("form").change(function(event){
+        var id = event.target.id;
+        if(id.substr(0,4) == "drug"){
+          var num = id.substr(4);
+          $("#quantity"+ num).removeAttr("disabled");
+          $("#usage"+ num).removeAttr("disabled");
+        }
       });
 
-  </script>
+      var index = 1;
 
-  </body>
-</html>
+      $("#increase").click(function(){
+        ++index;
+        $("#inc-dec").before("\
+        <div class='form-group drugGroup"+index+"'>\
+          <label class='col-sm-2 control-label'>ยา</label>\
+          <div class='col-sm-4'>\
+            <select class='form-control' id='drug"+index+"' name='drug"+index+"'>\
+              <option disabled selected>-- Select Medicine --</option>\
+              <option>Aspirin</option>\
+              <option>Chlorpheniramine Maleate</option>\
+              <option>Dimenhydrinate</option>\
+              <option>Mebendazole</option>\
+              <option>Paracetamol</option>\
+              <option>Ponstan</option>\
+            </select>\
+          </div>\
+          \
+          <label class='col-sm-2 control-label'>ปริมาณ</label>\
+          <div class='col-sm-4'>\
+            <input type='text' class='form-control' id='quantity"+index+"' name='quantity"+index+"' disabled>\
+          </div>\
+        </div>\
+        \
+        <div class='form-group drugGroup"+index+"'>\
+          <label class='col-sm-2 control-label'>วิธีใช้</label>\
+          <div class='col-sm-10'>\
+            <textarea class='form-control' rows='5' style='resize:vertical' id='usage"+index+"' name='usage"+index+"' disabled></textarea>\
+          </div>\
+        </div>\
+        ");
+      });
+
+      $("#decrease").click(function(){
+          $(".drugGroup"+index).remove();
+          if(index >= 1) --index;
+      });
+
+    });
+  </script>
+@endsection

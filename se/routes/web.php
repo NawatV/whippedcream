@@ -45,9 +45,7 @@ Route::get('/schedule', function () {
 Route::get('/dispention', function () {
     return view('dispention');
 });
-Route::get('/diagnosis', function () {
-    return view('diagnosis');
-});
+
 Route::get('/diagnosisnext', function () {
     return view('diagnosisnext');
 });
@@ -56,6 +54,36 @@ Route::get('/blank', function () {
 });
 
 
+Route::get('/diagnosis', 'TreatmentController@getDiagnosisForm');
+
+Route::post('/diagnosis', 'TreatmentController@saveDiagnosisForm');
+
 Route::get('/vitalsign', 'TreatmentController@getVitalSignForm');
 
-Route::post('/vitalsign', 'TreatmentController@save');
+Route::post('/vitalsign', 'TreatmentController@saveVitalSignForm');
+
+/*routes for admin*/
+Route::get('/manageAccount', 'ManageAccountController@display_users');
+Route::post('/manageAccount', 'ManageAccountController@edit_user');
+
+Route::get('/createStaff', 'CreateAccountController@create_staff_form');
+Route::post('/createStaff', 'CreateAccountController@create_staff');
+
+Route::get('/createDoctor', 'CreateAccountController@create_doctor_form');
+Route::post('/createDoctor', 'CreateAccountController@create_doctor');
+
+Route::get('/createNurse', 'CreateAccountController@create_nurse_form');
+Route::post('/createNurse', 'CreateAccountController@create_nurse');
+
+Route::get('/createPharmacist', 'CreateAccountController@create_pharmacist_form');
+Route::post('/createPharmacist', 'CreateAccountController@create_pharmacist');
+
+Route::get('/createAdmin', 'CreateAccountController@create_admin_form');
+Route::post('/createAdmin', 'CreateAccountController@create_admin');
+
+Route::get('/manageDepartment', 'ManageDepartmentController@display_all_department');
+Route::post('/manageDepartment', 'ManageDepartmentController@edit_department');
+
+Route::get('/createDepartment', 'CreateDepartmentController@create_department_form');
+Route::post('/createDepartment', 'CreateDepartmentController@create_department');
+/*end-routes for admin*/

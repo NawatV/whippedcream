@@ -126,14 +126,52 @@ class AppointmentController extends Controller
     {
         $doctor = Doctor::find($request->id);
         $schedules = $doctor -> schedule;
-        $scheduleArray = array();
-        array_push($scheduleArray, $schedules->sunPeriod);
-        array_push($scheduleArray, $schedules->monPeriod);
-        array_push($scheduleArray, $schedules->tuePeriod);
-        array_push($scheduleArray, $schedules->wedPeriod);
-        array_push($scheduleArray, $schedules->thuPeriod);
-        array_push($scheduleArray, $schedules->friPeriod);
-        array_push($scheduleArray, $schedules->satPeriod);
+        $fastestDate = "no";
+         
+        for ($x = 1; $x < 7; $x++) {
+            if(date('l', strtotime($x.' days', strtotime('today'))) == "Sunday" && $schedules->sunPeriod != "0" ){
+                $fastestDate = date("Y-m-d", strtotime('Sunday'));
+                break;
+            }
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Monday" && $schedules->monPeriod != 0){
+                $fastestDate = date("Y-m-d", strtotime('Monday'));
+                break;
+            }
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Tuesday" && $schedules->tuePeriod != 0){
+                $fastestDate = date("Y-m-d", strtotime('Tuesday'));
+                break;
+            }
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Wednesday" && $schedules->wedPeriod != 0){
+                $fastestDate = date("Y-m-d", strtotime('Wednesday'));
+                break;
+            }
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Thursday" && $schedules->thuPeriod != 0){
+                $fastestDate = date("Y-m-d", strtotime('Thursday'));
+                break;
+            }
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Friday" && $schedules->friPeriod != 0){
+                $fastestDate = date("Y-m-d", strtotime('Friday'));
+                break;
+            }
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Saturday" && $schedules->satPeriod != 0){
+                $fastestDate = date("Y-m-d", strtotime('Saturday'));
+                break;
+            }
+
+        } 
+          
+
+        $scheduleArray = array
+        (
+            array("sunPeriod", $schedules->sunPeriod),
+            array("monPeriod", $schedules->monPeriod),
+            array("tuePeriod", $schedules->tuePeriod),
+            array("wedPeriod", $schedules->wedPeriod),
+            array("thuPeriod", $schedules->thuPeriod),
+            array("friPeriod", $schedules->friPeriod),
+            array("satPeriod", $schedules->satPeriod),
+            array("fastestDate", $fastestDate)
+        );
         return $scheduleArray;
     }
 }

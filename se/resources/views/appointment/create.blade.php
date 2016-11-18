@@ -86,12 +86,6 @@
 
                               <div class = "form-group">
                                 <div id = "date">
-                                    <div class="input-group date">
-                                        <input type="text" class="form-control" value="12-02-2012">
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-th"></span>
-                                        </div>
-                                    </div>
                                 </div>
                               </div>
 
@@ -121,7 +115,7 @@ var tmp;
               id: $('#department :selected').val()
             },
             success: function( result ) {
-              //console.log(result)
+              console.log(result)
               $("#doctor").empty();
               $("#doctor").append('<input type="radio" name="doctorId" value="0" onclick="if(this.checked){queryDoctorDateTime()}"> random<br>');
               //ocument.getElementById("demo").innerHTML = result;
@@ -148,14 +142,13 @@ var tmp;
                 $("#date").empty();
                   for (i = 0; i < result.length; i++) {
                     if (result != 0) {
-                        console.log("ok")
-                        //$("#date").append('<input type="date" value="' + '2016-11-17' + '" name="appDate" min="2016-11-16">');
-                        $("#date").append('<input data-provide="datepicker">');
+                        $("#date").append('<input type="date" value="' + result[7][1] + '" name="bday">');
                         break;
                     }
                  }
 
-                
+                //<label class="col-sm-2 control-label">เลือกวัน</label>
+                                  
             }
           });
    

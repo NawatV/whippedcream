@@ -193,4 +193,9 @@ class AppointmentController extends Controller
         );
         return $scheduleArray;
     }
+
+    public function queryPeriod(Request $request){
+        return "hello";
+    }
+        
 }

@@ -133,6 +133,20 @@
           });
      });
    });
+
+  // $(document).ready(function(){
+  //     $('#datepicker').datepicker( {
+  //        $.ajax({
+  //           url: "/queryPeriod",
+  //           data: {
+  //             id: "1"
+  //           },
+  //           success: function( result ) {
+  //             console.log(result)
+  //           }
+  //       });
+  //    });
+  // });
    var fastestdate;
    function queryDoctorDateTime() {
         //console.log($('input[name=doctorId]:checked', '#doctor').val());
@@ -143,6 +157,7 @@
               departmentId: $('#department :selected').val()
             },
             success: function( result ) {
+                console.log(result)
                 $("#date").empty();
                 $("#time").empty();
                 fastestdate = result[7][1];
@@ -160,18 +175,19 @@
                 }
                 //<label class="col-sm-2 control-label">เลือกวัน</label>
                 //<input class="form-control" type="text" id="datepicker" >
-                myFunction();
+                myFunction(result);
             }
           });
    }
 
-function myFunction() {
+function myFunction(params) {
         $( "#datepicker" ).datepicker({
               dateFormat: 'yy-mm-dd',
               maxDate: "+1y",
               minDate: "+1d",
               beforeShowDay: function(date){
-                  return [date.getDay() != 1, ''];
+                var day = date.getDay();
+                return [(day == '2' || day == '5'), ''];
               }
         }).val(fastestdate);
 }

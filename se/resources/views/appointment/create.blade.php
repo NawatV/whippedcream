@@ -88,7 +88,11 @@
 
                               <div class = "form-group">
                                 <div id = "date">
-                                    <input class="form-control" type="text" id="datepicker" >
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                                <div id = "time">
                                 </div>
                               </div>
 
@@ -109,7 +113,7 @@
 <script>
 
   $(document).ready(function(){
-    $("select").change(function(){
+    $("#department").change(function(){
         $.ajax({
             url: "/queryDoctor",
             data: {
@@ -119,7 +123,6 @@
               console.log(result)
               $("#doctor").empty();
               $("#doctor").append('<input type="radio" name="doctorId" value="0" onclick="if(this.checked){queryDoctorDateTime()}"> random<br>');
-              //ocument.getElementById("demo").innerHTML = result;
               for (i = 0; i < result.length; i++) {
                   tmp = '<input type="radio" name="doctorId" value="' + result[i][0] + '"' + 'onclick="if(this.checked){queryDoctorDateTime()}">' + result[i][1] + " " 
                   + result[i][2] + '<br>';
@@ -131,7 +134,6 @@
      });
    });
    var fastestdate;
-
    function queryDoctorDateTime() {
         //console.log($('input[name=doctorId]:checked', '#doctor').val());
         $.ajax({
@@ -140,15 +142,24 @@
               id: $('input[name=doctorId]:checked', '#doctor').val()
             },
             success: function( result ) {
-                console.log(result)
-                //$("#date").empty();
-                        fastestdate = result[7][1];
-                        //$("#date").append('<input type="date" value="' + result[7][1] + '" name="bday">');
-                        $("#date").append('<input class="form-control" type="text" id="datepicker" >');
-
+                $("#date").empty();
+                $("#time").empty();
+                fastestdate = result[7][1];
+                //$("#date").append('<input type="date" value="' + result[7][1] + '" name="bday">');
+                $("#date").append('<input class="form-control" type="text" id="datepicker" name="appDate">');
+                if(result[8][1] == "1"){
+                  $("#time").append('<input type="radio" name="appTime" value="1" checked="checked"> เช้า<br>');
+                  $("#time").append('<input type="radio" name="appTime" value="2" disabled> บ่าย<br>');
+                }else if(result[8][1] == "2"){
+                  $("#time").append('<input type="radio" name="appTime" value="1" disabled> เช้า<br>');
+                  $("#time").append('<input type="radio" name="appTime" value="2" checked="checked"> บ่าย<br>');
+                }else if(result[8][1] == "3"){
+                  $("#time").append('<input type="radio" name="appTime" value="1" checked="checked"> เช้า<br>');
+                  $("#time").append('<input type="radio" name="appTime" value="2"> บ่าย<br>');
+                }
                 //<label class="col-sm-2 control-label">เลือกวัน</label>
                 //<input class="form-control" type="text" id="datepicker" >
-                                  
+                myFunction();   
             }
           });
    }
@@ -156,8 +167,11 @@
 function myFunction() {
         $( "#datepicker" ).datepicker({
               dateFormat: 'yy-mm-dd'
-        }).val("2016-5-6");
+        }).val(fastestdate);
 }
+
+
 </script>
+
 
 @endsection

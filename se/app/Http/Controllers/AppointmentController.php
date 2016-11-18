@@ -48,16 +48,16 @@ class AppointmentController extends Controller
     { 
         //return dd($request->all());
         $appointment = new Appointment();
-        $appointment -> appDate = date("2016-11-19");
-        $appointment -> appTime = date('H:m:s', time())  ;
         $appointment -> symptom = $request -> symptom;
-        $appointment -> patientId = "4";//wait for user login
-        if ($request -> doctorId == "0") {
-            $department = Department::find($request -> departmentId);
-            $appointment -> doctorId = $department -> doctor[0] -> doctorId; 
-        } else {
-            $appointment -> doctorId = $request -> doctorId;
+        $appointment -> doctorId = $request -> doctorId;
+        $appointment -> appDate = $request -> appDate;
+        if($request -> appTime == "1"){
+            $appointment -> appTime = "9:00";
+        }elseif($request -> appTime == "2"){
+            $appointment -> appTime = "13:00";
         }
+        
+        $appointment -> patientId = "4";//wait for user login
         $appointment -> save();
         return redirect() -> action('AppointmentController@index');
     }
@@ -127,39 +127,45 @@ class AppointmentController extends Controller
         $doctor = Doctor::find($request->id);
         $schedules = $doctor -> schedule;
         $fastestDate = "no";
+        $workDay = "no";
          
         for ($x = 1; $x < 7; $x++) {
             if(date('l', strtotime($x.' days', strtotime('today'))) == "Sunday" && $schedules->sunPeriod != "0" ){
                 $fastestDate = date("Y-m-d", strtotime('Sunday'));
+                $workDay=$schedules->sunPeriod;
                 break;
             }
             elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Monday" && $schedules->monPeriod != 0){
                 $fastestDate = date("Y-m-d", strtotime('Monday'));
+                $workDay=$schedules->monPeriod;
                 break;
             }
             elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Tuesday" && $schedules->tuePeriod != 0){
                 $fastestDate = date("Y-m-d", strtotime('Tuesday'));
+                $workDay=$schedules->tuePeriod;
                 break;
             }
             elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Wednesday" && $schedules->wedPeriod != 0){
                 $fastestDate = date("Y-m-d", strtotime('Wednesday'));
+                $workDay=$schedules->wedPeriod;
                 break;
             }
             elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Thursday" && $schedules->thuPeriod != 0){
                 $fastestDate = date("Y-m-d", strtotime('Thursday'));
+                $workDay=$schedules->thuPeriod;
                 break;
             }
             elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Friday" && $schedules->friPeriod != 0){
                 $fastestDate = date("Y-m-d", strtotime('Friday'));
+                $workDay=$schedules->friPeriod;
                 break;
             }
             elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Saturday" && $schedules->satPeriod != 0){
                 $fastestDate = date("Y-m-d", strtotime('Saturday'));
+                $workDay=$schedules->satPeriod;
                 break;
             }
-
         } 
-          
 
         $scheduleArray = array
         (
@@ -170,7 +176,8 @@ class AppointmentController extends Controller
             array("thuPeriod", $schedules->thuPeriod),
             array("friPeriod", $schedules->friPeriod),
             array("satPeriod", $schedules->satPeriod),
-            array("fastestDate", $fastestDate)
+            array("fastestDate", $fastestDate),
+            array("fastestTime", $workDay)
         );
         return $scheduleArray;
     }

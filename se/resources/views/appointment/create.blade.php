@@ -132,21 +132,9 @@
             }
           });
      });
+   
    });
 
-  // $(document).ready(function(){
-  //     $('#datepicker').datepicker( {
-  //        $.ajax({
-  //           url: "/queryPeriod",
-  //           data: {
-  //             id: "1"
-  //           },
-  //           success: function( result ) {
-  //             console.log(result)
-  //           }
-  //       });
-  //    });
-  // });
    var fastestdate;
    function queryDoctorDateTime() {
         //console.log($('input[name=doctorId]:checked', '#doctor').val());
@@ -181,13 +169,25 @@
    }
 
 function myFunction(params) {
+        console.log(params[5][1]);
         $( "#datepicker" ).datepicker({
               dateFormat: 'yy-mm-dd',
               maxDate: "+1y",
               minDate: "+1d",
               beforeShowDay: function(date){
                 var day = date.getDay();
-                return [(day == '2' || day == '5'), ''];
+                return [(day == params[5][1] || day == params[3][1] || day == params[1][1] || day == params[0][1] || day == params[2][1] || day == params[4][1] || day == params[6][1]), ''];
+              },
+              onSelect: function() {
+                 $.ajax({
+                    url: "/queryPeriod",
+                    data: {
+                      id: "1"
+                    },
+                    success: function( result ) {
+                      console.log(result)
+                    }
+                });
               }
         }).val(fastestdate);
 }

@@ -179,18 +179,76 @@ class AppointmentController extends Controller
             }
         } 
 
-        $scheduleArray = array
-        (
-            array("sunPeriod", $schedules->sunPeriod),
-            array("monPeriod", $schedules->monPeriod),
-            array("tuePeriod", $schedules->tuePeriod),
-            array("wedPeriod", $schedules->wedPeriod),
-            array("thuPeriod", $schedules->thuPeriod),
-            array("friPeriod", $schedules->friPeriod),
-            array("satPeriod", $schedules->satPeriod),
-            array("fastestDate", $fastestDate),
-            array("fastestTime", $workDay)
-        );
+        $scheduleArray = array();
+            // array("sunPeriod", $schedules->sunPeriod),
+            // array("monPeriod", $schedules->monPeriod),
+            // array("tuePeriod", $schedules->tuePeriod),
+            // array("wedPeriod", $schedules->wedPeriod),
+            // array("thuPeriod", $schedules->thuPeriod),
+            // array("friPeriod", $schedules->friPeriod),
+            // array("satPeriod", $schedules->satPeriod),
+            // array("fastestDate", $fastestDate),
+            // array("fastestTime", $workDay)
+            if($schedules->sunPeriod == 0){
+                $tmp = array("sunPeriod", "10");
+                array_push($scheduleArray, $tmp);
+            }
+            else{
+                $tmp = array("sunPeriod", "0");
+                array_push($scheduleArray, $tmp);
+            }
+            if($schedules->monPeriod == 0){
+                $tmp = array("monPeriod", "10");
+                array_push($scheduleArray, $tmp);
+            }
+            else{
+                $tmp = array("monPeriod", "1");
+                array_push($scheduleArray, $tmp);
+            }
+            if($schedules->tuePeriod == 0){
+                $tmp = array("tuePeriod", "10");
+                array_push($scheduleArray, $tmp);
+            }
+            else{
+                $tmp = array("tuePeriod", "2");
+                array_push($scheduleArray, $tmp);
+            }
+            if($schedules->wedPeriod == 0){
+                $tmp = array("wedPeriod", "10");
+                array_push($scheduleArray, $tmp);
+            }
+            else{
+                $tmp = array("wedPeriod", "3");
+                array_push($scheduleArray, $tmp);
+            }
+            if($schedules->thuPeriod == 0){
+                $tmp = array("thuPeriod", "10");
+                array_push($scheduleArray, $tmp);
+            }
+            else{
+                $tmp = array("thuPeriod", "4");
+                array_push($scheduleArray, $tmp);
+            }
+            if($schedules->friPeriod == 0){
+                $tmp = array("friPeriod", "10");
+                array_push($scheduleArray, $tmp);
+            }
+            else{
+                $tmp = array("friPeriod", "5");
+                array_push($scheduleArray, $tmp);
+            }
+            if($schedules->satPeriod == 0){
+                $tmp = array("satPeriod", "10");
+                array_push($scheduleArray, $tmp);
+            }
+            else{
+                $tmp = array("satPeriod", "6");
+                array_push($scheduleArray, $tmp);
+            }
+            $tmp = array("fastestDate", $fastestDate);
+            array_push($scheduleArray, $tmp);
+            $tmp = array("fastestTime", $workDay);
+            array_push($scheduleArray, $tmp);
         return $scheduleArray;
     }
 

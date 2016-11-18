@@ -132,7 +132,7 @@
             }
           });
      });
-   
+
    });
 
    var fastestdate;
@@ -178,14 +178,27 @@ function myFunction(params) {
                 var day = date.getDay();
                 return [(day == params[5][1] || day == params[3][1] || day == params[1][1] || day == params[0][1] || day == params[2][1] || day == params[4][1] || day == params[6][1]), ''];
               },
-              onSelect: function() {
+              onSelect: function(date) {
                  $.ajax({
                     url: "/queryPeriod",
                     data: {
-                      id: "1"
+                      id: $('input[name=doctorId]:checked', '#doctor').val(),
+                      day : $( "#datepicker" ).datepicker( "getDate" ).getDay()
                     },
                     success: function( result ) {
                       console.log(result)
+                      $("#time").empty();
+                      //$("#date").append('<input type="date" value="' + result[7][1] + '" name="bday">');
+                      if(result == "1"){
+                        $("#time").append('<input type="radio" name="appTime" value="1" checked="checked"> เช้า<br>');
+                        $("#time").append('<input type="radio" name="appTime" value="2" disabled> บ่าย<br>');
+                      }else if(result == "2"){
+                        $("#time").append('<input type="radio" name="appTime" value="1" disabled> เช้า<br>');
+                        $("#time").append('<input type="radio" name="appTime" value="2" checked="checked"> บ่าย<br>');
+                      }else if(result  == "3"){
+                        $("#time").append('<input type="radio" name="appTime" value="1" checked="checked"> เช้า<br>');
+                        $("#time").append('<input type="radio" name="appTime" value="2"> บ่าย<br>');
+                      }
                     }
                 });
               }

@@ -45,7 +45,7 @@ class AppointmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
+    {
         //return dd($request->all());
         $appointment = new Appointment();
         $appointment -> symptom = $request -> symptom;
@@ -61,7 +61,7 @@ class AppointmentController extends Controller
         }elseif($request -> appTime == "2"){
             $appointment -> appTime = "13:00";
         }
-        
+
         $appointment -> patientId = "4";//wait for user login
         $appointment -> save();
         return redirect() -> action('AppointmentController@index');
@@ -140,7 +140,7 @@ class AppointmentController extends Controller
         $schedules = $doctor -> schedule;
         $fastestDate = "no";
         $workDay = "no";
-         
+
         for ($x = 1; $x < 7; $x++) {
             if(date('l', strtotime($x.' days', strtotime('today'))) == "Sunday" && $schedules->sunPeriod != "0" ){
                 $fastestDate = date("Y-m-d", strtotime('Sunday'));
@@ -177,7 +177,7 @@ class AppointmentController extends Controller
                 $workDay=$schedules->satPeriod;
                 break;
             }
-        } 
+        }
 
         $scheduleArray = array();
             // array("sunPeriod", $schedules->sunPeriod),
@@ -253,7 +253,16 @@ class AppointmentController extends Controller
     }
 
     public function queryPeriod(Request $request){
-        return "hello";
+        $schedules = Doctor::find($request->id) -> schedule;
+        $day = $request->day;
+        if ($day==0) return $schedules->sunPeriod;
+        elseif ($day==1) return $schedules->monPeriod;
+        elseif ($day==2) return $schedules->tuePeriod;
+        elseif ($day==3) return $schedules->wedPeriod;
+        elseif ($day==4) return $schedules->thuPeriod;
+        elseif ($day==5) return $schedules->friPeriod;
+        elseif ($day==6) return $schedules->satPeriod;
+
     }
-        
+
 }

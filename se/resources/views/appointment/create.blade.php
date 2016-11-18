@@ -71,13 +71,13 @@
                                     <label class="col-sm-2 control-label">อาการ</label>
                                     <input type="text" class="form-control" name="symptom">
                               </div>
-                              
+
                               <div class="form-group">
                                 <select id = "department" name = "departmentId">
                                       <option selected disabled>Choose Department</option>
                                       @foreach ($departments as $department)
                                           <option value="{{$department -> departmentId}}">{{$department -> departmentName}}</option>
-                                      @endforeach  
+                                      @endforeach
                                 </select>
                               </div>
 
@@ -101,7 +101,7 @@
                                       <input type="submit" class="btn btn-primary pull-right" value="บันทึก">
                                       <a href = "{{url('appointment')}}" class="btn btn-primary">back</a>
                                   </div>
-                              </div>               
+                              </div>
                           </form>
                         </div>
                 </div>
@@ -124,9 +124,9 @@
               $("#doctor").empty();
               $("#doctor").append('<input type="radio" name="doctorId" value="0" onclick="if(this.checked){queryDoctorDateTime()}"> random<br>');
               for (i = 0; i < result.length; i++) {
-                  tmp = '<input type="radio" name="doctorId" value="' + result[i][0] + '"' + 'onclick="if(this.checked){queryDoctorDateTime()}">' + result[i][1] + " " 
+                  tmp = '<input type="radio" name="doctorId" value="' + result[i][0] + '"' + 'onclick="if(this.checked){queryDoctorDateTime()}">' + result[i][1] + " "
                   + result[i][2] + '<br>';
-                  
+
                   $("#doctor").append(tmp);
               }
             }
@@ -159,14 +159,19 @@
                 }
                 //<label class="col-sm-2 control-label">เลือกวัน</label>
                 //<input class="form-control" type="text" id="datepicker" >
-                myFunction();   
+                myFunction();
             }
           });
    }
 
 function myFunction() {
         $( "#datepicker" ).datepicker({
-              dateFormat: 'yy-mm-dd'
+              dateFormat: 'yy-mm-dd',
+              maxDate: "+1y",
+              minDate: "+1d",
+              beforeShowDay: function(date){
+                  return [date.getDay() != 1, ''];
+              }
         }).val(fastestdate);
 }
 

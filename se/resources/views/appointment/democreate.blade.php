@@ -83,26 +83,24 @@
                                     </div>
                                 </div>
 
-                                <div class = "form-group">
+                                <div class ="form-group">
                                       <label class="col-sm-2 control-label">เลือกหมอ</label>
-                                      <div id = "doctor" class="col-sm-10">
-                                        <span class="input-group">
-                                          <div class="col-sm-4">
+                                      <div id = "doctor" class="col-sm-10 radio">
+                                          <label class="col-sm-4">
                                             <input type="radio" name="doctorId" value="0"> random
-                                          </div>
-                                          <div class="col-sm-4">
-                                            <input type="radio" name="doctorId" value="0"> Dr. A
-                                          </div>
-                                          <div class="col-sm-4">
-                                            <input type="radio" name="doctorId" value="0"> Dr. B
-                                          </div>
-                                          <div class="col-sm-4">
-                                            <input type="radio" name="doctorId" value="0"> Dr. C
-                                          </div>
-                                          <div class="col-sm-4">
-                                            <input type="radio" name="doctorId" value="0"> Dr. D
-                                          </div>
-                                        </span><!-- /input-group -->
+                                          </label>
+                                          <label class="col-sm-4">
+                                            <input type="radio" name="doctorId" value="1"> Dr. A
+                                          </label>
+                                          <label class="col-sm-4">
+                                            <input type="radio" name="doctorId" value="2"> Dr. B
+                                          </label>
+                                          <label class="col-sm-4">
+                                            <input type="radio" name="doctorId" value="3"> Dr. C
+                                          </label>
+                                          <label class="col-sm-4">
+                                            <input type="radio" name="doctorId" value="4"> Dr. D
+                                          </label>
                                       </div>
                                 </div>
 
@@ -116,11 +114,13 @@
 
                                 <div class="form-group">
                                   <label class="col-sm-2 control-label">เลือกช่วงเวลา</label>
-                                  <div class="col-sm-10">
-                                    <select class="form-control" id = "department" name = "departmentId">
-                                          <option value="1">เช้า</option>
-                                          <option value="2"  selected>บ่าย</option>
-                                    </select>
+                                  <div class="col-sm-10 radio">
+                                    <label class="col-sm-4">
+                                      <input type="radio" name="period" value="1"> เช้า
+                                    </label>
+                                    <label class="col-sm-4">
+                                      <input type="radio" name="period" value="2"> บ่าย
+                                    </label>
                                   </div>
                                 </div>
 

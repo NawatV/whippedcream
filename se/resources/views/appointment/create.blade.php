@@ -88,7 +88,7 @@
 
                               <div class = "form-group">
                                 <div id = "date">
-                                    <input class="form-control" type="text" id="datepicker">
+                                    <input class="form-control" type="text" id="datepicker" >
                                 </div>
                               </div>
 
@@ -107,11 +107,6 @@
 </div>
 
 <script>
-$( function() {
-  $( "#datepicker" ).datepicker();
-} );
-var tmp; 
-
 
   $(document).ready(function(){
     $("select").change(function(){
@@ -135,6 +130,7 @@ var tmp;
           });
      });
    });
+   var fastestdate;
 
    function queryDoctorDateTime() {
         //console.log($('input[name=doctorId]:checked', '#doctor').val());
@@ -145,20 +141,23 @@ var tmp;
             },
             success: function( result ) {
                 console.log(result)
-                $("#date").empty();
-                  for (i = 0; i < result.length; i++) {
-                    if (result != 0) {
-                        $("#date").append('<input type="date" value="' + result[7][1] + '" name="bday">');
-                        break;
-                    }
-                 }
+                //$("#date").empty();
+                        fastestdate = result[7][1];
+                        //$("#date").append('<input type="date" value="' + result[7][1] + '" name="bday">');
+                        $("#date").append('<input class="form-control" type="text" id="datepicker" >');
 
                 //<label class="col-sm-2 control-label">เลือกวัน</label>
+                //<input class="form-control" type="text" id="datepicker" >
                                   
             }
           });
-   
    }
+
+function myFunction() {
+        $( "#datepicker" ).datepicker({
+              dateFormat: 'yy-mm-dd'
+        }).val("2016-5-6");
+}
 </script>
 
 @endsection

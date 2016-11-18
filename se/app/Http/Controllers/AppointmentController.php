@@ -49,7 +49,12 @@ class AppointmentController extends Controller
         //return dd($request->all());
         $appointment = new Appointment();
         $appointment -> symptom = $request -> symptom;
-        $appointment -> doctorId = $request -> doctorId;
+        if($request -> doctorId == "0"){
+            $appointment -> doctorId = Department::find($request -> departmentId)-> doctor[0]-> doctorId;
+        }
+        else{
+            $appointment -> doctorId = $request -> doctorId;
+        }
         $appointment -> appDate = $request -> appDate;
         if($request -> appTime == "1"){
             $appointment -> appTime = "9:00";
@@ -124,7 +129,14 @@ class AppointmentController extends Controller
 
     public function queryDoctorDateTime(Request $request)
     {
-        $doctor = Doctor::find($request->id);
+        //$doctor = Doctor::all()[0];
+        if($request->id == "0"){
+            $department = Department::find($request -> departmentId);
+            $doctor = $department -> doctor[0];
+        }
+        else{
+            $doctor = Doctor::find($request->id);
+        }
         $schedules = $doctor -> schedule;
         $fastestDate = "no";
         $workDay = "no";

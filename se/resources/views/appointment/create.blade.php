@@ -139,7 +139,8 @@
         $.ajax({
             url: "/queryDoctorDateTime",
             data: {
-              id: $('input[name=doctorId]:checked', '#doctor').val()
+              id: $('input[name=doctorId]:checked', '#doctor').val(),
+              departmentId: $('#department :selected').val()
             },
             success: function( result ) {
                 $("#date").empty();

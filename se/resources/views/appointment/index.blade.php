@@ -64,6 +64,11 @@
                 <td>
                     <a href = "{{ url('appointment/show/'.$appointment -> id) }}">ดูรายละเอียด</a>
                     <a href = "{{ url('appointment/'.$appointment -> appointmentId.'/edit') }}">เเก้ไข</a>
+                    <form class="form-horizontal style-form" method="post" action="{{ url('deleteAppointment/'.$appointment -> appointmentId) }}">
+                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                          <input type="submit" class="btn btn-primary pull-right" value="ลบ">
+                          <input type="hidden" name="_token" value="{{csrf_token()}}">
+                    </form>
                 </td>
             </tr>
         @endforeach

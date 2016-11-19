@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\LoginRequest;
 
+use App\Model\LoginData;
 use App\Model\User;
 use App\Model\Patient;
 use App\Model\Nurse;
@@ -19,6 +20,7 @@ class LoginController extends Controller
   //------------- login -------------------------------------------
     public function getLoginForm()
     {
+
       return view('login');
     }
 

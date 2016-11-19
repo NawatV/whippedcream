@@ -24,7 +24,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required'
+            'username' => 'required',
             'password' => 'required'
         ];
     }
@@ -32,7 +32,7 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-          'username.required' => 'โปรดระบุชื่อของบัญชีผู้ใช้'
+          'username.required' => 'โปรดระบุชื่อของบัญชีผู้ใช้',
           'password.required' => 'โปรดระบุรหัสผ่านของบัญชีผู้ใช้'
         ];
     }

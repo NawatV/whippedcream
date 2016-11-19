@@ -19,9 +19,9 @@ Route::get('/appoint', function () {
 // Route::get('/login', function () {
 //     return view('login');
 // });
-Route::get('/regis', function () {
-    return view('regis');
-});
+//Route::get('/regis', function () {
+//    return view('regis');
+//});
 Route::get('/schedule', function () {
     return view('schedule');
 });
@@ -34,6 +34,10 @@ Route::get('/diagnosisnext', function () {
 Route::get('/blank', function () {
     return view('blank');
 });
+
+//----- register ------
+Route::get('/regis', 'RegisterController@getRegisterForm');
+Route::post('/regis', 'RegisterController@postRegisterForm');
 //-----login------
 Route::get('/login', 'LoginController@getLoginForm');
 Route::post('/login', 'LoginController@postLoginForm');

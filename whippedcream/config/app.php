@@ -120,11 +120,11 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'), 
+    'log' => env('APP_LOG', 'single'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
-    /* 
+    /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
@@ -140,9 +140,6 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
-
-        Barryvdh\Debugbar\ServiceProvider::class,
-
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -195,8 +192,6 @@ return [
     */
 
     'aliases' => [
-
-        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
 
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,

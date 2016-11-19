@@ -27,14 +27,18 @@ class DiagnosisHistoryController extends Controller
 
     public function editDiagnosisHistoryForm(Diagnosis $diagnosis)
     {
-        dd($diagnosis);
-        echo $diagnosis;
-        return view('editDiagnosisHistoryForm', compact($diagnosis));
+//        dd($diagnosis);
+//        return $diagnosis;
+        return view('editDiagnosisHistoryForm', compact('diagnosis'));
     }
 
-    public function confirm()
+    public function confirm(Request $request)
     {
-        echo 'confirm';
+        $diagnosis = Diagnosis::where('diagnosisId', $request->diagnosisId)->first();
+        $diagnosis->symptomcode = $request->newSymptomcode;
+        $diagnosis->diagnosisDetail = $request->newDiagnosisDetail;
+        $diagnosis->save();
+        return back();
     }
 
     public function findPatientFromHnIdName(Request $request)

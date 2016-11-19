@@ -81,10 +81,20 @@
                                     <td>{{$doctors[$i]->firstname.' '.$doctors[$i]->lastname}}</td>
                                     <td>{{$diagnoses[$i]->diagnosisDetail}}</td>
                                     <td>
-                                        <a href="{{url('/findPatientFromHnIdName/'.$diagnoses[$i]->diagnosisId.'/edit')}}">
+
+                                        <form method="GET" class="form-horizontal style-form"
+                                              action="/findPatientFromHnIdName/{{$diagnoses[$i]->diagnosisId}}/edit"/>
+
+                                        <button type="submit">
                                             <i class="fa fa-pencil-square"></i>
                                             แก้ไข
-                                        </a>
+                                        </button>
+
+                                        </form>
+
+                                        {{--<a href="{{url('/findPatientFromHnIdName/'.$diagnoses[$i]->diagnosisId.'/edit')}}">--}}
+                                        {{--แก้ไข--}}
+                                        {{--</a>--}}
                                     </td>
                                 </tr>
                             @endfor

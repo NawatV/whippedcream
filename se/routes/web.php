@@ -32,6 +32,14 @@ Route::get('/login', function () {
 
 Route::get('/dispensation', 'TreatmentController@getDispensationPage');
 
+Route::post('/dispensation', 'TreatmentController@editPrescription');
+
+Route::get('/dispensation/list', 'TreatmentController@getNumberPrescription');
+
+Route::get('/dispensation/{id}', 'TreatmentController@getPrescription');
+
+Route::get('/dispensation/confirm/{id}', 'TreatmentController@confirmPrescription');
+
 Route::get('/diagnosis', 'TreatmentController@getDiagnosisForm');
 
 Route::post('/diagnosis', 'TreatmentController@saveDiagnosisForm');

@@ -5,7 +5,7 @@
 @endsection
 
 @section('name')
-  Mr. Someone
+  {{$name}}
 @endsection
 
 @section('leftnav')
@@ -101,12 +101,20 @@
 @section('special-content')
   <!-- Start Modal -->
   <div class="modal fade" tabindex="-1" role="dialog" id="error-modal">
+<<<<<<< HEAD
     <div class="modal-dialog modal-sm" role="document">
+=======
+    <div class="modal-dialog modal-md" role="document">
+>>>>>>> 9475d4de8f09ca6b010512f737155b27c2ddfe24
       <div class="modal-content">
         <div class="modal-header" style="border-radius:5px 5px 0 0; text-align:center">
           <h4 class="modal-title">ข้อผิดพลาด</h4>
         </div>
+<<<<<<< HEAD
         <div class="modal-body" style="padding-left:11px; padding-right:11px">
+=======
+        <div class="modal-body" style="text-align:center; padding-left:11px; padding-right:11px">
+>>>>>>> 9475d4de8f09ca6b010512f737155b27c2ddfe24
           @if(count($errors) > 0)
             @foreach($errors->all() as $error)
               <h5>{{$error}}</h5>

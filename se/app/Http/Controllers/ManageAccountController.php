@@ -96,7 +96,7 @@ class ManageAccountController extends Controller
 	    			}
 	    		}
 			}
-			/*check if despartment is qualified*/
+			/*check if department is qualified*/
 			if($dep != ""){
 				if($users[$i]['userType'] == 'Doctor' or $users[$i]['userType'] == 'Nurse'){
 					$user_dep = '';

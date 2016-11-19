@@ -29,8 +29,13 @@ class CreateDatabaseTable extends Migration
         Schema::create('department', function (Blueprint $table) {
             $table->increments('departmentId');
             $table->string('departmentName');
+<<<<<<< HEAD
             $table->string('location');
         });
+=======
+        });
+
+>>>>>>> 9475d4de8f09ca6b010512f737155b27c2ddfe24
         Schema::create('patient', function (Blueprint $table) {
             $table->integer('patientId')->unsigned();
             $table->char('bloodType',2)->nullable();
@@ -73,6 +78,10 @@ class CreateDatabaseTable extends Migration
             $table->primary('adminId');
             $table->foreign('adminId')->references('userId')->on('user');
         });
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9475d4de8f09ca6b010512f737155b27c2ddfe24
         Schema::create('schedule', function (Blueprint $table) {
             $table->increments('scheduleId');
             $table->integer('doctorId')->unsigned();
@@ -169,13 +178,13 @@ class CreateDatabaseTable extends Migration
         Schema::dropIfExists('leaving');
         Schema::dropIfExists('appointment');
         Schema::dropIfExists('schedule');
-        Schema::dropIfExists('department');
         Schema::dropIfExists('admin');
         Schema::dropIfExists('staff');
         Schema::dropIfExists('pharmacist');
         Schema::dropIfExists('nurse');
         Schema::dropIfExists('doctor');
         Schema::dropIfExists('patient');
+        Schema::dropIfExists('department');
         Schema::dropIfExists('user');
     }
 }

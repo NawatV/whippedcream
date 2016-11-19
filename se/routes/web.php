@@ -11,6 +11,7 @@
 |
 */
 
+//<<<<<<< HEAD
 //Before login ========================================
 //Before login ========================================
 
@@ -30,7 +31,6 @@ Route::get('/register', function () {
 
 
 
-
 //After login ==========================================
 //After login ==========================================
 
@@ -40,7 +40,9 @@ Route::get('/editPrescriptionHistory', 'PrescriptionHistoryController@editPrescr
 //แก้ไขประวัติคำวินิจฉัย
 Route::get('/editDiagnosisHistory', 'DiagnosisHistoryController@editDiagnosisHistory');
 Route::post('findPatientFromHnIdName', 'DiagnosisHistoryController@findPatientFromHnIdName');
-//Route::post('findPatientFromHnIdName', function(){echo 'adfasdf';});
+//Route::post('/findPatientFromHnIdName/edit', 'DiagnosisHistoryController@editDiagnosis');
+Route::get('/findPatientFromHnIdName/{diagnosisId}/edit', 'DiagnosisHistoryController@editDiagnosisHistoryForm');
+Route::post('/findPatientFromHnIdName/{diagnosisId}/confirm', 'DiagnosisHistoryController@confirm');
 
 //ดูประวัติการสั่งยาของแพทย์
 Route::get('/viewPrescriptionHistory', 'PrescriptionHistoryController@viewPrescriptionHistory');
@@ -53,6 +55,9 @@ Route::get('/viewDiagnosisHistory', 'DiagnosisHistoryController@viewDiagnosisHis
 
 
 
+//=======
+//Route::get('/', 'TreatmentController@login_temp');
+//>>>>>>> 9475d4de8f09ca6b010512f737155b27c2ddfe24
 
 Route::get('/appoint', function () {
     return view('appoint');
@@ -63,6 +68,7 @@ Route::get('/regis', function () {
 Route::get('/schedule', function () {
     return view('schedule');
 });
+//<<<<<<< HEAD
 Route::get('/dispention', function () {
     return view('dispention');
 });
@@ -70,6 +76,9 @@ Route::get('/dispention', function () {
 Route::get('/diagnosisnext', function () {
     return view('diagnosisnext');
 });
+//=======
+
+//>>>>>>> 9475d4de8f09ca6b010512f737155b27c2ddfe24
 Route::get('/blank', function () {
     return view('blank');
 });
@@ -79,9 +88,16 @@ Route::get('/diagnosis', 'TreatmentController@getDiagnosisForm');
 
 Route::post('/diagnosis', 'TreatmentController@saveDiagnosisForm');
 
+Route::get('/dispensation', 'TreatmentController@getDispensationPage');
+
+Route::get('/diagnosis', 'TreatmentController@getDiagnosisForm');
+
+Route::post('/diagnosis', 'TreatmentController@saveDiagnosisForm');
+
 Route::get('/vitalsign', 'TreatmentController@getVitalSignForm');
 
 Route::post('/vitalsign', 'TreatmentController@saveVitalSignForm');
+//<<<<<<< HEAD
 
 /*routes for admin*/
 Route::get('/manageAccount', 'ManageAccountController@display_users');
@@ -108,3 +124,5 @@ Route::post('/manageDepartment', 'ManageDepartmentController@edit_department');
 Route::get('/createDepartment', 'CreateDepartmentController@create_department_form');
 Route::post('/createDepartment', 'CreateDepartmentController@create_department');
 /*end-routes for admin*/
+//=======
+//>>>>>>> 9475d4de8f09ca6b010512f737155b27c2ddfe24

@@ -10,7 +10,6 @@ use App\Model\Patient;
 use App\Model\User;
 use App\Model\Department;
 
-
 class AppointmentController extends Controller
 {
     public function index()

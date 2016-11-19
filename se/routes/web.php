@@ -58,3 +58,7 @@ Route::get('/democreate', function () {
 //Route::post('/appointment', 'AppointmentController@store');
 
 //Route::post('/queryDoctor', 'AppointmentController@store');
+Route::get('/pdf', function(){
+    $pdf = PDF::loadView('appointment.vista');
+    return $pdf->download('archivo.pdf');
+});

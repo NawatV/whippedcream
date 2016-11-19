@@ -12,11 +12,6 @@ use App\Model\Department;
 
 class AppointmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $appointment = Appointment::all();
@@ -25,11 +20,6 @@ class AppointmentController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $department = Department::all();
@@ -38,12 +28,6 @@ class AppointmentController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //return dd($request->all());
@@ -67,23 +51,11 @@ class AppointmentController extends Controller
         return redirect() -> action('AppointmentController@index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $appointment = Appointment::find($id);
@@ -92,27 +64,15 @@ class AppointmentController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy($appointment)
     {
-        //
+        Appointment::destroy($appointment);
+        return redirect() -> action('AppointmentController@index');
     }
 
     public function queryDoctor(Request $request)
@@ -445,15 +405,7 @@ class AppointmentController extends Controller
         }
 
         $scheduleArray = array();
-            // array("sunPeriod", $schedules->sunPeriod),
-            // array("monPeriod", $schedules->monPeriod),
-            // array("tuePeriod", $schedules->tuePeriod),
-            // array("wedPeriod", $schedules->wedPeriod),
-            // array("thuPeriod", $schedules->thuPeriod),
-            // array("friPeriod", $schedules->friPeriod),
-            // array("satPeriod", $schedules->satPeriod),
-            // array("fastestDate", $fastestDate),
-            // array("fastestTime", $workDay)
+
             if($schedules->sunPeriod == 0){
                 $tmp = array("sunPeriod", "10");
                 array_push($scheduleArray, $tmp);

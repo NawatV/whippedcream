@@ -45,16 +45,23 @@ Route::get('/vitalsign', 'TreatmentController@getVitalSignForm');
 
 Route::post('/vitalsign', 'TreatmentController@saveVitalSignForm');
 
-Route::resource('/appointment', 'AppointmentController');
-Route::get('/queryDoctorDateTime', 'AppointmentController@queryDoctorDateTime');
-Route::get('/queryDoctor', 'AppointmentController@queryDoctor');
-Route::get('/queryPeriod', 'AppointmentController@queryPeriod');
-Route::get('/test1', function () { return "hello i am ton"; });
+//appointment
+//Route::resource('/appointment', 'AppointmentController');
+Route::get('/appointment', 'AppointmentController@index');
+Route::get('/appointment/create', 'AppointmentController@create');
+Route::post('/appointment', 'AppointmentController@store');
+Route::get('/appointment/{appointment}/edit', 'AppointmentController@edit');
+Route::post('/appointment/{appointment}', 'AppointmentController@update');
+Route::post('/deleteAppointment/{appointment}', 'AppointmentController@destroy');
 Route::get('/democreate', function () { 
     return view('appointment.democreate'); 
 });
-//Route::get('/appointment', 'AppointmentController@index');
-//Route::get('/appointmentcreate', 'AppointmentController@create');
-//Route::post('/appointment', 'AppointmentController@store');
-
-//Route::post('/queryDoctor', 'AppointmentController@store');
+//ajax
+Route::get('/queryDoctorDateTime', 'AppointmentController@queryDoctorDateTime');
+Route::get('/queryDoctor', 'AppointmentController@queryDoctor');
+Route::get('/queryPeriod', 'AppointmentController@queryPeriod');
+//pdf
+Route::get('/pdf', function(){
+    $pdf = PDF::loadView('appointment.vista');
+    return $pdf->download('archivo.pdf');
+});

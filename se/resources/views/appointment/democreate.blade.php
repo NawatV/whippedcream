@@ -58,21 +58,21 @@
                   <form class="form-horizontal style-form" method="post" action="{{url('/appointment')}}">
                       <input type="hidden" name="_token" value="{{csrf_token()}}">
                                 <div class="form-group">
-                                      <label class="col-sm-2 control-label">SSN/HN</label>
+                                      <label class="col-sm-2 text-right">รหัสประจำตัวประชาชน/เลขรหัสโรงพยาบาล</label>
                                       <div class="col-sm-10">
                                         <input type="text" class="form-control" name="symptom">
                                       </div>
                                 </div>
 
                                 <div class="form-group">
-                                      <label class="col-sm-2 control-label">อาการ</label>
+                                      <label class="col-sm-2 text-right">อาการ</label>
                                       <div class="col-sm-10">
                                         <textarea class="form-control" rows="5" name="symptom"></textarea>
                                       </div>
                                 </div>
 
                                 <div class="form-group">
-                                  <label class="col-sm-2 control-label">เลือกแผนก</label>
+                                  <label class="col-sm-2 text-right">เลือกแผนก</label>
                                     <div class="col-sm-10">
                                       <select class="form-control" id = "department" name = "departmentId">
                                         <option selected disabled>แผนก</option>
@@ -84,7 +84,7 @@
                                 </div>
 
                                 <div class ="form-group">
-                                      <label class="col-sm-2 control-label">เลือกหมอ</label>
+                                      <label class="col-sm-2 text-right">เลือกหมอ</label>
                                       <div id = "doctor" class="col-sm-10 radio">
                                           <label class="col-sm-4">
                                             <input type="radio" name="doctorId" value="0"> random
@@ -105,7 +105,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                  <label class="col-sm-2 control-label">เลือกวัน</label>
+                                  <label class="col-sm-2 text-right">เลือกวัน</label>
                                   <div class="col-sm-10">
                                     <input class="form-control" type="text" id="datepicker" >
                                   </div>
@@ -113,7 +113,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                  <label class="col-sm-2 control-label">เลือกช่วงเวลา</label>
+                                  <label class="col-sm-2 text-right">เลือกช่วงเวลา</label>
                                   <div class="col-sm-10 radio">
                                     <label class="col-sm-4">
                                       <input type="radio" name="period" value="1"> เช้า
@@ -127,7 +127,7 @@
                                 <div class = "form-group">
                                     <div class = "col-sm-10">
                                         <input type="submit" class="btn btn-primary pull-right" value="บันทึก">
-                                        <a href = "" class="btn btn-primary">back</a>
+                                        <a href = "" class="btn btn-primary">กลับ</a>
                                     </div>
                                 </div>
                   </form>

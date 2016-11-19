@@ -140,42 +140,307 @@ class AppointmentController extends Controller
         $schedules = $doctor -> schedule;
         $fastestDate = "no";
         $workDay = "no";
-
-        for ($x = 1; $x < 7; $x++) {
-            if(date('l', strtotime($x.' days', strtotime('today'))) == "Sunday" && $schedules->sunPeriod != "0" ){
+        for ($x = 1; $x < 29; $x++) {
+            if(date('l', strtotime($x.' days', strtotime('today'))) == "Sunday"
+            && $schedules->sunPeriod == 1
+            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            ->where('appTime','=','09:00:00')->count() < 5 )
+            {
                 $fastestDate = date("Y-m-d", strtotime('Sunday'));
-                $workDay=$schedules->sunPeriod;
+                $workDay=1;
                 break;
             }
-            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Monday" && $schedules->monPeriod != 0){
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Sunday"
+            && $schedules->sunPeriod == 2
+            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            ->where('appTime','=','13:00:00')->count() < 5 ){
+                $fastestDate = date("Y-m-d", strtotime('Sunday'));
+                $workDay=2;
+                break;
+            }
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Sunday"
+            && $schedules->sunPeriod == 3 ){
+              if(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() < 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() < 5){
+                $fastestDate = date("Y-m-d", strtotime('Sunday'));
+                $workDay=3;
+                break;
+              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() < 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() >= 5){
+                $fastestDate = date("Y-m-d", strtotime('Sunday'));
+                $workDay=1;
+                break;
+              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() >= 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() < 5){
+                $fastestDate = date("Y-m-d", strtotime('Sunday'));
+                $workDay=2;
+                break;
+              }
+            }
+            //Monday
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Monday"
+            && $schedules->monPeriod == 1
+            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            ->where('appTime','=','09:00:00')->count() < 5
+             )
+            {
                 $fastestDate = date("Y-m-d", strtotime('Monday'));
-                $workDay=$schedules->monPeriod;
+                $workDay=1;
                 break;
             }
-            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Tuesday" && $schedules->tuePeriod != 0){
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Monday"
+            && $schedules->monPeriod == 2
+            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            ->where('appTime','=','13:00:00')->count() < 5 ){
+                $fastestDate = date("Y-m-d", strtotime('Monday'));
+                $workDay=2;
+                break;
+            }
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Monday"
+            && $schedules->monPeriod == 3 ){
+              if(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() < 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() < 5){
+                $fastestDate = date("Y-m-d", strtotime('Monday'));
+                $workDay=3;
+                break;
+              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() < 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() >= 5){
+                $fastestDate = date("Y-m-d", strtotime('Monday'));
+                $workDay=1;
+                break;
+              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() >= 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() < 5){
+                $fastestDate = date("Y-m-d", strtotime('Monday'));
+                $workDay=2;
+                break;
+              }
+            }
+            //Tuesday
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Tuesday"
+            && $schedules->tuePeriod == 1
+            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            ->where('appTime','=','09:00:00')->count() < 5 )
+            {
                 $fastestDate = date("Y-m-d", strtotime('Tuesday'));
-                $workDay=$schedules->tuePeriod;
+                $workDay=1;
                 break;
             }
-            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Wednesday" && $schedules->wedPeriod != 0){
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Tuesday"
+            && $schedules->tuePeriod == 2
+            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            ->where('appTime','=','13:00:00')->count() < 5 ){
+                $fastestDate = date("Y-m-d", strtotime('Tuesday'));
+                $workDay=2;
+                break;
+            }
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Tuesday"
+            && $schedules->tuePeriod == 3 ){
+              if(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() < 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() < 5){
+                $fastestDate = date("Y-m-d", strtotime('Tuesday'));
+                $workDay=3;
+                break;
+              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() < 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() >= 5){
+                $fastestDate = date("Y-m-d", strtotime('Tuesday'));
+                $workDay=1;
+                break;
+              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() >= 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() < 5){
+                $fastestDate = date("Y-m-d", strtotime('Tuesday'));
+                $workDay=2;
+                break;
+              }
+            }
+            //Wednesday
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Wednesday"
+            && $schedules->wedPeriod == 1
+            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            ->where('appTime','=','09:00:00')->count() < 5 )
+            {
                 $fastestDate = date("Y-m-d", strtotime('Wednesday'));
-                $workDay=$schedules->wedPeriod;
+                $workDay=1;
                 break;
             }
-            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Thursday" && $schedules->thuPeriod != 0){
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Wednesday"
+            && $schedules->wedPeriod == 2
+            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            ->where('appTime','=','13:00:00')->count() < 5 ){
+                $fastestDate = date("Y-m-d", strtotime('Wednesday'));
+                $workDay=2;
+                break;
+            }
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Wednesday"
+            && $schedules->wedPeriod == 3 ){
+              if(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() < 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() < 5){
+                $fastestDate = date("Y-m-d", strtotime('Wednesday'));
+                $workDay=3;
+                break;
+              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() < 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() >= 5){
+                $fastestDate = date("Y-m-d", strtotime('Wednesday'));
+                $workDay=1;
+                break;
+              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() >= 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() < 5){
+                $fastestDate = date("Y-m-d", strtotime('Wednesday'));
+                $workDay=2;
+                break;
+              }
+            }
+            //Thursday
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Thursday"
+            && $schedules->thuPeriod == 1
+            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            ->where('appTime','=','09:00:00')->count() < 5 )
+            {
                 $fastestDate = date("Y-m-d", strtotime('Thursday'));
-                $workDay=$schedules->thuPeriod;
+                $workDay=1;
                 break;
             }
-            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Friday" && $schedules->friPeriod != 0){
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Thursday"
+            && $schedules->thuPeriod == 2
+            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            ->where('appTime','=','13:00:00')->count() < 5 ){
+                $fastestDate = date("Y-m-d", strtotime('Thursday'));
+                $workDay=2;
+                break;
+            }
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Thursday"
+            && $schedules->thuPeriod == 3 ){
+              if(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() < 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() < 5){
+                $fastestDate = date("Y-m-d", strtotime('Thursday'));
+                $workDay=3;
+                break;
+              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() < 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() >= 5){
+                $fastestDate = date("Y-m-d", strtotime('Thursday'));
+                $workDay=1;
+                break;
+              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() >= 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() < 5){
+                $fastestDate = date("Y-m-d", strtotime('Thursday'));
+                $workDay=2;
+                break;
+              }
+            }
+            //Friday
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Friday"
+            && $schedules->friPeriod == 1
+            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            ->where('appTime','=','09:00:00')->count() < 5 )
+            {
                 $fastestDate = date("Y-m-d", strtotime('Friday'));
-                $workDay=$schedules->friPeriod;
+                $workDay=1;
                 break;
             }
-            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Saturday" && $schedules->satPeriod != 0){
-                $fastestDate = date("Y-m-d", strtotime('Saturday'));
-                $workDay=$schedules->satPeriod;
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Friday"
+            && $schedules->friPeriod == 2
+            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            ->where('appTime','=','13:00:00')->count() < 5 ){
+                $fastestDate = date("Y-m-d", strtotime('Friday'));
+                $workDay=2;
                 break;
+            }
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Friday"
+            && $schedules->friPeriod == 3 ){
+              if(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() < 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() < 5){
+                $fastestDate = date("Y-m-d", strtotime('Friday'));
+                $workDay=3;
+                break;
+              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() < 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() >= 5){
+                $fastestDate = date("Y-m-d", strtotime('Friday'));
+                $workDay=1;
+                break;
+              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() >= 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() < 5){
+                $fastestDate = date("Y-m-d", strtotime('Friday'));
+                $workDay=2;
+                break;
+              }
+            }
+            //Satday
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Satday"
+            && $schedules->satPeriod == 1
+            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            ->where('appTime','=','09:00:00')->count() < 5 )
+            {
+                $fastestDate = date("Y-m-d", strtotime('Satday'));
+                $workDay=1;
+                break;
+            }
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Satday"
+            && $schedules->satPeriod == 2
+            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            ->where('appTime','=','13:00:00')->count() < 5 ){
+                $fastestDate = date("Y-m-d", strtotime('Satday'));
+                $workDay=2;
+                break;
+            }
+            elseif(date('l', strtotime($x.' days', strtotime('today'))) == "Satday"
+            && $schedules->satPeriod == 3 ){
+              if(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() < 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() < 5){
+                $fastestDate = date("Y-m-d", strtotime('Satday'));
+                $workDay=3;
+                break;
+              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() < 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() >= 5){
+                $fastestDate = date("Y-m-d", strtotime('Satday'));
+                $workDay=1;
+                break;
+              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','09:00:00')->count() >= 5
+              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              ->where('appTime','=','13:00:00')->count() < 5){
+                $fastestDate = date("Y-m-d", strtotime('Satday'));
+                $workDay=2;
+                break;
+              }
             }
         }
 

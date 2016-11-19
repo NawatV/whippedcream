@@ -163,17 +163,16 @@
                 }
                 //<label class="col-sm-2 control-label">เลือกวัน</label>
                 //<input class="form-control" type="text" id="datepicker" >
-                myFunction(result);
+                myFunction(result,fastestdate);
             }
           });
    }
 
-function myFunction(params) {
-        console.log(params[5][1]);
+function myFunction(params,fastestdate) {
         $( "#datepicker" ).datepicker({
               dateFormat: 'yy-mm-dd',
               maxDate: "+1y",
-              minDate: "+1d",
+              minDate: fastestdate,
               beforeShowDay: function(date){
                 var day = date.getDay();
                 return [(day == params[5][1] || day == params[3][1] || day == params[1][1] || day == params[0][1] || day == params[2][1] || day == params[4][1] || day == params[6][1]), ''];

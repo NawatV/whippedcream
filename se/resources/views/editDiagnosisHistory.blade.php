@@ -103,6 +103,7 @@
                         <div class="form-group">
                             <button type="submit" class="btn btn-success center-block">
                                 ค้นหาด้วย เลขบัตรประจำตัวประชาชน หรือ เลขประจำตัวผู้ป่วย หรือ ชื่อ และ นามสกุล
+                                อย่างใดอย่างหนึ่ง
                             </button>
                         </div>
                     </form>
@@ -123,6 +124,24 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="form-panel">
+                <form class="form-horizontal style-form" action="testCurlMessage" method="get">
+                    <button class="btn btn-danger btn-block">
+                        test Send Sms
+                    </button>
+                </form>
+            </div>
+
+            <div class="form-panel">
+                <form class="form-horizontal style-form" action="testEmail" method="post">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-info btn-block">
+                        test Email on click
+                    </button>
+                </form>
+            </div>
+
         </div>
     </div>
 

@@ -112,4 +112,12 @@ return [
 
     'sendmail' => '/usr/sbin/sendmail -bs',
 
+
+
+
+    'mailgun' => [
+        'domain' => 'sandboxc1dbd4933f1a40d1818d620102c4bf3c.mailgun.org',
+        'secret' => 'key-9bf12bba98544f0e7796ae26006913fd',
+    ],
+
 ];

@@ -92,6 +92,17 @@
 
                                         </form>
 
+
+                                        <form method="delete" class="form-horizontal style-form"
+                                              action="/editDiagnosisHistory/{{$diagnoses[$i]->diagnosisId}}/delete"/>
+
+                                        <button type="submit">
+                                            <i class="fa fa-pencil-square"></i>
+                                            ลบ
+                                        </button>
+
+                                        </form>
+
                                         {{--<a href="{{url('/findPatientFromHnIdName/'.$diagnoses[$i]->diagnosisId.'/edit')}}">--}}
                                         {{--แก้ไข--}}
                                         {{--</a>--}}

@@ -10,6 +10,8 @@ use App\Model\Prescription;
 use App\Model\User;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Mail;
+
 class DiagnosisHistoryController extends Controller
 {
     //
@@ -39,6 +41,13 @@ class DiagnosisHistoryController extends Controller
         $diagnosis->diagnosisDetail = $request->newDiagnosisDetail;
         $diagnosis->save();
         return back();
+//        http://localhost/editDiagnosisHistory
+//        return redirect()->route('login');
+    }
+
+    public function delete(Request $request)
+    {
+        return $request;
     }
 
     public function findPatientFromHnIdName(Request $request)
@@ -48,13 +57,24 @@ class DiagnosisHistoryController extends Controller
 
         $patients_hn = Patient::where('hn', $request->input('hnNumber'))->value('patientId');
         $patients = User::where('userId', $patients_hn)->first();
-
-//        dd($patients);
-//        if($patients->isEmpty()){
         if ($patients == '') {
-            $patients = array();
-            return view('editDiagnosisHistory', compact('patients'));
+
+            $patients = User::where('idNumber', $request->input('idNumber'))->first();
+
+            if ($patients == '') {
+
+
+                $patients = User::where('firstname', $request->input('firstname'))->where('lastname', $request->input('lastname'))->first();
+
+                if ($patients == '') {
+                    $patients = array();
+                    return view('editDiagnosisHistory', compact('patients'));
+                }
+            }
+
+            $patients_hn = Patient::where('patientId', $patients->userId)->value('patientId');
         }
+
         $appointments = Appointment::where('patientId', $patients_hn)->get();
         $diagnoses = Diagnosis::where('patientId', $patients_hn)->get();
 
@@ -74,6 +94,140 @@ class DiagnosisHistoryController extends Controller
 
 
         return view('editDiagnosisHistoryFoundPatient', compact('patients', 'appointments', 'diagnoses', 'doctors'));
+    }
+
+
+    //    ========= ========= ========= ========= ========= ========= ========= ========= ========= ========= =========
+//    ========= ========= ========= ========= ========= ========= ========= ========= ========= ========= =========
+//    ========= ========= ========= ========= ========= ========= ========= ========= ========= ========= =========
+//    ========= ========= ========= ========= ========= ========= ========= ========= ========= ========= =========
+//    ========= ========= ========= ========= ========= ========= ========= ========= ========= ========= =========
+
+
+    public function sendEmail()
+    {
+//        $email = $_POST['email'];
+//
+//        $subject = 'Your subject for email';
+//        $message = 'Body of your message';
+//
+//        mail($email, $subject, $message);
+//
+//
+//        $patients = array();
+//        return view('editDiagnosisHistory', compact('patients'));
+
+
+//        return array(
+//            "driver" => "smtp",
+//            "host" => "mailtrap.io",
+//            "port" => 2525,
+//            "from" => array(
+//                "address" => "from@example.com",
+//                "name" => "Example"
+//            ),
+//            "username" => "1f7fc9abe0fdeb",
+//            "password" => "5d9e8180de7489",
+//            "sendmail" => "/usr/sbin/sendmail -bs",
+//            "pretend" => false
+//        );
+
+
+//        $title = $request->input('title');
+//        $content = $request->input('content');
+//
+//        Mail::send('emails.send', ['title' => $title, 'content' => $content], function ($message)
+//        {
+//
+//            $message->from('me@gmail.com', 'Christian Nwamba');
+//
+//            $message->to('chrisn@scotch.io');
+//
+//        });
+//
+//        return response()->json(['message' => 'Request completed']);
+
+
+        $title = 'This is the title of the email';
+        $content = 'This is the content of the Email คอนเท็นภาษาไทย 日本語';
+        $content .= '<p>Inside p tag</p>';
+
+        Mail::send('email.send', ['title' => $title, 'content' => $content], function ($message) {
+
+            $message->from('whippedcream@hotmail.com', 'Tkk24');
+            $message->to('pisanu15193@yahoo.com');
+            $message->subject('Email from WhippedCream System');
+        });
+
+//        return response()->json(['message' => 'Request completed']);
+
+        return back();
+
+//
+//            $user = 'emailOfUser@gmail.com';
+//
+//        Mail::send('emails.reminder', ['user' => $user], function ($m) use ($user) {
+//            $m->from('hello@app.com', 'Your Application');
+//
+//            $m->to($user->email, $user->name)->subject('Your Reminder!');
+//        });
+
+
+    }
+
+
+
+//    ========= ========= ========= ========= ========= ========= ========= ========= ========= ========= =========
+//    ========= ========= ========= ========= ========= ========= ========= ========= ========= ========= =========
+//    ========= ========= ========= ========= ========= ========= ========= ========= ========= ========= =========
+//    ========= ========= ========= ========= ========= ========= ========= ========= ========= ========= =========
+//    ========= ========= ========= ========= ========= ========= ========= ========= ========= ========= =========
+
+
+    public function sendSms()
+    {
+
+        $url = "https://sms.gipsic.com/api/send";
+        $data = array(
+            'key' => 'lj13D83fe7vi4QYpB4rP4S707XRhr5Ya',
+            'secret' => 'LmqK5guuSIdvwy1iF538182D2Wu4Wm44',
+//            'phone' => '0874894249',
+            'phone' => '0969155659',
+            'sender' => '0969155659',
+            'message' => 'เชรี่ยยยยยยย กูส่งได้แล้ววววววว'
+        );
+
+
+        $content = json_encode($data);
+
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER,
+            array("Content-type: application/json"));
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
+
+        $json_response = curl_exec($curl);
+
+        $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+//        if ($status != 201) {
+//            die("Error: call to URL $url failed with status $status, response $json_response, curl_error " . curl_error($curl) . ", curl_errno " . curl_errno($curl));
+//        }
+
+        curl_close($curl);
+
+        $response = json_decode($json_response, true);
+
+//        echo $response;
+//        return $response;
+        $patients = array();
+
+
+        return back();
+
+
     }
 
 }

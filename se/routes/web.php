@@ -43,6 +43,15 @@ Route::post('findPatientFromHnIdName', 'DiagnosisHistoryController@findPatientFr
 //Route::post('/findPatientFromHnIdName/edit', 'DiagnosisHistoryController@editDiagnosis');
 Route::get('/findPatientFromHnIdName/{diagnosis}/edit', 'DiagnosisHistoryController@editDiagnosisHistoryForm');
 Route::post('/editDiagnosisHistory/{diagnosisId}/confirm', 'DiagnosisHistoryController@confirm');
+Route::post('/editDiagnosisHistory/{diagnosisId}/delete', 'DiagnosisHistoryController@delete');
+
+Route::get('/testCurlMessage', 'DiagnosisHistoryController@sendSms');
+Route::post('/testEmail', 'DiagnosisHistoryController@sendEmail');
+
+
+Route::get('/editDiagnosisHistory', 'DiagnosisHistoryController@editDiagnosisHistory');
+
+
 
 //ดูประวัติการสั่งยาของแพทย์
 Route::get('/viewPrescriptionHistory', 'PrescriptionHistoryController@viewPrescriptionHistory');

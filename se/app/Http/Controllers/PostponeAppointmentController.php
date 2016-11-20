@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class PostponeAppointmentController extends Controller
 {
-    public function postponeAppointment($appointment)
+    public static function postponeAppointment($appointment)
     {
         //get all doctor in the same dep
         $target_doc = $appointment->doctor;

@@ -30,7 +30,8 @@ class AppointmentController extends Controller
     public function index()
     {
         //return session('name');
-        $appointment = Appointment::where('patientId', '=', session('userId'))->where('appDate', '=', date('Y-m-d', strtotime('today')))->get();
+        //$appointment = Appointment::where('patientId', '=', session('userId'))->where('appDate', '=', date('Y-m-d', strtotime('today')))->get();
+        $appointment = Appointment::all();
         return view('appointment.index',[
             'appointments' => $appointment
         ]);
@@ -39,7 +40,7 @@ class AppointmentController extends Controller
     public function staffIndex()
     {
         //return session('name');
-        $appointment = Appointment::all();
+        $appointment = Appointment::where('appDate', '=', date('Y-m-d', strtotime('today')))->get();
         return view('appointment.staffindex1',[
             'appointments' => $appointment
         ]);
@@ -129,15 +130,24 @@ class AppointmentController extends Controller
     public function edit($id)
     {
         $appointment = Appointment::find($id);
-        return view('appointment.edit', [
+        return view('appointment.edit1', [
             'appointment' => $appointment
         ]);
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      //return dd($request->all());
+      $appointment = Appointment::find($request->appointmentId);
+      $appointment -> appDate = $request->appDate;
+      if($request -> appTime == "1"){
+          $appointment -> appTime = "9:00";
+      }elseif($request -> appTime == "2"){
+          $appointment -> appTime = "13:00";
+      }
+      $appointment->update();
+      return redirect() -> action('AppointmentController@index');
     }
 
     public function destroy($appointment)

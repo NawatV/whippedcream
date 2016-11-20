@@ -28,7 +28,7 @@ class AppointmentController extends Controller
     public function index()
     {
         //return session('name');
-        $appointment = Appointment::where('patientId', '=', session('userId'))->get();
+        $appointment = Appointment::where('patientId', '=', session('userId'))->where('appDate', '=', date('Y-m-d', strtotime('today')))->get();
         return view('appointment.index',[
             'appointments' => $appointment
         ]);
@@ -37,8 +37,10 @@ class AppointmentController extends Controller
     public function staffIndex()
     {
         //return session('name');
-        //$appointment = Appointment::where('patientId', '=', session('userId'))->get();
-        return "helo";
+        $appointment = Appointment::all();
+        return view('appointment.staffindex1',[
+            'appointments' => $appointment
+        ]);
     }
 
     public function create()
@@ -131,6 +133,11 @@ class AppointmentController extends Controller
             array_push($doctors, $tmp);
         }
         return $doctors;
+    }
+
+    public function appointmentPdf($appointment)
+    {
+      return dd($appointment);
     }
 
 

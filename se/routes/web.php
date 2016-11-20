@@ -51,7 +51,7 @@ Route::get('/appointment', 'AppointmentController@index');
 Route::get('/appointment/create', 'AppointmentController@create');
 Route::post('/appointment', 'AppointmentController@store');
 //staff appointment
-Route::get('/appointment/staffindex', 'AppointmentController@staffIndex');
+Route::get('/appointment/staffindex1', 'AppointmentController@staffIndex');
 Route::get('/appointment/staffcreate', 'AppointmentController@staffCreate');
 Route::post('/appointment/staffcreate', 'AppointmentController@staffCreate');
 //walkin appointment
@@ -69,6 +69,7 @@ Route::get('/queryDoctorDateTime', 'AppointmentController@queryDoctorDateTime');
 Route::get('/queryDoctor', 'AppointmentController@queryDoctor');
 Route::get('/queryPeriod', 'AppointmentController@queryPeriod');
 //pdf
+Route::get('/appointment/{appointment}/appointmentpdf', 'AppointmentController@appointmentPdf');
 Route::get('/pdf', function(){
     $pdf = PDF::loadView('appointment.vista');
     return $pdf->download('archivo.pdf');

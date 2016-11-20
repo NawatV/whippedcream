@@ -56,7 +56,6 @@ class AppointmentController extends Controller
     public function store(Request $request)
     {
         //return dd($request->session()->get('userId'));
-        $appointment = new Appointment();
         $appointment -> symptom = $request -> symptom;
         if($request -> doctorId == "0"){
             $appointment -> doctorId = Department::find($request -> departmentId)-> doctor[0]-> doctorId;

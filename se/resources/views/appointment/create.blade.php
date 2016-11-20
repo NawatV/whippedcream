@@ -49,65 +49,73 @@
 @endsection
 
 
+
 @section('content')
 	<!-- BASIC FORM ELELEMNTS -->
-  <div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">New Appointment</div>
-
+  <div class="row mt">
+    <div class="col-lg-12">
+        <div class="form-panel">
+          <div class="container-fluid">
+                <h4 class="mb"><i class="fa fa-angle-right"></i> สร้างการนัดหมาย</h4>
                         <!-- Open Form -->
-                        <div class = "panel-body">
-                            <form class="form-horizontal style-form" method="post" action="{{url('/appointment')}}">
-                              <input type="hidden" name="_token" value="{{csrf_token()}}">
-
-                              <div class="form-group">
-                                    <label class="col-sm-2 control-label">SSN/HN</label>
-                                    <input type="text" class="form-control" name="symptom">
-                              </div>
-
-                              <div class="form-group">
-                                    <label class="col-sm-2 control-label">อาการ</label>
-                                    <input type="text" class="form-control" name="symptom">
-                              </div>
-
-                              <div class="form-group">
-                                <select id = "department" name = "departmentId">
-                                      <option selected disabled>Choose Department</option>
-                                      @foreach ($departments as $department)
-                                          <option value="{{$department -> departmentId}}">{{$department -> departmentName}}</option>
-                                      @endforeach
-                                </select>
-                              </div>
-
-                              <div class = "form-group">
-                                <div id = "doctor">
+                  <form class="form-horizontal style-form" method="post" action="{{url('/appointment')}}">
+                      <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                <div class="form-group">
+                                      <label class="col-sm-2 text-right">รหัสประจำตัวประชาชน/เลขรหัสโรงพยาบาล</label>
+                                      <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="patientId">
+                                      </div>
                                 </div>
-                              </div>
 
-                              <div class = "form-group">
-                                <div id = "date">
+                                <div class="form-group">
+                                      <label class="col-sm-2 text-right">อาการ</label>
+                                      <div class="col-sm-10">
+                                        <textarea class="form-control" rows="5" name="symptom"></textarea>
+                                      </div>
                                 </div>
-                              </div>
 
-                              <div class="form-group">
-                                <div id = "time">
+                                <div class="form-group">
+                                  <label class="col-sm-2 text-right">เลือกแผนก</label>
+                                    <div class="col-sm-10">
+                                      <select class="form-control" id = "department" name = "departmentId">
+                                          <option selected disabled>แผนก</option>
+                                          @foreach ($departments as $department)
+                                              <option value="{{$department -> departmentId}}">{{$department -> departmentName}}</option>
+                                          @endforeach
+                                      </select>
+                                    </div>
                                 </div>
-                              </div>
 
-                              <div class = "form-group">
-                                  <div class = "col-sm-10">
-                                      <input type="submit" class="btn btn-primary pull-right" value="บันทึก">
-                                      <a href = "{{url('appointment')}}" class="btn btn-primary">back</a>
+                                <div class ="form-group">
+                                      <label class="col-sm-2 text-right">เลือกหมอ</label>
+                                      <div id = "doctor" class="col-sm-10 radio">
+                                      </div>
+                                </div>
+
+                                <div class="form-group">
+                                  <label class="col-sm-2 text-right">เลือกวัน</label>
+                                  <div class="col-sm-10" id = "date">
                                   </div>
-                              </div>
-                          </form>
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                                </div>
+
+                                <div class="form-group">
+                                  <label class="col-sm-2 text-right">เลือกช่วงเวลา</label>
+                                  <div class="col-sm-10 radio" id = "time">
+                                  </div>
+                                </div>
+
+                                <div class = "form-group">
+                                    <div class = "col-sm-10">
+                                        <input type="submit" class="btn btn-primary pull-right" value="บันทึก">
+                                        <a href = "" class="btn btn-primary">กลับ</a>
+                                    </div>
+                                </div>
+                  </form>
+
+
+          </div>
+      </div>
+  </div>
 </div>
 
 <script>
@@ -122,12 +130,15 @@
             success: function( result ) {
               console.log(result)
               $("#doctor").empty();
+              $("#doctor").append('<label class="col-sm-4">');
               $("#doctor").append('<input type="radio" name="doctorId" value="0" onclick="if(this.checked){queryDoctorDateTime()}"> random<br>');
+              $("#doctor").append('</label>');
               for (i = 0; i < result.length; i++) {
                   tmp = '<input type="radio" name="doctorId" value="' + result[i][0] + '"' + 'onclick="if(this.checked){queryDoctorDateTime()}">' + result[i][1] + " "
                   + result[i][2] + '<br>';
-
+                  $("#doctor").append('<label class="col-sm-4">');
                   $("#doctor").append(tmp);
+                  $("#doctor").append('</label>');
               }
             }
           });
@@ -150,16 +161,29 @@
                 $("#time").empty();
                 fastestdate = result[7][1];
                 //$("#date").append('<input type="date" value="' + result[7][1] + '" name="bday">');
+                $("#date").append('<label class="col-sm-4">');
                 $("#date").append('<input class="form-control" type="text" id="datepicker" name="appDate">');
                 if(result[8][1] == "1"){
+                  $("#time").append('<label class="col-sm-4">');
                   $("#time").append('<input type="radio" name="appTime" value="1" checked="checked"> เช้า<br>');
+                  $("#time").append('</label>');
+                  $("#time").append('<label class="col-sm-4">');
                   $("#time").append('<input type="radio" name="appTime" value="2" disabled> บ่าย<br>');
+                  $("#time").append('</label>');
                 }else if(result[8][1] == "2"){
+                  $("#time").append('<label class="col-sm-4">');
                   $("#time").append('<input type="radio" name="appTime" value="1" disabled> เช้า<br>');
+                  $("#time").append('</label>');
+                  $("#time").append('<label class="col-sm-4">');
                   $("#time").append('<input type="radio" name="appTime" value="2" checked="checked"> บ่าย<br>');
+                  $("#time").append('</label>');
                 }else if(result[8][1] == "3"){
+                  $("#time").append('<label class="col-sm-4">');
                   $("#time").append('<input type="radio" name="appTime" value="1" checked="checked"> เช้า<br>');
+                  $("#time").append('</label>');
+                  $("#time").append('<label class="col-sm-4">');
                   $("#time").append('<input type="radio" name="appTime" value="2"> บ่าย<br>');
+                  $("#time").append('</label>');
                 }
                 //<label class="col-sm-2 control-label">เลือกวัน</label>
                 //<input class="form-control" type="text" id="datepicker" >

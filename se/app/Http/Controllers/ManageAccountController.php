@@ -197,6 +197,21 @@ class ManageAccountController extends Controller
 	    		$target_userType = $target_user->staff;
 	    	}
 	    	elseif ($target_user->userType == 'doctor') {
+	    		date_default_timezone_set('Asia/Bangkok');
+	    		$today = new \DateTime('now');
+				$today = $today->format('Y-m-d');
+	    		$all_app = $target_user->doctor->appointment;
+	    		if(count($all_app) > 0){
+		    		for($i = 0; $i < count($all_app); $i++){
+		    			if($all_app[$i]['appDate'] == $today){
+		    				session()->flash('delete_doc_error', 1);
+		    				return redirect('manageAccount');
+		    			}
+		    		}
+		    		for($i = 0; $i < count($all_app); $i++){
+		    			/*PostponeAppointmentController::postponeAppointment($all_app[$i]);*/
+		    		}
+	    		}
 	    		$target_userType = $target_user->doctor;
 	    		$target_schedule = $target_user->doctor->schedule;
 	    		$target_schedule->delete();

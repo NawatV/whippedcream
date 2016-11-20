@@ -9,7 +9,8 @@ use App\Model\Doctor;
 use App\Model\Patient;
 use App\Model\User;
 use App\Model\Department;
-
+use DB;
+use App\Model\Schedule;
 class AppointmentController extends Controller
 {
     public function index()
@@ -63,7 +64,7 @@ class AppointmentController extends Controller
             'appointment' => $appointment
         ]);
     }
-    
+
 
     public function update(Request $request, $id)
     {
@@ -404,8 +405,72 @@ class AppointmentController extends Controller
               }
             }
         }
+        $disabledDates = array();
+        $hisApps = DB::table('Appointment')->select(DB::raw('doctorId,appDate,count(*) as count'))->where('doctorId','=',$doctor->doctorId)->groupBy('doctorId')->groupBy('appDate')->get();
+        foreach ($hisApps as $hisApp) {
+          $day = date('l',strtotime($hisApp->appDate));
+          if($day = "Monday"){
+            if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->monPeriod < 3
+            && $hisApp->count >= 5){
+              array_push($disabledDates,$hisApp->appDate);
+            }else if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->monPeriod == 3
+            && $hisApp->count >= 10){
+              array_push($disabledDates,$hisApp->appDate);
+            }
+          }elseif($day = "Sunday"){
+            if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->sunPeriod < 3
+            && $hisApp->count >= 5){
+              array_push($disabledDates,$hisApp->appDate);
+            }else if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->sunPeriod == 3
+            && $hisApp->count >= 10){
+              array_push($disabledDates,$hisApp->appDate);
+            }
+          }elseif($day = "Tuesday"){
+            if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->tuePeriod < 3
+            && $hisApp->count >= 5){
+              array_push($disabledDates,$hisApp->appDate);
+            }else if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->tuePeriod == 3
+            && $hisApp->count >= 10){
+              array_push($disabledDates,$hisApp->appDate);
+            }
+          }elseif($day = "Wednesday"){
+            if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->wedPeriod < 3
+            && $hisApp->count >= 5){
+              array_push($disabledDates,$hisApp->appDate);
+            }else if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->wedPeriod == 3
+            && $hisApp->count >= 10){
+              array_push($disabledDates,$hisApp->appDate);
+            }
+          }elseif($day = "Thursday"){
+            if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->thuPeriod < 3
+            && $hisApp->count >= 5){
+              array_push($disabledDates,$hisApp->appDate);
+            }else if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->thuPeriod == 3
+            && $hisApp->count >= 10){
+              array_push($disabledDates,$hisApp->appDate);
+            }
+          }elseif($day = "Friday"){
+            if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->friPeriod < 3
+            && $hisApp->count >= 5){
+              array_push($disabledDates,$hisApp->appDate);
+            }else if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->friPeriod == 3
+            && $hisApp->count >= 10){
+              array_push($disabledDates,$hisApp->appDate);
+            }
+          }elseif($day = "Saturday"){
+            if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->satPeriod < 3
+            && $hisApp->count >= 5){
+              array_push($disabledDates,$hisApp->appDate);
+            }else if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->satPeriod == 3
+            && $hisApp->count >= 10){
+              array_push($disabledDates,$hisApp->appDate);
+            }
+          }
+        }
+
 
         $scheduleArray = array();
+
 
             if($schedules->sunPeriod == 0){
                 $tmp = array("sunPeriod", "10");
@@ -467,6 +532,7 @@ class AppointmentController extends Controller
             array_push($scheduleArray, $tmp);
             $tmp = array("fastestTime", $workDay);
             array_push($scheduleArray, $tmp);
+            array_push($scheduleArray,$disabledDates);
         return $scheduleArray;
     }
 

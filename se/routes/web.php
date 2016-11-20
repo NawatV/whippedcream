@@ -11,7 +11,8 @@
 |
 */
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
+//    return abort(404);
 });
 Route::get('/appoint', function () {
     return view('appoint');
@@ -48,3 +49,9 @@ Route::post('/vitalsign', 'TreatmentController@saveVitalSignForm');
 //----diagnosis-----
 Route::get('/diagnosis', 'TreatmentController@getDiagnosisForm');
 Route::post('/diagnosis', 'TreatmentController@saveDiagnosisForm');
+
+
+
+Route::any('{catchall}', function() {
+    return Response::view('errors.404', array(), 404);
+})->where('catchall', '.*');

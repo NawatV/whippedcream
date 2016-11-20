@@ -45,8 +45,7 @@ MAIN CONTENT
         {{$errors->first()}}
         @if($errors->first() != '')
             <script>
-                console.log('asdadasds');
-                swal('Good job!', 'You clicked the button!', 'error');
+                swal('ไม่มีรายชื่อผู้ใช้ภายในระบบ!', 'ลองกรอก Usernam, Password อีกครั้ง!', 'error');
             </script>
         @endif
 

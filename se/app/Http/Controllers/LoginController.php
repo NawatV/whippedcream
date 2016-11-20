@@ -41,7 +41,7 @@ class LoginController extends Controller
 
         if (count($user) <= 0) {
 
-            return redirect()->back()->withInput()->withErrors(['ไม่มีรายชื่อผู้ใช้ภายในระบบ']);
+            return redirect()->back()->withInput()->withErrors(['']);
             //these methods belongs to Laravel (go to the page with error msg)
         }
 

@@ -83,7 +83,7 @@
                                     <td>
 
                                         <form method="GET" class="form-horizontal style-form"
-                                              action="findPatientFromHnIdNameForDiagnosis/{{$diagnoses[$i]->diagnosisId}}/edit"/>
+                                              action="findPatientFromHnIdName/{{$diagnoses[$i]->diagnosisId}}/edit"/>
 
                                         <button type="submit">
                                             <i class="fa fa-pencil-square"></i>

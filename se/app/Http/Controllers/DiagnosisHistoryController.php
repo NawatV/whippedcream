@@ -14,18 +14,18 @@ use Illuminate\Support\Facades\Mail;
 
 class DiagnosisHistoryController extends Controller
 {
-    //
-    public function editDiagnosisHistory()
-    {
-//        $patients = Patient::all();
-        $patients = array();
-        return view('editDiagnosisHistory', compact('patients'));
-    }
-
-    public function viewDiagnosisHistory()
-    {
-        return view('viewDiagnosisHistory');
-    }
+//     //
+//     public function editDiagnosisHistory()
+//     {
+// //        $patients = Patient::all();
+//         $patients = array();
+//         return view('editDiagnosisHistory', compact('patients'));
+//     }
+//
+//     public function viewDiagnosisHistory()
+//     {
+//         return view('viewDiagnosisHistory');
+//     }
 
     public function editDiagnosisHistoryForm(Diagnosis $diagnosis)
     {
@@ -45,35 +45,26 @@ class DiagnosisHistoryController extends Controller
 //        return redirect()->route('login');
     }
 
-    public function delete(Request $request)
+    public function delete($diagnosisId)
     {
-        return $request;
+        $diag = Diagnosis::where('diagnosisId', $diagnosisId);
+        return dd($diag);
+        // return $diag;
+        $diag->delete();
+        return back();
     }
 
-    public function findPatientFromHnIdName(Request $request)
+    public function findPatientFromHnIdNameForDiagnosis(Request $request)
     {
 //        $patients = array();
 //        $patients = Patient::all();
 
-        $patients_hn = Patient::where('hn', $request->input('hnNumber'))->value('patientId');
+
+
+        $patients_hn = $request->input('userId');
+
         $patients = User::where('userId', $patients_hn)->first();
-        if ($patients == '') {
 
-            $patients = User::where('idNumber', $request->input('idNumber'))->first();
-
-            if ($patients == '') {
-
-
-                $patients = User::where('firstname', $request->input('firstname'))->where('lastname', $request->input('lastname'))->first();
-
-                if ($patients == '') {
-                    $patients = array();
-                    return view('editDiagnosisHistory', compact('patients'));
-                }
-            }
-
-            $patients_hn = Patient::where('patientId', $patients->userId)->value('patientId');
-        }
 
         $appointments = Appointment::where('patientId', $patients_hn)->get();
         $diagnoses = Diagnosis::where('patientId', $patients_hn)->get();

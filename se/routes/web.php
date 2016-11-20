@@ -37,13 +37,29 @@ Route::get('/register', function () {
 //แก้ไขประวัติการสั่งยา
 Route::get('/editPrescriptionHistory', 'PrescriptionHistoryController@editPrescriptionHistory');
 
+
+//ประวัติผู้ป่วย
+Route::get('/searchPatientInformation', 'UserController@getSearchPatientInformation');
+Route::post('/searchPatientInformation', 'UserController@findPatientFromHnIdName');
+
+Route::get('/seePatientInformation', 'UserController@getSearchPatientInformation');
+
+
 //แก้ไขประวัติคำวินิจฉัย
-Route::get('/editDiagnosisHistory', 'DiagnosisHistoryController@editDiagnosisHistory');
-Route::post('findPatientFromHnIdName', 'DiagnosisHistoryController@findPatientFromHnIdName');
+//Route::get('/editDiagnosisHistory', 'DiagnosisHistoryController@editDiagnosisHistory');
+Route::post('/findPatientFromHnIdNameForDiagnosis', 'DiagnosisHistoryController@findPatientFromHnIdNameForDiagnosis');
 //Route::post('/findPatientFromHnIdName/edit', 'DiagnosisHistoryController@editDiagnosis');
-Route::get('/findPatientFromHnIdName/{diagnosis}/edit', 'DiagnosisHistoryController@editDiagnosisHistoryForm');
+Route::get('/findPatientFromHnIdNameForDiagnosis/{diagnosis}/edit', 'DiagnosisHistoryController@editDiagnosisHistoryForm');
 Route::post('/editDiagnosisHistory/{diagnosisId}/confirm', 'DiagnosisHistoryController@confirm');
 Route::post('/editDiagnosisHistory/{diagnosisId}/delete', 'DiagnosisHistoryController@delete');
+
+//แก้ไขประวัติอาการทั่วไป
+//Route::get('/editDiagnosisHistory', 'DiagnosisHistoryController@editDiagnosisHistory');
+Route::post('/findPatientFromHnIdNameForVitalSign', 'DiagnosisHistoryController@findPatientFromHnIdNameForVitalSign');
+//Route::post('/findPatientFromHnIdName/edit', 'DiagnosisHistoryController@editDiagnosis');
+Route::get('/findPatientFromHnIdName/{vitalsign}/edit', 'DiagnosisHistoryController@editDiagnosisHistoryForm');
+Route::post('/editDiagnosisHistory/{vitalsignId}/confirm', 'DiagnosisHistoryController@confirm');
+Route::post('/editDiagnosisHistory/{vitalsignId}/delete', 'DiagnosisHistoryController@delete');
 
 Route::get('/testCurlMessage', 'DiagnosisHistoryController@sendSms');
 Route::post('/testEmail', 'DiagnosisHistoryController@sendEmail');

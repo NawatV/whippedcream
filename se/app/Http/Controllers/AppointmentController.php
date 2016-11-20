@@ -63,6 +63,7 @@ class AppointmentController extends Controller
             'appointment' => $appointment
         ]);
     }
+    
 
     public function update(Request $request, $id)
     {

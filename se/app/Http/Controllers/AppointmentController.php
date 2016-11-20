@@ -55,7 +55,7 @@ class AppointmentController extends Controller
 
     public function store(Request $request)
     {
-        //return dd($request->symptom);
+        //return dd($request->all());
         $appointment = new Appointment();
         $appointment -> symptom = $request->symptom;
         if($request -> doctorId == "0"){
@@ -78,14 +78,35 @@ class AppointmentController extends Controller
     public function staffCreate()
     {
         $department = Department::all();
-        return view('appointment.staffcreate',[
+        return view('appointment.staffcreate1',[
             'departments' => $department
         ]);
     }
 
     public function staffStore(Request $request)
     {
-        return "staffstore";
+        //return dd($request->all());
+        $patient = Patient::where('hn', '=', $request->patientId)->first();    
+        $appointment = Appointment::find($request->hn);
+        $appointment = new Appointment();
+        $appointment -> symptom = $request->symptom;
+        if($request -> doctorId == "0"){
+            $appointment -> doctorId = Department::find($request -> departmentId)-> doctor[0]-> doctorId;
+        }
+        else{
+            $appointment -> doctorId = $request -> doctorId;
+        }
+        $appointment -> appDate = $request -> appDate;
+        if($request -> appTime == "1"){
+            $appointment -> appTime = "9:00";
+        }elseif($request -> appTime == "2"){
+            $appointment -> appTime = "13:00";
+        }
+
+        $appointment -> patientId = $patient->patientId; 
+        $appointment -> save();
+        return redirect() -> action('AppointmentController@index');
+
     }
     public function walkInCreate()
     {

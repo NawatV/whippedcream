@@ -53,7 +53,7 @@ Route::post('/appointment', 'AppointmentController@store');
 //staff appointment
 Route::get('/appointment/staffindex', 'AppointmentController@staffIndex');
 Route::get('/appointment/staffcreate', 'AppointmentController@staffCreate');
-Route::post('/appointment/staffcreate', 'AppointmentController@staffCreate');
+Route::post('/appointment/staffstore', 'AppointmentController@staffStore');
 //walkin appointment
 Route::get('/appointment/walkincreate', 'AppointmentController@walkInCreate');
 Route::post('/appointment/walkincreate', 'AppointmentController@walkInCreate');
@@ -61,14 +61,11 @@ Route::post('/appointment/walkincreate', 'AppointmentController@walkInCreate');
 Route::get('/appointment/{appointment}/edit', 'AppointmentController@edit');
 Route::post('/appointment/{appointment}', 'AppointmentController@update');
 Route::post('/deleteAppointment/{appointment}', 'AppointmentController@destroy');
-Route::get('/democreate', function () { 
-    return view('appointment.democreate'); 
-});
 //ajax
 Route::get('/queryDoctorDateTime', 'AppointmentController@queryDoctorDateTime');
 Route::get('/queryDoctor', 'AppointmentController@queryDoctor');
 Route::get('/queryPeriod', 'AppointmentController@queryPeriod');
-//pdf
+//pdf 
 Route::get('/appointment/{appointment}/appointmentpdf', 'AppointmentController@appointmentPdf');
 // Route::get('/pdf', function(){
 //     $pdf = PDF::loadView('appointment.vista');

@@ -89,6 +89,8 @@ class AppointmentController extends Controller
         return $doctors;
     }
 
+
+
     public function queryDoctorDateTime(Request $request)
     {
         //$doctor = Doctor::all()[0];

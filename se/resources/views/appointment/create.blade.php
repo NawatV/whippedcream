@@ -175,6 +175,9 @@ function myFunction(params,fastestdate) {
               minDate: fastestdate,
               beforeShowDay: function(date){
                 var day = date.getDay();
+
+                if (date.getDate() == new Date("2016/11/26").getDate()) return false;
+
                 return [(day == params[5][1] || day == params[3][1] || day == params[1][1] || day == params[0][1] || day == params[2][1] || day == params[4][1] || day == params[6][1]), ''];
               },
               onSelect: function(date) {

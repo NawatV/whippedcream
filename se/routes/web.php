@@ -41,12 +41,13 @@ Route::get('/editPrescriptionHistory', 'PrescriptionHistoryController@editPrescr
 //ดูประวัติผู้ป่วย
 Route::get('/searchPatientInformation', 'UserController@getSearchPatientInformation');
 Route::post('/searchPatientInformation', 'UserController@findPatientFromHnIdName');
-Route::post('/showNewProfile', 'UserController@editPatientInformation');
+
 
 
 //แก้ไขประวัติผู้ป่วย
-
 Route::post('/editPatientInformation', 'UserController@searchPatientFromHnIdNameForEditProfile');
+Route::post('/showNewProfile', 'UserController@editPatientInformation');
+
 
 
 //ดูประวัติผู้ป่วยตัวเองมั้ง ยังไม่ทำ
@@ -65,11 +66,11 @@ Route::post('/editDiagnosisHistory/{diagnosisId}/delete', 'DiagnosisHistoryContr
 
 //แก้ไขประวัติอาการทั่วไป
 //Route::get('/editDiagnosisHistory', 'DiagnosisHistoryController@editDiagnosisHistory');
-Route::post('/findPatientFromHnIdNameForVitalSign', 'DiagnosisHistoryController@findPatientFromHnIdNameForVitalSign');
+Route::post('/findPatientFromHnIdNameForVitalSign', 'vitalSignHistoryController@findPatientFromHnIdNameForVitalSign');
 //Route::post('/findPatientFromHnIdName/edit', 'DiagnosisHistoryController@editDiagnosis');
-Route::get('/findPatientFromHnIdName/{vitalsign}/edit', 'DiagnosisHistoryController@editDiagnosisHistoryForm');
-Route::post('/editDiagnosisHistory/{vitalsignId}/confirm', 'DiagnosisHistoryController@confirm');
-Route::post('/editDiagnosisHistory/{vitalsignId}/delete', 'DiagnosisHistoryController@delete');
+Route::get('/findPatientFromHnIdName/{vitalsign}/edit', 'vitalSignHistoryController@editDiagnosisHistoryForm');
+Route::post('/editVitalSignHistory/{vitalsignId}/confirm', 'vitalSignHistoryController@confirm');
+Route::post('/editVitalSignHistory/{vitalsignId}/delete', 'vitalSignHistoryController@delete');
 
 Route::get('/testCurlMessage', 'DiagnosisHistoryController@sendSms');
 Route::post('/testEmail', 'DiagnosisHistoryController@sendEmail');

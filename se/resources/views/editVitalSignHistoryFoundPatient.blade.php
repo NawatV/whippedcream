@@ -53,7 +53,7 @@
                     {{--<p>{{$patients}}</p>--}}
                     {{--<p>{{$diagnoses}}</p>--}}
                     {{--<p>{{$appointments}}</p>--}}
-                    <h1>รายการตรวจพบ และ คำวินิจฉัย</h1>
+                    <h1>รายการตรวจพบ และ อาการทั่วไป</h1>
                     <h2>{{$patients->firstname.' '.$patients->lastname}}</h2>
                 </div>
 
@@ -70,20 +70,20 @@
                             <tr>
                                 <th class="col-xs-2 col-lg-2">ตรวจ ณ วันที่</th>
                                 <th class="col-xs-3 col-lg-3">แพทย์ผู้ตรวจ</th>
-                                <th class="col-xs-5 col-lg-5">รายละเอียดการตรวจ</th>
+
                                 <th class="col-xs-2 col-lg-2">แก้ไขข้อมูล</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @for($i=0; $i < count($diagnoses);$i++)
+                            @for($i=0; $i < count($nurses);$i++)
                                 <tr>
-                                    <td>{{$diagnoses[$i]->diagnosisDate}}</td>
-                                    <td>{{$doctors[$i]->firstname.' '.$doctors[$i]->lastname}}</td>
-                                    <td>{{$diagnoses[$i]->diagnosisDetail}}</td>
+                                    <td>{{$vitalsigns[$i]->vitalSignDataDate}}</td>
+                                    <td>{{$nurses[$i]->firstname.' '.$nurses[$i]->lastname}}</td>
+
                                     <td>
 
                                         <form method="GET" class="form-horizontal style-form"
-                                              action="findPatientFromHnIdName/{{$diagnoses[$i]->diagnosisId}}/edit"/>
+                                              action="findPatientFromHnIdName/{{$vitalsigns[$i]->vitalSignDataId}}/edit"/>
 
                                         <button type="submit">
                                             <i class="fa fa-pencil-square"></i>
@@ -94,7 +94,7 @@
 
 
                                         <form method="post" class="form-horizontal style-form"
-                                              action="editDiagnosisHistory/{{$diagnoses[$i]->diagnosisId}}/delete"/>
+                                              action="editVitalSignHistory/{{$vitalsigns[$i]->vitalSignDataId}}/delete"/>
                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                                         <button type="submit">

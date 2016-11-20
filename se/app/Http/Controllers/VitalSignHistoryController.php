@@ -8,6 +8,8 @@ use App\Model\Doctor;
 use App\Model\Patient;
 use App\Model\Prescription;
 use App\Model\User;
+use App\Model\Nurse;
+use App\Model\VitalSignData;
 use Illuminate\Http\Request;
 
 
@@ -27,7 +29,7 @@ class vitalSignHistoryController extends Controller
 //         return view('viewDiagnosisHistory');
 //     }
 
-    public function editVitalSignHistoryForm(Diagnosis $diagnosis)
+    public function editVitalSignHistoryForm(VitalSign $diagnosis)
     {
 //        dd($diagnosis);
 //        return $diagnosis;
@@ -54,7 +56,7 @@ class vitalSignHistoryController extends Controller
         return back();
     }
 
-    public function findPatientFromHnIdName(Request $request)
+    public function findPatientFromHnIdNameForVitalSign(Request $request)
     {
 //        $patients = array();
 //        $patients = Patient::all();
@@ -67,12 +69,12 @@ class vitalSignHistoryController extends Controller
 
 
         $appointments = Appointment::where('patientId', $patients_hn)->get();
-        $diagnoses = Diagnosis::where('patientId', $patients_hn)->get();
+        $vitalsigns = VitalSignData::where('patientId', $patients_hn)->get();
 
-        $doctors = array();
-        foreach ($diagnoses as $diagnosis) {
-            $doctorFromDiag = User::where('userId', $diagnosis->doctorId)->first();
-            array_push($doctors, $doctorFromDiag);
+        $nurses = array();
+        foreach ($vitalsigns as $vitalsign) {
+            $nurseFromVital = User::where('userId', $vitalsign->nurseId)->first();
+            array_push($nurses, $nurseFromVital);
         }
 
 //        $diagnoses = array();
@@ -84,7 +86,7 @@ class vitalSignHistoryController extends Controller
 //        dd($name);
 
 
-        return view('editDiagnosisHistoryFoundPatient', compact('patients', 'appointments', 'diagnoses', 'doctors'));
+        return view('editvitalSignHistoryFoundPatient', compact('patients', 'appointments', '$vitalsigns', 'nurses'));
     }
 
 

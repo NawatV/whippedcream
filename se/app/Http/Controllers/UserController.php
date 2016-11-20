@@ -63,6 +63,7 @@ public function searchPatientFromHnIdNameForEditProfile(Request $request)
 
 //        dd($name);
 
+ 
 
 		return view('editPatientInformation', compact('patients'));
 }

@@ -50,7 +50,7 @@
             <div class="form-panel">
                 <div class="container-fluid">
 
-                    <h1>แบบฟอร์ม แก้ไขประวัติคำวินิจฉัย</h1>
+                    <h1>แบบฟอร์ม แก้ไขประวัติอาการทั่วไป</h1>
 
                     <br>
                     <form class="form-horizontal style-form" action="/editDiagnosisHistory/{{$diagnosis->diagnosisId}}/confirm" method="post">

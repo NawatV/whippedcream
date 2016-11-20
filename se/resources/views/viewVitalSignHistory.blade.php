@@ -33,56 +33,52 @@
         <div class="form-panel">
           <div class="container-fluid">
             <h4 class="mb"><i class="fa fa-angle-right"></i> &nbsp;ดูอาการทั่วไป&nbsp;&nbsp;{{$patients->firstname}}&nbsp;{{$patients->lastname}} </h4>
-              <div class="container-fluid">
 
 
-
-              </div>
-
-            <div class="form-group">
-            <div class="container-fluid">
-                <label class="col-sm-2 control-label">ส่วนสูง</label>
-                    <div class="col-lg-5">
-                        <p class="form-control-label">{{$patients->height}}</p>
+                <div class="form-horizontal style-form">
+                    <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">น้ำหนัก</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" value="{{$patients->weight}}" readonly>
+                            </div>
                     </div>
-            </div>
-            <div class="container-fluid">
-                <label class="col-sm-2 control-label">น้ำหนัก</label>
-                    <div class="col-lg-5">
-                        <p class="form-control-label">{{$patients->weight}}</p>
+                    <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">ส่วนสูง</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" value="{{$patients->height}}" readonly>
+                            </div>
                     </div>
-            </div>
-            <div class="container-fluid">
-                <label class="col-sm-2 control-label">อุณหภูมิ</label>
-                    <div class="col-lg-5">
-                        <p class="form-control-label">{{$patients->pulse}}</p>
+                    <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">อุณหภูมิ</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" value="{{$patients->temperature}}" readonly>
+                            </div>
                     </div>
-            </div>
-           <div class="container-fluid">
-                <label class="col-sm-2 control-label">อัตราเต้นของหัวใจ</label>
-                    <div class="col-lg-5">
-                        <p class="form-control-label">{{$patients->systolic}}</p>
+                    <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">ชีพจร</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" value="{{$patients->pulse}}" readonly>
+                            </div>
                     </div>
-            </div>
-            <div class="container-fluid">
-                <label class="col-sm-2 control-label">ความดัน Systolic</label>
-                    <div class="col-lg-5">
-                        <p class="form-control-label">{{$patients->diastolic}}</p>
+                    <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">ความดัน Systolic</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" value="{{$patients->systolic}}" readonly>
+                            </div>
                     </div>
-            </div>
-
-            <div class="container-fluid">
-                <label class="col-sm-2 control-label">ความดัน Diastolic</label>
-                    <div class="col-lg-5">
-                        <p class="form-control-label">{{$patients->address}}</p>
+                    <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">ความดัน Diastolic</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" value="{{$patients->diastolic}}" readonly>
+                            </div>
                     </div>
-            </div>
 
-
-            </div>
-
-
-        <a class="btn btn-primary pull-right" href="{{ url('/editpatientinformation') }}">แก้ไข</a>
+                    <form class="form-horizontal style-form" action="editVitalSi" method="post">
+                        <input type="hidden" name="userId" value="{{$patients->userId}}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="btn btn-primary pull-right"> แก้ไข</button>
+                    </form>
+                      </div>
 
 
           </div>

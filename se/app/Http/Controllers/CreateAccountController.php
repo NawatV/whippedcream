@@ -138,7 +138,7 @@ class CreateAccountController extends Controller
         $new_user->password = bcrypt($new_pass);
         $new_user->address = $input['address'];
         /*thai or eng*/
-        $new_user->userType = 'เจ้าหน้าที่';
+        $new_user->userType = 'staff';
         try {
             $new_user->save();
         } catch(Exception $e) {
@@ -281,7 +281,7 @@ class CreateAccountController extends Controller
         $new_user->password = bcrypt($new_pass);
         $new_user->address = $input['address'];
         /*thai or eng*/
-        $new_user->userType = 'แพทย์';
+        $new_user->userType = 'doctor';
         try {
             $new_user->save();
         } catch(Exception $e) {
@@ -399,7 +399,7 @@ class CreateAccountController extends Controller
         $new_user->password = bcrypt($new_pass);
         $new_user->address = $input['address'];
         /*thai or eng*/
-        $new_user->userType = 'พยาบาล';
+        $new_user->userType = 'nurse';
         try {
             $new_user->save();
         } catch(Exception $e) {
@@ -500,7 +500,7 @@ class CreateAccountController extends Controller
         $new_user->password = bcrypt($new_pass);
         $new_user->address = $input['address'];
         /*thai or eng*/
-        $new_user->userType = 'เภสัชกร';
+        $new_user->userType = 'pharmacist';
         try {
             $new_user->save();
         } catch(Exception $e) {
@@ -599,7 +599,7 @@ class CreateAccountController extends Controller
         $new_user->password = bcrypt($new_pass);
         $new_user->address = $input['address'];
         /*thai or eng*/
-        $new_user->userType = 'ผู้คุมระบบ';
+        $new_user->userType = 'admin';
         try {
             $new_user->save();
         } catch(Exception $e) {

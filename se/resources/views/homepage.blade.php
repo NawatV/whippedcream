@@ -31,6 +31,16 @@
     @endif
 
 
+    <h1>
+        {{session('userId')}}
+        <br>
+        {{session('userType')}}
+        <br>
+        {{session('name')}}
+        <br>
+    </h1>
+
+
 
 
     <div class="row mt">

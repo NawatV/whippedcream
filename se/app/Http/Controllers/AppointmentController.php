@@ -30,8 +30,8 @@ class AppointmentController extends Controller
     public function index()
     {
         //return session('name');
-        //$appointment = Appointment::where('patientId', '=', session('userId'))->where('appDate', '=', date('Y-m-d', strtotime('today')))->get();
-        $appointment = Appointment::all();
+        $appointment = Appointment::where('patientId', '=', session('userId'))->where('appDate', '=', date('Y-m-d', strtotime('today')))->get();
+        //$appointment = Appointment::all();
         return view('appointment.index',[
             'appointments' => $appointment
         ]);

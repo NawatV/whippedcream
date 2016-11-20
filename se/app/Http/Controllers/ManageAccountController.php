@@ -10,6 +10,7 @@ use App\Model\Staff;
 use App\Model\Pharmacist;
 use App\Model\Admin;
 use App\Model\Schedule;
+use App\Model\Appointment;
 use Request;
 /*use Illuminate\Http\Request;*/
 
@@ -123,27 +124,27 @@ class ManageAccountController extends Controller
 			}			
 			/*check if patient/staff number is qualified*/
 			if($id != ""){
-				if($users[$i]['userType'] == 'Patient') {
+				if($users[$i]['userType'] == 'patient') {
 					if($id != $users[$i]->patient['hn']){
 						$qualify = False;
 					}
 				}
-				elseif ($users[$i]['userType'] == 'Staff') {
+				elseif ($users[$i]['userType'] == 'staff') {
 					if($id != $users[$i]->staff['staffNumber']){
 						$qualify = False;
 					}
 				}
-				elseif ($users[$i]['userType'] == 'Doctor') {
+				elseif ($users[$i]['userType'] == 'doctor') {
 					if($id != $users[$i]->doctor['doctorNumber']){
 						$qualify = False;
 					}
 				}
-				elseif ($users[$i]['userType'] == 'Nurse') {
+				elseif ($users[$i]['userType'] == 'nurse') {
 					if($id != $users[$i]->nurse['nurseNumber']){
 						$qualify = False;
 					}
 				}
-				elseif ($users[$i]['userType'] == 'Pharmacist') {
+				elseif ($users[$i]['userType'] == 'pharmacist') {
 					if($id != $users[$i]->pharmacist['pharmacistNumber']){
 						$qualify = False;
 					}
@@ -186,26 +187,27 @@ class ManageAccountController extends Controller
 	    	/*code change right*/
 	    }
 	    else if($input['operation'] == 'delete'){
+
 	    	$target_user = User::where('username', $input['username'])->first();
 	    	$target_userType = '';
-	    	if($target_user->userType == 'ผู้ป่วย'){
+	    	if($target_user->userType == 'patient'){
 	    		$target_userType = $target_user->patient;
 	    	}
-	    	elseif ($target_user->userType == 'เจ้าหน้าที่') {
+	    	elseif ($target_user->userType == 'staff') {
 	    		$target_userType = $target_user->staff;
 	    	}
-	    	elseif ($target_user->userType == 'แพทย์') {
+	    	elseif ($target_user->userType == 'doctor') {
 	    		$target_userType = $target_user->doctor;
 	    		$target_schedule = $target_user->doctor->schedule;
 	    		$target_schedule->delete();
 	    	}
-	    	elseif ($target_user->userType == 'พยาบาล') {
+	    	elseif ($target_user->userType == 'nurse') {
 	    		$target_userType = $target_user->nurse;
 	    	}
-	    	elseif ($target_user->userType == 'เภสัชกร') {
+	    	elseif ($target_user->userType == 'pharmacist') {
 	    		$target_userType = $target_user->pharmacist;
 	    	}
-	    	elseif ($target_user->userType == 'ผู้คุมระบบ') {
+	    	elseif ($target_user->userType == 'admin') {
 	    		$target_userType = $target_user->admin;
 	    	}
 	    	$target_userType->delete();
@@ -213,4 +215,5 @@ class ManageAccountController extends Controller
 	    }
 	    return redirect('manageAccount');
 	}
+
 }

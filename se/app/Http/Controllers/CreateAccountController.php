@@ -91,7 +91,12 @@ class CreateAccountController extends Controller
             return redirect('createStaff');
         }
         /*end*/
-        $new_user->gender = $input['gender'];
+        if($input['gender'] == 'ชาย'){
+            $new_user->gender = 'male';
+        }
+        else{
+            $new_user->gender = 'female';
+        }
         /*check date*/
         $is_date_correct = self::checkDateFormat($input['birthDate']);
         if(!$is_date_correct){
@@ -133,7 +138,7 @@ class CreateAccountController extends Controller
         $new_user->password = bcrypt($new_pass);
         $new_user->address = $input['address'];
         /*thai or eng*/
-        $new_user->userType = 'เจ้าหน้าที่';
+        $new_user->userType = 'staff';
         try {
             $new_user->save();
         } catch(Exception $e) {
@@ -229,7 +234,12 @@ class CreateAccountController extends Controller
             return redirect('createDoctor');
         }
         /*end*/
-        $new_user->gender = $input['gender'];
+        if($input['gender'] == 'ชาย'){
+            $new_user->gender = 'male';
+        }
+        else{
+            $new_user->gender = 'female';
+        }
         /*check date*/
         $is_date_correct = self::checkDateFormat($input['birthDate']);
         if(!$is_date_correct){
@@ -271,7 +281,7 @@ class CreateAccountController extends Controller
         $new_user->password = bcrypt($new_pass);
         $new_user->address = $input['address'];
         /*thai or eng*/
-        $new_user->userType = 'แพทย์';
+        $new_user->userType = 'doctor';
         try {
             $new_user->save();
         } catch(Exception $e) {
@@ -342,7 +352,12 @@ class CreateAccountController extends Controller
             return redirect('createNurse');
         }
         /*end*/
-        $new_user->gender = $input['gender'];
+        if($input['gender'] == 'ชาย'){
+            $new_user->gender = 'male';
+        }
+        else{
+            $new_user->gender = 'female';
+        }
         /*check date*/
         $is_date_correct = self::checkDateFormat($input['birthDate']);
         if(!$is_date_correct){
@@ -384,7 +399,7 @@ class CreateAccountController extends Controller
         $new_user->password = bcrypt($new_pass);
         $new_user->address = $input['address'];
         /*thai or eng*/
-        $new_user->userType = 'พยาบาล';
+        $new_user->userType = 'nurse';
         try {
             $new_user->save();
         } catch(Exception $e) {
@@ -438,7 +453,12 @@ class CreateAccountController extends Controller
             return redirect('createPharmacist');
         }
         /*end*/
-        $new_user->gender = $input['gender'];
+        if($input['gender'] == 'ชาย'){
+            $new_user->gender = 'male';
+        }
+        else{
+            $new_user->gender = 'female';
+        }
         /*check date*/
         $is_date_correct = self::checkDateFormat($input['birthDate']);
         if(!$is_date_correct){
@@ -480,7 +500,7 @@ class CreateAccountController extends Controller
         $new_user->password = bcrypt($new_pass);
         $new_user->address = $input['address'];
         /*thai or eng*/
-        $new_user->userType = 'เภสัชกร';
+        $new_user->userType = 'pharmacist';
         try {
             $new_user->save();
         } catch(Exception $e) {
@@ -532,7 +552,12 @@ class CreateAccountController extends Controller
             return redirect('createAdmin');
         }
         /*end*/
-        $new_user->gender = $input['gender'];
+        if($input['gender'] == 'ชาย'){
+            $new_user->gender = 'male';
+        }
+        else{
+            $new_user->gender = 'female';
+        }
         /*check date*/
         $is_date_correct = self::checkDateFormat($input['birthDate']);
         if(!$is_date_correct){
@@ -574,7 +599,7 @@ class CreateAccountController extends Controller
         $new_user->password = bcrypt($new_pass);
         $new_user->address = $input['address'];
         /*thai or eng*/
-        $new_user->userType = 'ผู้คุมระบบ';
+        $new_user->userType = 'admin';
         try {
             $new_user->save();
         } catch(Exception $e) {

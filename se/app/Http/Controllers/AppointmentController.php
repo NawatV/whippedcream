@@ -14,12 +14,31 @@ use App\Model\Schedule;
 use App\Model\Leaving;
 class AppointmentController extends Controller
 {
+
+    public function login_temp(Request $request)
+    {
+      $request->session()->put([
+        'userId' => 1,
+        'userType' => 'patient',
+        'name' => 'firstton1 '
+      ]);
+      return view('welcome');
+    }
+
     public function index()
     {
-        $appointment = Appointment::all();
+        //return session('name');
+        $appointment = Appointment::where('patientId', '=', session('userId'))->get();
         return view('appointment.index',[
             'appointments' => $appointment
         ]);
+    }
+
+    public function staffIndex()
+    {
+        //return session('name');
+        //$appointment = Appointment::where('patientId', '=', session('userId'))->get();
+        return "helo";
     }
 
     public function create()
@@ -32,7 +51,7 @@ class AppointmentController extends Controller
 
     public function store(Request $request)
     {
-        //return dd($request->all());
+        //return dd($request->session()->get('userId'));
         $appointment = new Appointment();
         $appointment -> symptom = $request -> symptom;
         if($request -> doctorId == "0"){
@@ -48,9 +67,33 @@ class AppointmentController extends Controller
             $appointment -> appTime = "13:00";
         }
 
-        $appointment -> patientId = "4";//wait for user login
+        $appointment -> patientId = $request->session()->get('userId');//wait for user login
         $appointment -> save();
         return redirect() -> action('AppointmentController@index');
+    }
+    public function staffCreate()
+    {
+        $department = Department::all();
+        return view('appointment.staffcreate',[
+            'departments' => $department
+        ]);
+    }
+
+    public function staffStore(Request $request)
+    {
+        return "staffstore";
+    }
+    public function walkInCreate()
+    {
+        $department = Department::all();
+        return view('appointment.walkincreate',[
+            'departments' => $department
+        ]);
+    }
+
+    public function walkInStore(Request $request)
+    {
+        return "hello"; 
     }
 
     public function show($id)

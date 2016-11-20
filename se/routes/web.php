@@ -50,6 +50,14 @@ Route::post('/vitalsign', 'TreatmentController@saveVitalSignForm');
 Route::get('/appointment', 'AppointmentController@index');
 Route::get('/appointment/create', 'AppointmentController@create');
 Route::post('/appointment', 'AppointmentController@store');
+//staff appointment
+Route::get('/appointment/staffindex', 'AppointmentController@staffIndex');
+Route::get('/appointment/staffcreate', 'AppointmentController@staffCreate');
+Route::post('/appointment/staffcreate', 'AppointmentController@staffCreate');
+//walkin appointment
+Route::get('/appointment/walkincreate', 'AppointmentController@walkInCreate');
+Route::post('/appointment/walkincreate', 'AppointmentController@walkInCreate');
+
 Route::get('/appointment/{appointment}/edit', 'AppointmentController@edit');
 Route::post('/appointment/{appointment}', 'AppointmentController@update');
 Route::post('/deleteAppointment/{appointment}', 'AppointmentController@destroy');
@@ -65,3 +73,6 @@ Route::get('/pdf', function(){
     $pdf = PDF::loadView('appointment.vista');
     return $pdf->download('archivo.pdf');
 });
+
+//test Login
+Route::get('/', 'AppointmentController@login_temp');

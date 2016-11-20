@@ -53,7 +53,7 @@
                     <h1>แบบฟอร์ม แก้ไขประวัติคำวินิจฉัย</h1>
 
                     <br>
-                    <form class="form-horizontal style-form" action="/editDiagnosisHistory/{{$diagnosis->diagnosisId}}/confirm" method="post">
+                    <form class="form-horizontal style-form" action="/editDiagnosisHistory/{{$diagnosis->diagnosisId}}/confirm" method="delete">
                     {{--<form class="form-horizontal style-form" action="/confirm" method="post">--}}
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 

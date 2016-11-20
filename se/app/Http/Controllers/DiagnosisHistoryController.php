@@ -11,6 +11,7 @@ use App\Model\User;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 
 class DiagnosisHistoryController extends Controller
 {
@@ -45,9 +46,25 @@ class DiagnosisHistoryController extends Controller
 //        return redirect()->route('login');
     }
 
-    public function delete(Request $request)
+    public function delete($diagnosisId)
     {
-        return $request;
+        $diagnosis = Diagnosis::where('diagnosisId', $diagnosisId)->first();
+
+        Diagnosis::destroy($diagnosisId);
+
+
+        $patients = User::where('userId', $diagnosis->patientId)->first();
+        $diagnoses = Diagnosis::where('patientId', $patients->userId)->get();
+        $appointments = Appointment::where('patientId', $patients->userId)->get();
+        $doctors = array();
+        foreach ($diagnoses as $diagnosis) {
+            $doctorFromDiag = User::where('userId', $diagnosis->doctorId)->first();
+            array_push($doctors, $doctorFromDiag);
+        }
+
+//            return 'aosdij';
+
+        return view('editDiagnosisHistoryFoundPatient', compact('patients', 'appointments', 'diagnoses', 'doctors'));
     }
 
     public function findPatientFromHnIdName(Request $request)

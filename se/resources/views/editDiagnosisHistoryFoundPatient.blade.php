@@ -93,9 +93,9 @@
                                         </form>
 
 
-                                        <form method="delete" class="form-horizontal style-form"
+                                        <form method="post" class="form-horizontal style-form"
                                               action="/editDiagnosisHistory/{{$diagnoses[$i]->diagnosisId}}/delete"/>
-
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <button type="submit">
                                             <i class="fa fa-pencil-square"></i>
                                             ลบ

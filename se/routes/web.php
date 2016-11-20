@@ -42,7 +42,7 @@ Route::get('/editDiagnosisHistory', 'DiagnosisHistoryController@editDiagnosisHis
 Route::post('findPatientFromHnIdName', 'DiagnosisHistoryController@findPatientFromHnIdName');
 //Route::post('/findPatientFromHnIdName/edit', 'DiagnosisHistoryController@editDiagnosis');
 Route::get('/findPatientFromHnIdName/{diagnosis}/edit', 'DiagnosisHistoryController@editDiagnosisHistoryForm');
-Route::post('/editDiagnosisHistory/{diagnosisId}/confirm', 'DiagnosisHistoryController@confirm');
+Route::delete('/editDiagnosisHistory/{diagnosisId}/confirm', 'DiagnosisHistoryController@confirm');
 Route::post('/editDiagnosisHistory/{diagnosisId}/delete', 'DiagnosisHistoryController@delete');
 
 Route::get('/testCurlMessage', 'DiagnosisHistoryController@sendSms');

@@ -22,39 +22,15 @@ Route::post('/login', 'UserController@postLoginForm');
 Route::get('/register', 'UserController@registerForm');
 Route::post('/register', 'UserController@postRegisterForm');
 
+
 //Need to login first
 Route::group(['middleware' => 'login'], function (){
-
+    Route::get('/homepage', 'OtherController@homepage');
 });
 
 
 
-
-
-
-
-
-
-
-Route::get('/appoint', function () {
-    return view('appoint');
-});
-
-
-Route::get('/schedule', function () {
-    return view('schedule');
-});
-Route::get('/dispention', function () {
-    return view('dispention');
-});
-Route::get('/diagnosisnext', function () {
-    return view('diagnosisnext');
-});
-Route::get('/blank', function () {
-    return view('blank');
-});
-
-
+Route::get('/blank', 'OtherController@blankPage');
 
 //----vitalSign-----
 Route::get('/vitalsign', 'TreatmentController@getVitalSignForm');

@@ -50,7 +50,7 @@ MAIN CONTENT
 
         <form class="form-login" action="/login" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <h2 class="form-login-heading">sign in now</h2>
+            <h2 class="form-login-heading">เข้าสู่ระบบ</h2>
             <div class="login-wrap">
                 <input type="text" class="form-control" placeholder="User ID" name="username">
                 <br>

@@ -28,9 +28,17 @@ class UserController extends Controller
         $username = $request->input('username');
         $password = $request->input('password');
 
+        if($request->input('username') == '' or $request->input('password') == ''){
+            return redirect()->back()->withInput()->withErrors(['']);
+        }
+
 
         //query in DBs
         $user = User::where('username', $username)->first();
+        if($user == ''){
+            return redirect()->back()->withInput()->withErrors(['']);
+        }
+
 
         if(Hash::check($password, $user->password)){
             $request->session()->put([
@@ -39,7 +47,7 @@ class UserController extends Controller
                 'name' => $user->firstname
             ]);
 
-            return redirect('homepage');
+            return redirect('homepage')->with('status', 'เข้าสู่ระบบ สำเร็จ');
         }
 
         return redirect()->back()->withInput()->withErrors(['']);
@@ -132,7 +140,7 @@ class UserController extends Controller
         ]);
 
 
-        return redirect('homepage');
+        return redirect('homepage')->with('status', 'ลงทะเบียน สำเร็จ');
 
 
     }

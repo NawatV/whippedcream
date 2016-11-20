@@ -1,28 +1,46 @@
 @extends('layouts.theme')
 
 @section('css')
-  <style>
-    .panel-body{
-      text-align: center;
-    }
+    <style>
+        .midImage {
+            text-align: center;
+            overflow: hidden;
+        }
 
-    img{
-      width: 50%;
-      height: 50%;
-      opacity: 0.3;
-    }
-  </style>
+        img {
+            position: fixed;
+            display: block;
+            right: 0px;
+            width: 60%;
+            height: auto;
+            overflow: hidden;
+            opacity: 0.3;
+        }
+    </style>
+
+
+
+
 @endsection
 
 @section('content')
-  <div class="row mt">
+    @if (session('status'))
+        <script>
+            swal("{{session('status')}}", "สามารถกดเลือกที่เมนูทางซ้าย เพื่อทำนัดหมายได้เลย", "success");
+        </script>
+    @endif
 
-      <div class="panel-body">
-        <!-- <div style="margin: auto auto"> -->
+
+
+
+    <div class="row mt">
+
+        <div class="midImage">
+            <!-- <div style="margin: auto auto"> -->
             <img src="{{url('assets/img/whippedcreamLogo.png')}}">
-        <!-- </div> -->
+            <!-- </div> -->
+        </div>
 
-      </div>
+    </div>
 
-  </div>
 @endsection

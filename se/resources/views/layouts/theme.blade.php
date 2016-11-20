@@ -17,6 +17,10 @@
     <link href="{{url('assets/css/style.css')}}" rel="stylesheet">
     <link href="{{url('assets/css/style-responsive.css')}}" rel="stylesheet">
 
+    <link rel="stylesheet" href="/assets/css/sweetalert.css">
+    <script src="/assets/js/sweetalert.min.js"></script>
+    <script src="/assets/js/jquery-1.8.3.min.js"></script>
+
     @yield('css')
 
 </head>
@@ -36,9 +40,12 @@
         <div class="top-menu">
             <ul class="nav pull-right top-menu">
                 {{--<a class="logo" postion="right"><i class="fa fa-user"></i>&nbsp;คุณ{{$name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--}}
-                <a class="logo" postion="right"><i class="fa fa-user"></i>&nbsp;คุณ{{$request->session()->get('name')}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="logo" postion="right"><i class="fa fa-user"></i>&nbsp;คุณ{{$request->session()->get('name')}}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </a>
-                <li><a class="logout" href="{{ url('/login') }}">ออกจากระบบ</a></li>
+                <li>
+                    <a href="/logout" class="btn btn-danger logout">ออกจากระบบ</a>
+                </li>
             </ul>
         </div>
     </header>

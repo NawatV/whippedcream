@@ -18,6 +18,8 @@ Route::get('/', 'UserController@loginForm');
 Route::get('/login', 'UserController@loginForm');
 Route::post('/login', 'UserController@postLoginForm');
 
+Route::get('/logout', 'OtherController@logout');
+
 //-----Register------
 Route::get('/register', 'UserController@registerForm');
 Route::post('/register', 'UserController@postRegisterForm');

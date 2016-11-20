@@ -13,6 +13,10 @@ class OtherController extends Controller
 
     public function homepage(Request $request){
         return view('homepage', compact('request'));
-//        return 'asdpifk';
+    }
+
+    public function logout(){
+        session()->flush();
+        return redirect('/');
     }
 }

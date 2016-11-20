@@ -56,7 +56,7 @@ Route::get('/appointment/staffcreate', 'AppointmentController@staffCreate');
 Route::post('/appointment/staffstore', 'AppointmentController@staffStore');
 //walkin appointment
 Route::get('/appointment/walkincreate', 'AppointmentController@walkInCreate');
-Route::post('/appointment/walkincreate', 'AppointmentController@walkInCreate');
+Route::post('/appointment/walkinstore', 'AppointmentController@walkInStore');
 
 Route::get('/appointment/{appointment}/edit', 'AppointmentController@edit');
 Route::post('/appointment/{appointment}', 'AppointmentController@update');
@@ -64,7 +64,9 @@ Route::post('/deleteAppointment/{appointment}', 'AppointmentController@destroy')
 //ajax
 Route::get('/queryDoctorDateTime', 'AppointmentController@queryDoctorDateTime');
 Route::get('/queryDoctor', 'AppointmentController@queryDoctor');
+Route::get('/queryDoctorWalkIn', 'AppointmentController@queryDoctorWalkIn');
 Route::get('/queryPeriod', 'AppointmentController@queryPeriod');
+Route::get('/queryPeriodWalkIn', 'AppointmentController@queryPeriodWalkIn');
 //pdf 
 Route::get('/appointment/{appointment}/appointmentpdf', 'AppointmentController@appointmentPdf');
 // Route::get('/pdf', function(){

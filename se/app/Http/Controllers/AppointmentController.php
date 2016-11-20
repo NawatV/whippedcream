@@ -110,7 +110,7 @@ class AppointmentController extends Controller
             && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
             ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5 )
             {
-                $fastestDate = date("Y-m-d", strtotime('Sunday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
             }
@@ -118,7 +118,7 @@ class AppointmentController extends Controller
             && $schedules->sunPeriod == 2
             && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
             ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5 ){
-                $fastestDate = date("Y-m-d", strtotime('Sunday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
             }
@@ -128,21 +128,21 @@ class AppointmentController extends Controller
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
-                $fastestDate = date("Y-m-d", strtotime('Sunday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=3;
                 break;
               }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5){
-                $fastestDate = date("Y-m-d", strtotime('Sunday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
               }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
-                $fastestDate = date("Y-m-d", strtotime('Sunday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
               }
@@ -154,7 +154,7 @@ class AppointmentController extends Controller
             ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
              )
             {
-                $fastestDate = date("Y-m-d", strtotime('Monday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
             }
@@ -162,7 +162,7 @@ class AppointmentController extends Controller
             && $schedules->monPeriod == 2
             && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
             ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5 ){
-                $fastestDate = date("Y-m-d", strtotime('Monday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
             }
@@ -172,21 +172,21 @@ class AppointmentController extends Controller
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
-                $fastestDate = date("Y-m-d", strtotime('Monday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=3;
                 break;
               }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5){
-                $fastestDate = date("Y-m-d", strtotime('Monday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
               }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
-                $fastestDate = date("Y-m-d", strtotime('Monday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
               }
@@ -197,7 +197,7 @@ class AppointmentController extends Controller
             && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
             ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5 )
             {
-                $fastestDate = date("Y-m-d", strtotime('Tuesday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
             }
@@ -205,7 +205,7 @@ class AppointmentController extends Controller
             && $schedules->tuePeriod == 2
             && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
             ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5 ){
-                $fastestDate = date("Y-m-d", strtotime('Tuesday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
             }
@@ -215,21 +215,21 @@ class AppointmentController extends Controller
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
-                $fastestDate = date("Y-m-d", strtotime('Tuesday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=3;
                 break;
               }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5){
-                $fastestDate = date("Y-m-d", strtotime('Tuesday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
               }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
-                $fastestDate = date("Y-m-d", strtotime('Tuesday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
               }
@@ -240,7 +240,7 @@ class AppointmentController extends Controller
             && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
             ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5 )
             {
-                $fastestDate = date("Y-m-d", strtotime('Wednesday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
             }
@@ -248,7 +248,7 @@ class AppointmentController extends Controller
             && $schedules->wedPeriod == 2
             && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
             ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5 ){
-                $fastestDate = date("Y-m-d", strtotime('Wednesday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
             }
@@ -258,21 +258,21 @@ class AppointmentController extends Controller
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
-                $fastestDate = date("Y-m-d", strtotime('Wednesday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=3;
                 break;
               }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5){
-                $fastestDate = date("Y-m-d", strtotime('Wednesday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
               }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
-                $fastestDate = date("Y-m-d", strtotime('Wednesday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
               }
@@ -283,7 +283,7 @@ class AppointmentController extends Controller
             && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
             ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5 )
             {
-                $fastestDate = date("Y-m-d", strtotime('Thursday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
             }
@@ -291,7 +291,7 @@ class AppointmentController extends Controller
             && $schedules->thuPeriod == 2
             && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
             ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5 ){
-                $fastestDate = date("Y-m-d", strtotime('Thursday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
             }
@@ -301,21 +301,21 @@ class AppointmentController extends Controller
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
-                $fastestDate = date("Y-m-d", strtotime('Thursday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=3;
                 break;
               }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5){
-                $fastestDate = date("Y-m-d", strtotime('Thursday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
               }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
-                $fastestDate = date("Y-m-d", strtotime('Thursday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
               }
@@ -326,7 +326,7 @@ class AppointmentController extends Controller
             && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
             ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5 )
             {
-                $fastestDate = date("Y-m-d", strtotime('Friday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
             }
@@ -334,7 +334,7 @@ class AppointmentController extends Controller
             && $schedules->friPeriod == 2
             && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
             ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5 ){
-                $fastestDate = date("Y-m-d", strtotime('Friday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
             }
@@ -344,21 +344,21 @@ class AppointmentController extends Controller
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
-                $fastestDate = date("Y-m-d", strtotime('Friday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=3;
                 break;
               }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5){
-                $fastestDate = date("Y-m-d", strtotime('Friday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
               }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
-                $fastestDate = date("Y-m-d", strtotime('Friday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
               }
@@ -369,7 +369,7 @@ class AppointmentController extends Controller
             && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
             ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5 )
             {
-                $fastestDate = date("Y-m-d", strtotime('Satday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
             }
@@ -377,7 +377,7 @@ class AppointmentController extends Controller
             && $schedules->satPeriod == 2
             && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
             ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5 ){
-                $fastestDate = date("Y-m-d", strtotime('Satday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
             }
@@ -387,21 +387,21 @@ class AppointmentController extends Controller
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
-                $fastestDate = date("Y-m-d", strtotime('Satday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=3;
                 break;
               }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5){
-                $fastestDate = date("Y-m-d", strtotime('Satday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
               }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
               && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
               ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
-                $fastestDate = date("Y-m-d", strtotime('Satday'));
+                $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
               }

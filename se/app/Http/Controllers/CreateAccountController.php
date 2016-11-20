@@ -91,7 +91,12 @@ class CreateAccountController extends Controller
             return redirect('createStaff');
         }
         /*end*/
-        $new_user->gender = $input['gender'];
+        if($input['gender'] == 'ชาย'){
+            $new_user->gender = 'male';
+        }
+        else{
+            $new_user->gender = 'female';
+        }
         /*check date*/
         $is_date_correct = self::checkDateFormat($input['birthDate']);
         if(!$is_date_correct){
@@ -229,7 +234,12 @@ class CreateAccountController extends Controller
             return redirect('createDoctor');
         }
         /*end*/
-        $new_user->gender = $input['gender'];
+        if($input['gender'] == 'ชาย'){
+            $new_user->gender = 'male';
+        }
+        else{
+            $new_user->gender = 'female';
+        }
         /*check date*/
         $is_date_correct = self::checkDateFormat($input['birthDate']);
         if(!$is_date_correct){
@@ -342,7 +352,12 @@ class CreateAccountController extends Controller
             return redirect('createNurse');
         }
         /*end*/
-        $new_user->gender = $input['gender'];
+        if($input['gender'] == 'ชาย'){
+            $new_user->gender = 'male';
+        }
+        else{
+            $new_user->gender = 'female';
+        }
         /*check date*/
         $is_date_correct = self::checkDateFormat($input['birthDate']);
         if(!$is_date_correct){
@@ -438,7 +453,12 @@ class CreateAccountController extends Controller
             return redirect('createPharmacist');
         }
         /*end*/
-        $new_user->gender = $input['gender'];
+        if($input['gender'] == 'ชาย'){
+            $new_user->gender = 'male';
+        }
+        else{
+            $new_user->gender = 'female';
+        }
         /*check date*/
         $is_date_correct = self::checkDateFormat($input['birthDate']);
         if(!$is_date_correct){
@@ -532,7 +552,12 @@ class CreateAccountController extends Controller
             return redirect('createAdmin');
         }
         /*end*/
-        $new_user->gender = $input['gender'];
+        if($input['gender'] == 'ชาย'){
+            $new_user->gender = 'male';
+        }
+        else{
+            $new_user->gender = 'female';
+        }
         /*check date*/
         $is_date_correct = self::checkDateFormat($input['birthDate']);
         if(!$is_date_correct){

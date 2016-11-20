@@ -245,9 +245,15 @@
   		          			<div class="col-xs-8 col-lg-8">
                         <p>เลขประจำตัวประชาชน: {{$user->idNumber}}</p>
                       </div>
-                      <div class="col-xs-4 col-lg-4">
-                        <p>เพศ: {{$user->gender}}</p>
-                      </div>
+                      @if ($user->gender == 'male')
+                        <div class="col-xs-4 col-lg-4">
+                          <p>เพศ: ชาย</p>
+                        </div>
+                      @else
+                        <div class="col-xs-4 col-lg-4">
+                          <p>เพศ: หญิง</p>
+                        </div>
+                      @endif
                       <div class="col-xs-4 col-lg-4">
                         <p>วันเกิด: {{$user->birthDate}}</p>
                       </div>
@@ -291,9 +297,15 @@
                       <div class="col-xs-8 col-lg-8">
                         <p>เลขประจำตัวประชาชน: {{$user->idNumber}}</p>
                       </div>
-                      <div class="col-xs-4 col-lg-4">
-                        <p>เพศ: {{$user->gender}}</p>
-                      </div>
+                      @if ($user->gender == 'male')
+                        <div class="col-xs-4 col-lg-4">
+                          <p>เพศ: ชาย</p>
+                        </div>
+                      @else
+                        <div class="col-xs-4 col-lg-4">
+                          <p>เพศ: หญิง</p>
+                        </div>
+                      @endif
                       <div class="col-xs-8 col-lg-8">
                         <p>วันเกิด: {{$user->birthDate}}</p>
                       </div>

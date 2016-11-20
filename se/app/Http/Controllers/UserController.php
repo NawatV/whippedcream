@@ -42,8 +42,10 @@ class UserController extends Controller
         return redirect('schedule');
     }
 
-    public function postRegisterForm(RegisterRequest $request)
+    public function postRegisterForm(Request $request)
     {
+//        dd($request);
+
         //------ get inputs-----------------
         $userId = $request->input('userId');
         $username = $request->input('username');
@@ -52,7 +54,7 @@ class UserController extends Controller
         $firstname = $request->input('firstname');
         $lastname = $request->input('lastname');
         $gender = $request->input('gender');
-        $birthDate = date('Y-m-d');
+        $birthDate = $request->input('birthDate');
         $phoneNumber = $request->input('phoneNumber');
         $email = $request->input('email');
         $address = $request->input('address');
@@ -89,6 +91,13 @@ class UserController extends Controller
 
         //*3. save $RegisterData
         $registerData->save();
+
+
+//        save ค่า Regis
+
+        //ทำคำสั่ง login
+
+        // redirect to Home
 
         return redirect('register');
     }

@@ -24,36 +24,34 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'userId' => 'numeric',
+            'firstname' => 'required|alpha',
+            'lastname' => 'required|alpha',
+            'idNumber' => 'required|numeric|digit:13',
+            'birthDate' => "required|date_format:'d/m/Y'",
+            'phoneNumber' => 'required|numeric|digits_between:9,10',
+            'email' => 'required|email',
+            'address' => 'required',
+//            'gender' => 'required',
+//            'bloodType' => 'required',
             'username' => 'required',
             'password' => 'required',
-            'idNumber' => 'required',
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'gender' => 'required',
-            'birthDate' => 'required|date',
-            'phoneNumber' => 'required',
-            'email' => 'required',
-            'address' => 'required'
-            'userType' => 'required'
+            'password_confirm' => 'required|confirmed'
         ];
     }
 
     public function messages()
     {
         return [
-           //'userId' => 'โปรดระบุเลขประจำตัวของบัญชีผู้ใช้',
-          'username.required' => 'โปรดระบุชื่อของบัญชีผู้ใช้',
-          'password.required' => 'โปรดระบุรหัสผ่านของบัญชีผู้ใช้',
-          'idNumber' => 'โปรดระบุเลขประจำตัวประชาชนของผู้ใช้',
-          'firstname.required' => 'โปรดระบุชื่อของผู้ใช้',
+            'username.required' => 'โปรดระบุชื่อของบัญชีผู้ใช้',
+            'password.required' => 'โปรดระบุรหัสผ่านของบัญชีผู้ใช้',
+            'idNumber' => 'โปรดระบุเลขประจำตัวประชาชนของผู้ใช้',
+            'firstname.required' => 'โปรดระบุชื่อของผู้ใช้',
             'lastname.required' => 'โปรดระบุนามสกุลของผู้ใช้',
-            'gender.required' => 'โปรดระบุเพศของผู้ใช้',
+//            'gender.required' => 'โปรดระบุเพศของผู้ใช้',
             'birthDate.required' => 'โปรดระบุวันเกิดของผู้ใช้',
             'phoneNumber.required' => 'โปรดระบุหมายเลขโทรศัพท์ของผู้ใช้',
             'email.required' => 'โปรดระบุอีเมลของผู้ใช้',
             'address.required' => 'โปรดระบุที่อยู่ของผู้ใช้'
-            //'userType.required' => 'โปรดระบุประเภทของผู้ใช้'
         ];
     }
 }

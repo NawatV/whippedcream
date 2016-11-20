@@ -24,18 +24,19 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'firstname' => 'required|alpha',
-            'lastname' => 'required|alpha',
-            'idNumber' => 'required|numeric|digit:13',
-            'birthDate' => "required|date_format:'d/m/Y'",
-            'phoneNumber' => 'required|numeric|digits_between:9,10',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'idNumber' => 'required|digits:13',
+            'birthDate' => 'required|date_format: d/m/Y',
+            'phoneNumber' => 'required|digits_between:9,10',
             'email' => 'required|email',
             'address' => 'required',
-//            'gender' => 'required',
-//            'bloodType' => 'required',
+            'gender' => 'required',
+            'bloodType' => 'required',
             'username' => 'required',
-            'password' => 'required',
-            'password_confirm' => 'required|confirmed'
+            'password' => 'required|confirmed',
+            'password_confirmation' => 'required',
+            'allergen' => 'required'
         ];
     }
 
@@ -44,14 +45,22 @@ class RegisterRequest extends FormRequest
         return [
             'username.required' => 'โปรดระบุชื่อของบัญชีผู้ใช้',
             'password.required' => 'โปรดระบุรหัสผ่านของบัญชีผู้ใช้',
-            'idNumber' => 'โปรดระบุเลขประจำตัวประชาชนของผู้ใช้',
+            'password.confirmed' => 'ยืนยันรหัสผ่านไม่ถูกต้อง',
+            'password_confirmation.required' => 'โปรดระบุยืนยันรหัสผ่านของบัญชีผู้ใช้',
+            'idNumber.required' => 'โปรดระบุเลขประจำตัวประชาชนของผู้ใช้',
+            'idNumber.digits' => 'โปรดระบุเลขประจำตัวประชาชนของผู้ใช้',
             'firstname.required' => 'โปรดระบุชื่อของผู้ใช้',
             'lastname.required' => 'โปรดระบุนามสกุลของผู้ใช้',
-//            'gender.required' => 'โปรดระบุเพศของผู้ใช้',
-            'birthDate.required' => 'โปรดระบุวันเกิดของผู้ใช้',
+            'gender.required' => 'โปรดระบุเพศของผู้ใช้',
+            'bloodType.required' => 'โปรดระบุกรุ๊ปเลือดของผู้ใช้',
+            'birthDate.required' => 'โปรดระบุวัน เดือน ปี เกิดของผู้ใช้',
+            'birthDate.date_format' => 'โปรดเลือกวัน เดือน ปีเกิดจากปฏิทิน',
             'phoneNumber.required' => 'โปรดระบุหมายเลขโทรศัพท์ของผู้ใช้',
+            'phoneNumber.digits_between' => 'โปรดระบุเบอร์โทรศัพท์',
             'email.required' => 'โปรดระบุอีเมลของผู้ใช้',
-            'address.required' => 'โปรดระบุที่อยู่ของผู้ใช้'
+            'email.email' => 'โปรดระบุอีเมลให้ถูกต้อง',
+            'address.required' => 'โปรดระบุที่อยู่ของผู้ใช้',
+            'allergen.required' => 'โปรดระบุประวัติการแพ้ยา'
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 use App\Model\User;
 
@@ -42,9 +43,9 @@ class UserController extends Controller
         return redirect('schedule');
     }
 
-    public function postRegisterForm(Request $request)
+    public function postRegisterForm(RegisterRequest $request)
     {
-//        dd($request);
+        dd($request);
 
         //------ get inputs-----------------
         $userId = $request->input('userId');

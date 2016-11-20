@@ -42,6 +42,12 @@
 
 
 <body>
+@if(count($errors)>0)
+    @foreach($errors->all() as $error)
+        {{$error}}
+    @endforeach
+@endif
+
 <div class="login-page">
     <div class="form-register">
 
@@ -151,8 +157,12 @@
                 </div>
 
                 <div class="form-group">
-
+                    <label class="col-sm-2 col-sm-2 control-label">ประวัติการแพ้ยา</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="ถ้าไม่มีประวัติการแพ้ยา ให้ใส่ -" name="allergen">
+                    </div>
                 </div>
+
 
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">ชื่อผู้ใช้</label>
@@ -166,15 +176,14 @@
                     <div class="col-sm-4">
                         <input type="password" class="form-control" placeholder="password" name="password">
                     </div>
-                </div>
 
-                <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">ยืนยันรหัสผ่าน</label>
                     <div class="col-sm-4">
                         <input type="password" class="form-control" placeholder="confirm password"
-                               name="confirmPassword">
+                               name="password_confirmation">
                     </div>
                 </div>
+
 
 
                 <div class="mt">

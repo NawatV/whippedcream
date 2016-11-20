@@ -12,6 +12,8 @@ use App\Model\Department;
 use DB;
 use App\Model\Schedule;
 use App\Model\Leaving;
+use Barryvdh\DomPDF\Facade as PDF;
+
 class AppointmentController extends Controller
 {
 
@@ -137,7 +139,10 @@ class AppointmentController extends Controller
 
     public function appointmentPdf($appointment)
     {
-      return dd($appointment);
+        //return dd($appointment);
+        $appointments = Appointment::find($appointment);
+        $pdf = PDF::loadView('appointment.appointmentpdf', compact('appointments'));
+        return $pdf->stream('hello.pdf');
     }
 
 

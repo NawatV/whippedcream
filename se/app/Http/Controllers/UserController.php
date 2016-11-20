@@ -29,13 +29,52 @@ class UserController extends Controller
 
     }
 
+		public function getEditPatientInformation()
+	{
+
+			return view('editPatientInformation');
+
+	}
+
+public function searchPatientFromHnIdNameForEditProfile(Request $request)
+{
+//        $patients = array();
+//        $patients = Patient::all();
+
+		$patients_hn = $request->input('userId');
+
+		$patients = User::where('userId', $patients_hn)->first();
+
+
+		// $appointments = Appointment::where('patientId', $patients_hn)->get();
+		// $diagnoses = Diagnosis::where('patientId', $patients_hn)->get();
+		//
+		// $doctors = array();
+		// foreach ($diagnoses as $diagnosis) {
+		// 		$doctorFromDiag = User::where('userId', $diagnosis->doctorId)->first();
+		// 		array_push($doctors, $doctorFromDiag);
+		// }
+
+//        $diagnoses = array();
+
+//        $prescription = Prescription::where('patientId', $patients_hn)->get();
+
+//        $name = $patients[0]->firstname;
+
+//        dd($name);
+
+
+		return view('editPatientInformation', compact('patients'));
+}
+
     public function findPatientFromHnIdName(Request $request)
     {
 //        $patients = array();
 //        $patients = Patient::all();
-    	//return dd($request->input('hnNumber'));
+
 
         $patients_hn = Patient::where('hn', $request->input('hnNumber'))->value('patientId');
+
         $patients = User::where('userId', $patients_hn)->first();
         if ($patients == '') {
 
@@ -48,22 +87,21 @@ class UserController extends Controller
 
                 if ($patients == '') {
                     $patients = array();
-                    return view('seePatientInformation', compact('patients'));
+                    return view('searchPatientInformation', compact('patients'));
                 }
             }
 
             $patients_hn = Patient::where('patientId', $patients->userId)->value('patientId');
         }
 
-
-        $appointments = Appointment::where('patientId', $patients_hn)->get();
-        $diagnoses = Diagnosis::where('patientId', $patients_hn)->get();
-
-        $doctors = array();
-        foreach ($diagnoses as $diagnosis) {
-            $doctorFromDiag = User::where('userId', $diagnosis->doctorId)->first();
-            array_push($doctors, $doctorFromDiag);
-        }
+        // $appointments = Appointment::where('patientId', $patients_hn)->get();
+        // $diagnoses = Diagnosis::where('patientId', $patients_hn)->get();
+				//
+        // $doctors = array();
+        // foreach ($diagnoses as $diagnosis) {
+        //     $doctorFromDiag = User::where('userId', $diagnosis->doctorId)->first();
+        //     array_push($doctors, $doctorFromDiag);
+        // }
 //        $diagnoses = array();
 
 //        $prescription = Prescription::where('patientId', $patients_hn)->get();
@@ -72,6 +110,32 @@ class UserController extends Controller
 
 //        dd($name);
 
-        return view('seePatientInformation', compact('patients', 'appointments', 'diagnoses', 'doctors'));
+        return view('seePatientInformation', compact('patients'));
     }
+		public function editPatientInformation(Request $request)
+		{
+//        dd($diagnosis);
+//        return $diagnosis;
+
+			$users = User::where('userId', $request->userId)->first();
+			$patients = Patient::where('patientId', $request->userId)->first();
+			$users->firstname = $request->newFirstname;
+			$users->lastname = $request->newLastname;
+			$users->gender = $request->newGender;
+			$users->idNumber = $request->newIdNumber;
+			$users->birthDate = $request->newBirthDate;
+			$users->address = $request->newAddress;
+			$users->phoneNumber = $request->newPhoneNumber;
+			$users->email = $request->newEmail;
+			$patients->bloodType = $request->newBloodType;
+			$patients->allergen = $request->newAllergen;
+
+			$users->save();
+			$patients->save();
+			$patients_hn = $request->input('userId');
+
+			$patients = User::where('userId', $patients_hn)->first();
+
+				return view('seePatientInformation', compact('patients','users'));
+		}
 }

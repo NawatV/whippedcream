@@ -38,11 +38,21 @@ Route::get('/register', function () {
 Route::get('/editPrescriptionHistory', 'PrescriptionHistoryController@editPrescriptionHistory');
 
 
-//ประวัติผู้ป่วย
+//ดูประวัติผู้ป่วย
 Route::get('/searchPatientInformation', 'UserController@getSearchPatientInformation');
 Route::post('/searchPatientInformation', 'UserController@findPatientFromHnIdName');
+Route::post('/showNewProfile', 'UserController@editPatientInformation');
 
+
+//แก้ไขประวัติผู้ป่วย
+
+Route::post('/editPatientInformation', 'UserController@searchPatientFromHnIdNameForEditProfile');
+
+
+//ดูประวัติผู้ป่วยตัวเองมั้ง ยังไม่ทำ
 Route::get('/seePatientInformation', 'UserController@getSearchPatientInformation');
+
+
 
 
 //แก้ไขประวัติคำวินิจฉัย

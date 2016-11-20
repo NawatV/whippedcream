@@ -33,19 +33,12 @@
         <div class="form-panel">
           <div class="container-fluid">
             <div class="container">
-            <h4 class="mb"><i class="fa fa-angle-right"></i> &nbsp;ข้อมูลทั่วไป</h4>
-            <form class="form-horizontal style-form" action="findPatientFromHnIdNameForVitalSign" method="post">
-                <input type="hidden" name="userId" value="{{$patients->userId}}">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <button type="submit" class="btn btn-primary pull-right"> ดูอาการทั่วไป</button>
-            </form>
-            <form class="form-horizontal style-form" action="findPatientFromHnIdNameForDiagnosis" method="post">
-                <input type="hidden" name="userId" value="{{$patients->userId}}">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <button type="submit" class="btn btn-primary pull-right"> ดูข้อมูลวินิจฉัย</button>
-            </form>
+            <h4 class="mb"><i class="fa fa-angle-right"></i> &nbsp;แก้ไขข้อมูลทั่วไป</h4>
+
           </div>
-			<div class="form-horizontal style-form">
+			<form class="form-horizontal style-form" action="showNewProfile" method="post">
+            <input type="hidden" name="userId" value="{{$patients->userId}}">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">รหัสประจำตัวผู้ป่วย</label>
                   <div class="col-sm-5">
@@ -55,74 +48,66 @@
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">ชื่อ</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->firstname}}" readonly>
+                      <input type="text" class="form-control" value="{{$patients->firstname}}" name="newFirstname"  >
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">นามสกุล</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->lastname}}" readonly>
+                      <input type="text" class="form-control" value="{{$patients->lastname}}" name="newLastname">
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">เพศ</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->gender}}" readonly>
+                      <input type="text" class="form-control" value="{{$patients->gender}}" name="newGender">
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">รหัสประจำตัวประชาชน</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->idNumber}}" readonly>
+                      <input type="text" class="form-control" value="{{$patients->idNumber}}" name="newIdNumber">
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">วันเกิด</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->birthDate}}" readonly>
+                      <input type="text" class="form-control" value="{{$patients->birthDate}}" name="newBirthDate">
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">ที่อยู่</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->address}}" readonly>
+                      <input type="text" class="form-control" value="{{$patients->address}}" name="newAddress">
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">เบอร์โทรศัพท์</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->phoneNumber}}" readonly>
+                      <input type="text" class="form-control" value="{{$patients->phoneNumber}}" name="newPhoneNumber">
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">อีเมล</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->email}}" readonly>
+                      <input type="text" class="form-control" value="{{$patients->email}}" name="newEmail">
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">กรุ๊ปเลือด</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->bloodType}}" readonly>
+                      <input type="text" class="form-control" value="{{$patients->bloodType}}" name="newBloodType">
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">ประวัติการแพ้ยา</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->allergen}}" readonly>
+                      <input type="text" class="form-control" value="{{$patients->allergen}}" name="newAllergen">
                   </div>
           </div>
-          <form class="form-horizontal style-form" action="editPatientInformation" method="post">
-              <input type="hidden" name="userId" value="{{$patients->userId}}">
-              <input type="hidden" name="_token" value="{{ csrf_token() }}">
-              <button type="submit" class="btn btn-primary pull-right"> แก้ไข</button>
-          </form>
-            </div>
-
-        </div>
-
-
-
+        <button type="submit" class="btn btn-primary pull-right"> ยืนยัน</button>
+        </form>
+              <a href="{{ URL::previous() }}" class="btn btn-primary pull-right"> ยกเลิก</a>
 
           </div>
         </div>

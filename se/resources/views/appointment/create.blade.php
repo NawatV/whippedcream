@@ -175,10 +175,12 @@ function myFunction(params,fastestdate) {
               minDate: fastestdate,
               beforeShowDay: function(date){
                 var day = date.getDay();
-
-
-
-
+                var dd = date.getDate();
+                var mm = date.getMonth()+1;
+                var yy = date.getFullYear();
+                var thisDate = yy+'-'+mm+'-'+dd;
+                var arrayOfDisabledDates = params[9];
+                if(arrayOfDisabledDates.indexOf(thisDate)!=-1) return false;
                 return [(day == params[5][1] || day == params[3][1] || day == params[1][1] || day == params[0][1] || day == params[2][1] || day == params[4][1] || day == params[6][1]), ''];
               },
               onSelect: function(date) {
@@ -186,7 +188,10 @@ function myFunction(params,fastestdate) {
                     url: "/queryPeriod",
                     data: {
                       id: $('input[name=doctorId]:checked', '#doctor').val(),
-                      day : $( "#datepicker" ).datepicker( "getDate" ).getDay()
+                      day : $("#datepicker").datepicker( "getDate" ).getDay(),
+                      date : $("#datepicker").datepicker( "getDate" ).getDate(),
+                      month : $("#datepicker").datepicker( "getDate" ).getMonth()+1,
+                      year : $("#datepicker").datepicker( "getDate" ).getFullYear()
                     },
                     success: function( result ) {
                       console.log(result)

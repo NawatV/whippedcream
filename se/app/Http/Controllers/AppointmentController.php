@@ -104,7 +104,7 @@ class AppointmentController extends Controller
         $schedules = $doctor -> schedule;
         $fastestDate = "no";
         $workDay = "no";
-        for ($x = 1; $x < 29; $x++) {
+        for ($x = 1; $x < 32; $x++) {
             if(date('l', strtotime($x.' days', strtotime('today'))) == "Sunday"
             && $schedules->sunPeriod == 1
             && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
@@ -407,11 +407,12 @@ class AppointmentController extends Controller
               }
             }
         }
+
         $disabledDates = array();
-        $hisApps = DB::table('Appointment')->select(DB::raw('doctorId,appDate,count(*) as count'))->where('doctorId','=',$doctor->doctorId)->groupBy('doctorId')->groupBy('appDate')->get();
+        $hisApps = DB::table('appointment')->select(DB::raw('doctorId,appDate,count(*) as count'))->where('doctorId','=',$doctor->doctorId)->groupBy('doctorId')->groupBy('appDate')->get();
         foreach ($hisApps as $hisApp) {
           $day = date('l',strtotime($hisApp->appDate));
-          if($day = "Monday"){
+          if($day == "Monday"){
             if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->monPeriod < 3
             && $hisApp->count >= 5){
               array_push($disabledDates,$hisApp->appDate);
@@ -419,7 +420,7 @@ class AppointmentController extends Controller
             && $hisApp->count >= 10){
               array_push($disabledDates,$hisApp->appDate);
             }
-          }elseif($day = "Sunday"){
+          }elseif($day == "Sunday"){
             if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->sunPeriod < 3
             && $hisApp->count >= 5){
               array_push($disabledDates,$hisApp->appDate);
@@ -427,7 +428,7 @@ class AppointmentController extends Controller
             && $hisApp->count >= 10){
               array_push($disabledDates,$hisApp->appDate);
             }
-          }elseif($day = "Tuesday"){
+          }elseif($day == "Tuesday"){
             if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->tuePeriod < 3
             && $hisApp->count >= 5){
               array_push($disabledDates,$hisApp->appDate);
@@ -435,7 +436,7 @@ class AppointmentController extends Controller
             && $hisApp->count >= 10){
               array_push($disabledDates,$hisApp->appDate);
             }
-          }elseif($day = "Wednesday"){
+          }elseif($day == "Wednesday"){
             if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->wedPeriod < 3
             && $hisApp->count >= 5){
               array_push($disabledDates,$hisApp->appDate);
@@ -443,7 +444,7 @@ class AppointmentController extends Controller
             && $hisApp->count >= 10){
               array_push($disabledDates,$hisApp->appDate);
             }
-          }elseif($day = "Thursday"){
+          }elseif($day == "Thursday"){
             if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->thuPeriod < 3
             && $hisApp->count >= 5){
               array_push($disabledDates,$hisApp->appDate);
@@ -451,7 +452,7 @@ class AppointmentController extends Controller
             && $hisApp->count >= 10){
               array_push($disabledDates,$hisApp->appDate);
             }
-          }elseif($day = "Friday"){
+          }elseif($day == "Friday"){
             if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->friPeriod < 3
             && $hisApp->count >= 5){
               array_push($disabledDates,$hisApp->appDate);
@@ -459,7 +460,7 @@ class AppointmentController extends Controller
             && $hisApp->count >= 10){
               array_push($disabledDates,$hisApp->appDate);
             }
-          }elseif($day = "Saturday"){
+          }elseif($day == "Saturday"){
             if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->satPeriod < 3
             && $hisApp->count >= 5){
               array_push($disabledDates,$hisApp->appDate);
@@ -472,8 +473,6 @@ class AppointmentController extends Controller
 
 
         $scheduleArray = array();
-
-
             if($schedules->sunPeriod == 0){
                 $tmp = array("sunPeriod", "10");
                 array_push($scheduleArray, $tmp);
@@ -541,13 +540,68 @@ class AppointmentController extends Controller
     public function queryPeriod(Request $request){
         $schedules = Doctor::find($request->id) -> schedule;
         $day = $request->day;
-        if ($day==0) return $schedules->sunPeriod;
-        elseif ($day==1) return $schedules->monPeriod;
-        elseif ($day==2) return $schedules->tuePeriod;
-        elseif ($day==3) return $schedules->wedPeriod;
-        elseif ($day==4) return $schedules->thuPeriod;
-        elseif ($day==5) return $schedules->friPeriod;
-        elseif ($day==6) return $schedules->satPeriod;
+        $dd = $request->date;
+        $mm = $request ->month;
+        $yy = $request ->year;
+        $newDate = $yy.'-'.$mm.'-'.$dd;
+        $numberOfAppOnNewDateMorn = Appointment::where('appDate', '=', $newDate)->where('appTime','=','09:00:00')->where('doctorId','=',$request->id)->count();
+        $numberOfAppOnNewDateAfte = Appointment::where('appDate', '=', $newDate)->where('appTime','=','13:00:00')->where('doctorId','=',$request->id)->count();
+        if( $day==0 && ($schedules->sunPeriod == 1 || $schedules->sunPeriod == 2) ) return $schedules->sunPeriod;
+        elseif ( $day==0  && $schedules->sunPeriod == 3 ) {
+          {
+            if($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte >= 5) return 1;
+            elseif($numberOfAppOnNewDateMorn >= 5 && $numberOfAppOnNewDateAfte < 5) return 2;
+            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5) return 3;
+          }
+        }
+        elseif ( $day==1 && ($schedules->monPeriod == 1 || $schedules->monPeriod == 2) ) return $schedules->monPeriod;
+        elseif ( $day==1  && $schedules->monPeriod == 3 ) {
+          {
+            if($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte >= 5) return 1;
+            elseif($numberOfAppOnNewDateMorn >= 5 && $numberOfAppOnNewDateAfte < 5) return 2;
+            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5) return 3;
+          }
+        }
+        elseif ( $day==2 && ($schedules->tuePeriod == 1 || $schedules->tuePeriod == 2) ) return $schedules->tuePeriod;
+        elseif ( $day==2  && $schedules->tuePeriod == 3 ) {
+          {
+            if($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte >= 5) return 1;
+            elseif($numberOfAppOnNewDateMorn >= 5 && $numberOfAppOnNewDateAfte < 5) return 2;
+            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5) return 3;
+          }
+        }
+        elseif ( $day==3 && ($schedules->wedPeriod == 1 || $schedules->wedPeriod == 2) ) return $schedules->wedPeriod;
+        elseif ( $day==3  && $schedules->wedPeriod == 3 ) {
+          {
+            if($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte >= 5) return 1;
+            elseif($numberOfAppOnNewDateMorn >= 5 && $numberOfAppOnNewDateAfte < 5) return 2;
+            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5) return 3;
+          }
+        }
+        elseif ( $day==4 && ($schedules->thuPeriod == 1 || $schedules->thuPeriod == 2) ) return $schedules->thuPeriod;
+        elseif ( $day==4  && $schedules->thuPeriod == 3 ) {
+          {
+            if($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte >= 5) return 1;
+            elseif($numberOfAppOnNewDateMorn >= 5 && $numberOfAppOnNewDateAfte < 5) return 2;
+            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5) return 3;
+          }
+        }
+        elseif ( $day==5 && ($schedules->friPeriod == 1 || $schedules->friPeriod == 2) ) return $schedules->friPeriod;
+        elseif ( $day==5  && $schedules->friPeriod == 3 ) {
+          {
+            if($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte >= 5) return 1;
+            elseif($numberOfAppOnNewDateMorn >= 5 && $numberOfAppOnNewDateAfte < 5) return 2;
+            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5) return 3;
+          }
+        }
+        elseif ( $day==6 && ($schedules->satPeriod == 1 || $schedules->satPeriod == 2) ) return $schedules->satPeriod;
+        elseif ( $day==6  && $schedules->satPeriod == 3 ) {
+          {
+            if($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte >= 5) return 1;
+            elseif($numberOfAppOnNewDateMorn >= 5 && $numberOfAppOnNewDateAfte < 5) return 2;
+            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5) return 3;
+          }
+        }
 
     }
 

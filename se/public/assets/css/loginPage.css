@@ -1,0 +1,66 @@
+/*
+Template Name: DASHGUM FREE - Bootstrap 3.2 Admin Theme
+Template Version: 1.0
+Author: Carlos Alvarez
+Website: http://blacktie.co
+Premium: http://www.gridgum.com
+*/
+/* Import fonts */
+@import url(http://fonts.googleapis.com/css?family=Ruda:400,700,900);
+
+/* BASIC THEME CONFIGURATION */
+body {
+    color: #797979;
+    font-family: 'Ruda', sans-serif;
+    padding: 0px !important;
+    margin: 0px !important;
+    font-size: 13px;
+    height: 100%;
+    background-image: url("/assets/img/bgHospitalVector.png");
+}
+
+.btn-theme {
+    color: #fff;
+    background-color: #005c99;
+    border-color: #48bcb4;
+}
+
+.btn-theme:hover,
+.btn-theme:focus,
+.btn-theme:active,
+.btn-theme.active,
+.open .dropdown-toggle.btn-theme {
+    color: #fff;
+    background-color: #80ccff;
+    border-color: #48bcb4;
+}
+
+/*LOGIN CONFIGURATION PAGE*/
+.form-login {
+    max-width: 330px;
+    margin: 100px auto 0;
+    background: #fff;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.form-login h2.form-login-heading {
+    margin: 0;
+    padding: 25px 20px;
+    text-align: center;
+    background: #005c99;
+    border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    color: #fff;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.login-wrap {
+    padding: 20px;
+}
+
+.login-wrap .registration {
+    text-align: center;
+}

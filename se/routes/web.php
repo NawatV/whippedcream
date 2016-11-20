@@ -10,19 +10,37 @@
 | to using a Closure or controller method. Build something great!
 |
 */
-Route::get('/', function () {
-    return view('login');
-//    return abort(404);
+
+
+
+//-----Login------
+Route::get('/', 'UserController@loginForm');
+Route::get('/login', 'UserController@loginForm');
+Route::post('/login', 'UserController@postLoginForm');
+
+//-----Register------
+Route::get('/register', 'UserController@registerForm');
+Route::post('/register', 'UserController@postRegisterForm');
+
+//Need to login first
+Route::group(['middleware' => 'login'], function (){
+
 });
+
+
+
+
+
+
+
+
+
+
 Route::get('/appoint', function () {
     return view('appoint');
 });
-// Route::get('/login', function () {
-//     return view('login');
-// });
-//Route::get('/regis', function () {
-//    return view('regis');
-//});
+
+
 Route::get('/schedule', function () {
     return view('schedule');
 });
@@ -36,12 +54,7 @@ Route::get('/blank', function () {
     return view('blank');
 });
 
-//----- register ------
-Route::get('/regis', 'RegisterController@getRegisterForm');
-Route::post('/regis', 'RegisterController@postRegisterForm');
-//-----login------
-Route::get('/login', 'LoginController@getLoginForm');
-Route::post('/login', 'LoginController@postLoginForm');
+
 
 //----vitalSign-----
 Route::get('/vitalsign', 'TreatmentController@getVitalSignForm');
@@ -51,6 +64,16 @@ Route::get('/diagnosis', 'TreatmentController@getDiagnosisForm');
 Route::post('/diagnosis', 'TreatmentController@saveDiagnosisForm');
 
 
+
+
+
+
+
+
+
+//========================================================================================================
+//=========================== เอา Route ทั้งหมด ไว้ข้างบน เท่านั้น !!! =======================================
+//========================================================================================================
 
 Route::any('{catchall}', function() {
     return Response::view('errors.404', array(), 404);

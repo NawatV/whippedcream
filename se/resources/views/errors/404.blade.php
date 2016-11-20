@@ -16,12 +16,13 @@
 
 <body>
 
+
 <div id="snowflakeContainer">
     <p class="snowflake">+</p>
 </div>
 
-<div class="container apps">
-    <div class="title center-block">
+<div class="apps container-fluid">
+    <div class="title">
         404 - ไม่มีหน้าเว็บนี้ในระบบ
     </div>
 </div>

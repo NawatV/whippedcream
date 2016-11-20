@@ -18,7 +18,7 @@
      <link rel="stylesheet" type="text/css" href="assets/js/bootstrap-daterangepicker/daterangepicker.css" /> -->
 
     <!-- Custom styles for this template -->
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/loginPage.css" rel="stylesheet">
     <link href="assets/css/style-responsive.css" rel="stylesheet">
 
     <link rel="stylesheet" href="/assets/css/sweetalert.css">
@@ -42,10 +42,9 @@ MAIN CONTENT
 *********************************************************************************************************************************************************** -->
 <div id="login-page">
     <div class="container">
-        {{$errors->first()}}
-        @if($errors->first() != '')
+        @if(count($errors) > 0)
             <script>
-                swal('ไม่มีรายชื่อผู้ใช้ภายในระบบ!', 'ลองกรอก Usernam, Password อีกครั้ง!', 'error');
+                swal('ไม่มีรายชื่อผู้ใช้ภายในระบบ!', 'ลองใส่ Username หรือ Password อีกครั้ง', 'error');
             </script>
         @endif
 
@@ -60,12 +59,11 @@ MAIN CONTENT
                 <div class="form-group">
                     <button class="btn btn-theme col-sm-5" type="submit"><i class="fa fa-lock"></i> เข้าสู่ระบบ</button>
                     <button class="btn btn-theme col-sm-5 col-sm-offset-2" type="button"
-                            onclick="window.location.href='{{url('/blank')}}'"><i class="fa fa-lock"></i> ลงทะเบียน
+                            onclick="window.location.href='{{url('/register')}}'"><i class="fa fa-lock"></i> ลงทะเบียน
                     </button>
                 </div>
                 <br>
             </div>
-
 
         </form>
 
@@ -75,8 +73,6 @@ MAIN CONTENT
 <!-- js placed at the end of the document so the pages load faster -->
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
-
-
 
 
 </body>

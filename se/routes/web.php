@@ -50,9 +50,11 @@ Route::post('/showNewProfile', 'UserController@editPatientInformation');
 
 
 
-//ดูประวัติผู้ป่วยตัวเองมั้ง ยังไม่ทำ
-Route::get('/seePatientInformation', 'UserController@getSearchPatientInformation');
-
+//ดูประวัติผู้ป่วยตัวเอง
+Route::get('/myPatientInformation', 'UserController@myPatientInformation');
+//แก้ประวัติผู้ป่วยตัวเอง
+Route::post('/myEditedPatientInformation', 'UserController@editMyPatientInformation');
+Route::post('/seeEditedMyPatientInformation', 'UserController@seeEditedMyPatientInformation');
 
 
 

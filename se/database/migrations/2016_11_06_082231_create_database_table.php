@@ -27,6 +27,12 @@ class CreateDatabaseTable extends Migration
             $table->string('address');
             $table->string('userType');
         });
+        
+        Schema::create('department', function (Blueprint $table) {
+            $table->increments('departmentId');
+            $table->string('departmentName');
+            $table->string('location');
+        });
 
         Schema::create('patient', function (Blueprint $table) {
             $table->integer('patientId')->unsigned();
@@ -74,12 +80,6 @@ class CreateDatabaseTable extends Migration
             $table->string('adminNumber')->unique();
             $table->primary('adminId');
             $table->foreign('adminId')->references('userId')->on('user');
-        });
-
-        Schema::create('department', function (Blueprint $table) {
-            $table->increments('departmentId');
-            $table->string('departmentName');
-            $table->string('location');
         });
 
         Schema::create('schedule', function (Blueprint $table) {

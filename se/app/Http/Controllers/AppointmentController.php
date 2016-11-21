@@ -87,7 +87,7 @@ class AppointmentController extends Controller
     public function staffStore(Request $request)
     {
         //return dd($request->all());
-        $patient = Patient::where('hn', '=', $request->patientId)->first();    
+        $patient = Patient::where('hn', '=', $request->patientId)->first();
         $appointment = Appointment::find($request->hn);
         $appointment = new Appointment();
         $appointment -> symptom = $request->symptom;
@@ -104,7 +104,7 @@ class AppointmentController extends Controller
             $appointment -> appTime = "13:00";
         }
 
-        $appointment -> patientId = $patient->patientId; 
+        $appointment -> patientId = $patient->patientId;
         $appointment -> save();
         return redirect() -> action('AppointmentController@index');
 
@@ -120,7 +120,7 @@ class AppointmentController extends Controller
     public function walkInStore(Request $request)
     {
         //return dd($request->all());
-        $patient = Patient::where('hn', '=', $request->patientId)->first();    
+        $patient = Patient::where('hn', '=', $request->patientId)->first();
         $appointment = Appointment::find($request->hn);
         $appointment = new Appointment();
         $appointment -> symptom = $request->symptom;
@@ -137,7 +137,7 @@ class AppointmentController extends Controller
             $appointment -> appTime = "13:00";
         }
 
-        $appointment -> patientId = $patient->patientId; 
+        $appointment -> patientId = $patient->patientId;
         $appointment -> save();
         return redirect() -> action('AppointmentController@index');
     }
@@ -207,7 +207,7 @@ class AppointmentController extends Controller
         $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('friPeriod', '!=', 0)->get();
       }
       elseif(date('l',  strtotime('today'))=="Saturday"){
-        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('satPeriod', '!=', 0)->get();  
+        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('satPeriod', '!=', 0)->get();
       }
       elseif(date('l',  strtotime('today'))=="Sunday"){
         $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('sunPeriod', '!=', 0)->get();
@@ -241,7 +241,7 @@ class AppointmentController extends Controller
         $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('friPeriod', '!=', 0)->get();
       }
       elseif(date('l',  strtotime('today'))=="Saturday"){
-        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('satPeriod', '!=', 0)->get();  
+        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('satPeriod', '!=', 0)->get();
       }
       elseif(date('l',  strtotime('today'))=="Sunday"){
         $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('sunPeriod', '!=', 0)->get();
@@ -864,6 +864,24 @@ class AppointmentController extends Controller
             $tmp = array("fastestTime", $workDay);
             array_push($scheduleArray, $tmp);
             array_push($scheduleArray,$disabledDates);
+            //เพิ่มตรง toDayPeriod สำหรับ walkIn
+            $toDay = date('l',strtotime('today'));
+            if($toDay == "Sunday"){
+              $tmp = array("toDayPeriod",Doctor::find($doctor->doctorId)-> schedule->sunPeriod);
+            }elseif ($toDay == "Monday") {
+              $tmp = array("toDayPeriod",Doctor::find($doctor->doctorId)-> schedule->monPeriod);
+            }elseif ($toDay == "Tuesday"){
+              $tmp = array("toDayPeriod",Doctor::find($doctor->doctorId)-> schedule->tuePeriod);
+            }elseif ($toDay == "Wednesday"){
+              $tmp = array("toDayPeriod",Doctor::find($doctor->doctorId)-> schedule->wedPeriod);
+            }elseif ($toDay == "Thursday"){
+              $tmp = array("toDayPeriod",Doctor::find($doctor->doctorId)-> schedule->thuPeriod);
+            }elseif ($toDay == "Friday"){
+              $tmp = array("toDayPeriod",Doctor::find($doctor->doctorId)-> schedule->friPeriod);
+            }elseif ($toDay == "Saturday"){
+              $tmp = array("toDayPeriod",Doctor::find($doctor->doctorId)-> schedule->satPeriod);
+            }
+            array_push($scheduleArray,$tmp);
         return $scheduleArray;
     }
 

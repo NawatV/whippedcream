@@ -29,6 +29,7 @@ Route::get('/register', function () {
     return view('regis');
 });
 
+Route::get('/testlogin', 'UserController@login_temp');
 
 
 //After login ==========================================

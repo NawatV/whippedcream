@@ -34,17 +34,7 @@
           <div class="container-fluid">
             <div class="container">
             <h4 class="mb"><i class="fa fa-angle-right"></i> &nbsp;ข้อมูลทั่วไป</h4>
-            <form class="form-horizontal style-form" action="findPatientFromHnIdNameForVitalSign" method="post">
-                <input type="hidden" name="userId" value="{{$patients->userId}}">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <button type="submit" class="btn btn-primary pull-right"> ดูอาการทั่วไป</button>
-            </form>
-            <form class="form-horizontal style-form" action="findPatientFromHnIdNameForDiagnosis" method="post">
-                <input type="hidden" name="userId" value="{{$patients->userId}}">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <button type="submit" class="btn btn-primary pull-right"> ดูข้อมูลวินิจฉัย</button>
-            </form>
-          </div>
+
 			<div class="form-horizontal style-form">
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">รหัสประจำตัวผู้ป่วย</label>

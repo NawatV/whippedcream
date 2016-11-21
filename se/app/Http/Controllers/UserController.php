@@ -16,9 +16,23 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
 //ของผู้ป่วย
+
+
+		//
+		// public function login_temp(Request $request)
+		//     {
+		//       $request->session()->put([
+		//         'userId' => 6,
+		//         'userType' => 'patient',
+		//         'name' => 'patient1Nameshhhssstest'
+		//       ]);
+		//       return view('welcome');
+		//     }
+
+
 public function myPatientInformation(Request $request)
 	{
-		return dd($request->session()->get('userId'));
+
 		$patients_hn = $request->session()->get('userId');
 		$patients = User::where('userId', $patients_hn)->first();
 		$patients2 = Patient::where('patientId', $patients_hn)->first(); // patients2 Patient query

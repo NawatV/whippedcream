@@ -26,14 +26,14 @@
     @endif
 
 
-    <h1>
-        {{session('userId')}}
-        <br>
-        {{session('userType')}}
-        <br>
-        {{session('name')}}
-        <br>
-    </h1>
+    {{--<h1>--}}
+        {{--{{session('userId')}}--}}
+        {{--<br>--}}
+        {{--{{session('userType')}}--}}
+        {{--<br>--}}
+        {{--{{session('name')}}--}}
+        {{--<br>--}}
+    {{--</h1>--}}
 
 
 

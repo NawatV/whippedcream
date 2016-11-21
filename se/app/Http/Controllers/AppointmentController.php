@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateAppointmentRequest;
 
 use App\Model\Appointment;
 use App\Model\Doctor;
@@ -64,26 +65,30 @@ class AppointmentController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(CreateAppointmentRequest $request)
     {
-        //return dd($request->all());
-        $appointment = new Appointment();
-        $appointment->symptom = $request->symptom;
-        if ($request->doctorId == "0") {
-            $appointment->doctorId = Department::find($request->departmentId)->doctor[0]->doctorId;
-        } else {
-            $appointment->doctorId = $request->doctorId;
-        }
-        $appointment->appDate = $request->appDate;
-        if ($request->appTime == "1") {
-            $appointment->appTime = "9:00";
-        } elseif ($request->appTime == "2") {
-            $appointment->appTime = "13:00";
+        $user = User::where('userId', session('userId'))->first();
+        if ($user->idNumber === $request->patientId or $user->patient->hn === $request->patientId) {
+            $appointment = new Appointment();
+            $appointment->symptom = $request->symptom;
+            if ($request->doctorId == "0") {
+                $appointment->doctorId = Department::find($request->departmentId)->doctor[0]->doctorId;
+            } else {
+                $appointment->doctorId = $request->doctorId;
+            }
+            $appointment->appDate = $request->appDate;
+            if ($request->appTime == "1") {
+                $appointment->appTime = "9:00";
+            } elseif ($request->appTime == "2") {
+                $appointment->appTime = "13:00";
+            }
+
+            $appointment->patientId = $request->session()->get('userId');//wait for user login
+            $appointment->save();
+            return redirect()->action('AppointmentController@index');
         }
 
-        $appointment->patientId = $request->session()->get('userId');//wait for user login
-        $appointment->save();
-        return redirect()->action('AppointmentController@index');
+        return back()->withErrors('e');
     }
 
     public function staffCreate()
@@ -937,12 +942,14 @@ class AppointmentController extends Controller
         }
     }
 
-    public function staffSearchPatient(){
+    public function staffSearchPatient()
+    {
         $patients = array();
-        return view('appointment.staffsearchpatient',compact('patients'));
+        return view('appointment.staffsearchpatient', compact('patients'));
     }
 
-    public function staffSearchPatientFound(Request $request){
+    public function staffSearchPatientFound(Request $request)
+    {
         $patients_hn = Patient::where('hn', $request->input('hnNumber'))->value('patientId');
         $patients = User::where('userId', $patients_hn)->first();
         if ($patients == '') {
@@ -957,7 +964,7 @@ class AppointmentController extends Controller
             $patients_hn = Patient::where('patientId', $patients->userId)->value('patientId');
         }
         $appointments = Appointment::where('patientId', $patients_hn)->get();
-        return view('appointment.staffindex1',compact('appointments'));
+        return view('appointment.staffindex1', compact('appointments'));
     }
 
 }

@@ -46,17 +46,14 @@
 @if(count($errors)>0)
     <script>
         swal({
-            title: "ไม่สามารถลงทะเบียนได้",
-            text: "กรุณาใส่ข้อมูลให้ครบทุกช่อง",
+            title: "รหัสประจำตัวประชาชน/เลขรหัสโรงพยาบาล ไม่ถูกต้อง",
+            text: "กรุราใส่ใหม่อีกครั้ง",
             type: "error",
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "ย้อนกลับไปแก้ไข",
+            confirmButtonText: "แก้ไข",
             closeOnConfirm: true
         });
     </script>
-    {{--@foreach($errors->all() as $error)--}}
-    {{--{{$error}}<br>--}}
-    {{--@endforeach--}}
 @endif
 
 <div class="login-page">

@@ -12,9 +12,7 @@
         <div class="col-lg-12">
             <div class="form-panel">
                 <div class="container-fluid">
-                    <div class="container">
-                        <h4 class="mb"><i class="fa fa-angle-right"></i> &nbsp;แก้ไขข้อมูลทั่วไป</h4>
-                    </div>
+                    <h4 class="mb"><i class="fa fa-angle-right"></i> &nbsp;แก้ไขข้อมูลทั่วไป</h4>
                     <form class="form-horizontal style-form" action="seeEditedMyPatientInformation" method="post">
                         <input type="hidden" name="userId" value="{{$patients->userId}}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -59,7 +57,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">ที่อยู่</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" value="{{$patients->address}}" name="address">
+                                <textarea name="address" class="form-control textareaControl" rows="4">
+                                    {{$patients->address}}
+                                </textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -89,9 +89,17 @@
                                        name="allergen">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary pull-right"> ยืนยัน</button>
+                        <div class="form-group">
+                            <div class="col-lg-offset-3 col-sm-2 col-lg-2">
+                                <button type="submit" class="btn btn-success btn-block" Z> ยืนยัน</button>
+                            </div>
+                            <div class="col-lg-offset-2 col-sm-2 col-lg-2">
+                                <a href="{{ URL::to('/myPatientInformation') }}" class="btn btn-danger btn-block">
+                                    ยกเลิก</a>
+                            </div>
+
+                        </div>
                     </form>
-                    <a href="{{ URL::to('/myPatientInformation') }}" class="btn btn-primary pull-right"> ยกเลิก</a>
                 </div>
             </div>
         </div>

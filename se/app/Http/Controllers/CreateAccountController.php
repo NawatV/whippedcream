@@ -30,10 +30,15 @@ class CreateAccountController extends Controller
         if((strlen($phoneNumber) != 10) or (!is_numeric($phoneNumber))){
             return False;
         }
-        if(substr($phoneNumber, 0, 2) != '08' or substr($phoneNumber, 0, 2) != '09' ){
-            return False;
+
+        if(substr($phoneNumber, 0, 2) === '08'){
+            return True;
         }
-        return True;
+        if(substr($phoneNumber, 0, 2) === '09' ){
+            return True;
+        }
+
+        return false;
     }
     private function checkSSNFormat($ssn)
     {

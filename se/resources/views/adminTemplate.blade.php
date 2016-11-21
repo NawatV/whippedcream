@@ -67,14 +67,16 @@
 
 <body>
 
-@if (session('userType') === 'admin')
+@if (session('userType') === 'admin' and session('status'))
     <script>
         swal("{{session('status')}}", "", "success");
+        {{session()->forget('status')}}
     </script>
+@elseif(session('userType') === 'admin')
 @else
     <script>
         {{session(['unauthorized' => 'e'])}}
-        window.location.href = "/homepage";
+                window.location.href = "/homepage";
     </script>
 @endif
 

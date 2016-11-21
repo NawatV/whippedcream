@@ -17,6 +17,9 @@
     <link href="{{url('assets/css/style.css')}}" rel="stylesheet">
     <link href="{{url('assets/css/style-responsive.css')}}" rel="stylesheet">
 
+    <link href="{{url('assets/css/afterLogin.css')}}" rel="stylesheet">
+
+
     <link rel="stylesheet" href="/assets/css/sweetalert.css">
     <script src="/assets/js/sweetalert.min.js"></script>
     <script src="/assets/js/jquery-1.8.3.min.js"></script>
@@ -34,20 +37,22 @@
     <header class="header black-bg">
 
         <!--logo start-->
-        <a class="logo"><b>Whipped Cream</b></a>
+        <a class="logo"><b>WhippedCream System 0.1</b></a>
         <!--logo end-->
 
         <div class="top-menu">
             <ul class="nav pull-right top-menu">
-                {{--<a class="logo" postion="right"><i class="fa fa-user"></i>&nbsp;คุณ{{$name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--}}
-                <a class="logo" postion="right"><i class="fa fa-user"></i>&nbsp;คุณ{{$request->session()->get('name')}}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="logo" postion="right" style="margin-right: 30px">
+                    <i class="fa fa-user"></i>&nbspคุณ{{session('name')}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </a>
                 <li>
-                    <a href="/logout" class="btn btn-danger logout">ออกจากระบบ</a>
+                    <a href="/logout" class="btn btn-danger logout">
+                        ออกจากระบบ
+                    </a>
                 </li>
             </ul>
         </div>
+
     </header>
     <!--header end-->
 

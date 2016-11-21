@@ -1,0 +1,13 @@
+.midImage {
+    text-align: center;
+    overflow: hidden;
+}
+.midImage img{
+    position: fixed;
+    display: block;
+    right: 0px;
+    width: 60%;
+    height: auto;
+    overflow: hidden;
+    opacity: 0.3;
+}

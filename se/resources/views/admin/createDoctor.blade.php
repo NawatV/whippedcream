@@ -100,7 +100,7 @@
                     <div class="col-xs-5 col-lg-5" align="left" style="padding-left: 5px">
                         <label class="col-xs-5 col-lg-5 control-label">ชื่อ</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" name="firstname">
+                            <input type="text" class="form-control" name="firstname" value="{{old('firstname')}}">
                         </div>
                     </div>
                     <div class="col-xs-7 col-lg-7" align="left">

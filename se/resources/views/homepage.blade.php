@@ -1,25 +1,6 @@
 @extends('layouts.theme')
 
 @section('css')
-    <style>
-        .midImage {
-            text-align: center;
-            overflow: hidden;
-        }
-
-        img {
-            position: fixed;
-            display: block;
-            right: 0px;
-            width: 60%;
-            height: auto;
-            overflow: hidden;
-            opacity: 0.3;
-        }
-    </style>
-
-
-
 
 @endsection
 
@@ -27,6 +8,7 @@
     @if (session('status'))
         <script>
             swal("{{session('status')}}", "", "success");
+            {{session()->forget('status')}}
         </script>
     @endif
     @if (session('unauthorized'))

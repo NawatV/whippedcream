@@ -11,8 +11,6 @@
 |
 */
 
-
-
 //-----Login------
 Route::get('/', 'UserController@loginForm');
 Route::get('/login', 'UserController@loginForm');
@@ -56,29 +54,47 @@ Route::group(['middleware' => 'login'], function (){
     /*end-routes for admin*/
 
 
+
+
+
+//----vitalSign-----
+    Route::get('/dispensation', 'TreatmentController@getDispensationPage');
+    Route::post('/dispensation', 'TreatmentController@editPrescription');
+
+    Route::get('/dispensation/list', 'TreatmentController@getNumberPrescription');
+    Route::get('/dispensation/{id}', 'TreatmentController@getPrescription');
+    Route::get('/dispensation/confirm/{id}', 'TreatmentController@confirmPrescription');
+
+    Route::get('/vitalsign', 'TreatmentController@getVitalSignForm');
+    Route::post('/vitalsign', 'TreatmentController@saveVitalSignForm');
+
+//----diagnosis-----
+    Route::get('/diagnosis', 'TreatmentController@getDiagnosisForm');
+    Route::post('/diagnosis', 'TreatmentController@saveDiagnosisForm');
+
+
+
+
+
 });
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Route::get('/blank', 'OtherController@blankPage');
-
-//----vitalSign-----
-Route::get('/vitalsign', 'TreatmentController@getVitalSignForm');
-Route::post('/vitalsign', 'TreatmentController@saveVitalSignForm');
-
-
-
-//----diagnosis-----
-Route::get('/diagnosis', 'TreatmentController@getDiagnosisForm');
-Route::post('/diagnosis', 'TreatmentController@saveDiagnosisForm');
-
-
-
-
-
-
-
-
 
 //========================================================================================================
 //=========================== เอา Route ทั้งหมด ไว้ข้างบน เท่านั้น !!! =======================================
@@ -87,6 +103,3 @@ Route::post('/diagnosis', 'TreatmentController@saveDiagnosisForm');
 Route::any('{catchall}', function() {
     return Response::view('errors.404', array(), 404);
 })->where('catchall', '.*');
-
-
-

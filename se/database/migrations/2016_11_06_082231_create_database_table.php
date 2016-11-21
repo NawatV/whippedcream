@@ -34,6 +34,11 @@ class CreateDatabaseTable extends Migration
             $table->string('location');
         });
 
+        Schema::create('department', function (Blueprint $table) {
+            $table->increments('departmentId');
+            $table->string('departmentName');
+        });
+
         Schema::create('patient', function (Blueprint $table) {
             $table->integer('patientId')->unsigned();
             $table->char('bloodType',2)->nullable();
@@ -186,13 +191,13 @@ class CreateDatabaseTable extends Migration
         Schema::dropIfExists('leaving');
         Schema::dropIfExists('appointment');
         Schema::dropIfExists('schedule');
-        Schema::dropIfExists('department');
         Schema::dropIfExists('admin');
         Schema::dropIfExists('staff');
         Schema::dropIfExists('pharmacist');
         Schema::dropIfExists('nurse');
         Schema::dropIfExists('doctor');
         Schema::dropIfExists('patient');
+        Schema::dropIfExists('department');
         Schema::dropIfExists('user');
     }
 }

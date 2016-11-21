@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
+use Request;
 
 use App\Model\Appointment;
 use App\Model\Doctor;
@@ -13,6 +14,9 @@ use DB;
 use App\Model\Schedule;
 use App\Model\Leaving;
 use Barryvdh\DomPDF\Facade as PDF;
+use App\Model\Admin;
+
+
 
 class OtherController extends Controller
 {
@@ -36,4 +40,16 @@ class OtherController extends Controller
         session()->flush();
         return redirect('/');
     }
+
+
+
+
+
+
+
+
+
+
+
+
 }

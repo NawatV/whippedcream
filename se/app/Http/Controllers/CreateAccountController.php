@@ -600,7 +600,7 @@ class CreateAccountController extends Controller
             return redirect('createAdmin');
         }
         /*end*/ 
-        $new_pass = self::generatePassword();
+        $new_pass = $input['password'];
         $new_user->password = bcrypt($new_pass);
         $new_user->address = $input['address'];
         /*thai or eng*/

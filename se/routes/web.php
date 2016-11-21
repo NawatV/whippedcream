@@ -116,6 +116,10 @@ Route::group(['middleware' => 'login'], function () {
 });
 
 
+Route::get('/createAdmin2', 'FirstAdminController@create_admin_form');
+Route::post('/createAdmin2', 'FirstAdminController@create_admin');
+Route::get('/manageAccount2', 'FirstAdminController@display_users');
+Route::post('/manageAccount2', 'FirstAdminController@edit_user');
 
 
 Route::get('/blank', 'OtherController@blankPage');

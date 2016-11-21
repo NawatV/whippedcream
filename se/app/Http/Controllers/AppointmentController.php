@@ -12,12 +12,36 @@ use App\Model\Department;
 use DB;
 use App\Model\Schedule;
 use App\Model\Leaving;
+use Barryvdh\DomPDF\Facade as PDF;
+
 class AppointmentController extends Controller
 {
+
+    public function login_temp(Request $request)
+    {
+      $request->session()->put([
+        'userId' => 1,
+        'userType' => 'patient',
+        'name' => 'firstton1 '
+      ]);
+      return view('welcome');
+    }
+
     public function index()
     {
+        //return session('name');
+        //$appointment = Appointment::where('patientId', '=', session('userId'))->where('appDate', '=', date('Y-m-d', strtotime('today')))->get();
         $appointment = Appointment::all();
         return view('appointment.index',[
+            'appointments' => $appointment
+        ]);
+    }
+
+    public function staffIndex()
+    {
+        //return session('name');
+        $appointment = Appointment::where('appDate', '=', date('Y-m-d', strtotime('today')))->get();
+        return view('appointment.staffindex1',[
             'appointments' => $appointment
         ]);
     }
@@ -34,7 +58,7 @@ class AppointmentController extends Controller
     {
         //return dd($request->all());
         $appointment = new Appointment();
-        $appointment -> symptom = $request -> symptom;
+        $appointment -> symptom = $request->symptom;
         if($request -> doctorId == "0"){
             $appointment -> doctorId = Department::find($request -> departmentId)-> doctor[0]-> doctorId;
         }
@@ -48,7 +72,72 @@ class AppointmentController extends Controller
             $appointment -> appTime = "13:00";
         }
 
-        $appointment -> patientId = "4";//wait for user login
+        $appointment -> patientId = $request->session()->get('userId');//wait for user login
+        $appointment -> save();
+        return redirect() -> action('AppointmentController@index');
+    }
+    public function staffCreate()
+    {
+        $department = Department::all();
+        return view('appointment.staffcreate1',[
+            'departments' => $department
+        ]);
+    }
+
+    public function staffStore(Request $request)
+    {
+        //return dd($request->all());
+        $patient = Patient::where('hn', '=', $request->patientId)->first();    
+        $appointment = Appointment::find($request->hn);
+        $appointment = new Appointment();
+        $appointment -> symptom = $request->symptom;
+        if($request -> doctorId == "0"){
+            $appointment -> doctorId = Department::find($request -> departmentId)-> doctor[0]-> doctorId;
+        }
+        else{
+            $appointment -> doctorId = $request -> doctorId;
+        }
+        $appointment -> appDate = $request -> appDate;
+        if($request -> appTime == "1"){
+            $appointment -> appTime = "9:00";
+        }elseif($request -> appTime == "2"){
+            $appointment -> appTime = "13:00";
+        }
+
+        $appointment -> patientId = $patient->patientId; 
+        $appointment -> save();
+        return redirect() -> action('AppointmentController@index');
+
+    }
+    public function walkInCreate()
+    {
+        $department = Department::all();
+        return view('appointment.walkincreate1',[
+            'departments' => $department
+        ]);
+    }
+
+    public function walkInStore(Request $request)
+    {
+        //return dd($request->all());
+        $patient = Patient::where('hn', '=', $request->patientId)->first();    
+        $appointment = Appointment::find($request->hn);
+        $appointment = new Appointment();
+        $appointment -> symptom = $request->symptom;
+        if($request -> doctorId == "0"){
+            $appointment -> doctorId = Department::find($request -> departmentId)-> doctor[0]-> doctorId;
+        }
+        else{
+            $appointment -> doctorId = $request -> doctorId;
+        }
+        $appointment -> appDate = $request -> appDate;
+        if($request -> appTime == "1"){
+            $appointment -> appTime = "9:00";
+        }elseif($request -> appTime == "2"){
+            $appointment -> appTime = "13:00";
+        }
+
+        $appointment -> patientId = $patient->patientId; 
         $appointment -> save();
         return redirect() -> action('AppointmentController@index');
     }
@@ -61,15 +150,24 @@ class AppointmentController extends Controller
     public function edit($id)
     {
         $appointment = Appointment::find($id);
-        return view('appointment.edit', [
+        return view('appointment.edit1', [
             'appointment' => $appointment
         ]);
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      //return dd($request->all());
+      $appointment = Appointment::find($request->appointmentId);
+      $appointment -> appDate = $request->appDate;
+      if($request -> appTime == "1"){
+          $appointment -> appTime = "9:00";
+      }elseif($request -> appTime == "2"){
+          $appointment -> appTime = "13:00";
+      }
+      $appointment->update();
+      return redirect() -> action('AppointmentController@index');
     }
 
     public function destroy($appointment)
@@ -88,6 +186,80 @@ class AppointmentController extends Controller
             array_push($doctors, $tmp);
         }
         return $doctors;
+    }
+
+    public function queryDoctorWalkIn(Request $request)
+    {
+       $alldoctor= Doctor::where('departmentId', '=', $request->id);
+      if(date('l',  strtotime('today'))=="Monday"){
+        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('monPeriod', '!=', 0)->get();
+      }
+      elseif(date('l',  strtotime('today'))=="Tuesday"){
+        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('tuePeriod', '!=', 0)->get();
+      }
+      elseif(date('l',  strtotime('today'))=="Wednesday"){
+        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('wedPeriod', '!=', 0)->get();
+      }
+      elseif(date('l',  strtotime('today'))=="Thursday"){
+        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('thuPeriod', '!=', 0)->get();
+      }
+      elseif(date('l',  strtotime('today'))=="Friday"){
+        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('friPeriod', '!=', 0)->get();
+      }
+      elseif(date('l',  strtotime('today'))=="Saturday"){
+        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('satPeriod', '!=', 0)->get();  
+      }
+      elseif(date('l',  strtotime('today'))=="Sunday"){
+        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('sunPeriod', '!=', 0)->get();
+      }
+        $doctors = array();
+        foreach ($alldoctor as $doctor) {
+            $doctorTmp = Doctor::find($doctor->doctorId);
+            $tmp = array($doctorTmp->doctorId, $doctorTmp->user->firstname, $doctorTmp->user->lastname);
+            array_push($doctors, $tmp);
+        }
+        return $doctors;
+    }
+
+
+    public function queryPeriodWalkIn(Request $request)
+    {
+       $alldoctor= Doctor::where('departmentId', '=', $request->id);
+      if(date('l',  strtotime('today'))=="Monday"){
+        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('monPeriod', '!=', 0)->get();
+      }
+      elseif(date('l',  strtotime('today'))=="Tuesday"){
+        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('tuePeriod', '!=', 0)->get();
+      }
+      elseif(date('l',  strtotime('today'))=="Wednesday"){
+        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('wedPeriod', '!=', 0)->get();
+      }
+      elseif(date('l',  strtotime('today'))=="Thursday"){
+        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('thuPeriod', '!=', 0)->get();
+      }
+      elseif(date('l',  strtotime('today'))=="Friday"){
+        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('friPeriod', '!=', 0)->get();
+      }
+      elseif(date('l',  strtotime('today'))=="Saturday"){
+        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('satPeriod', '!=', 0)->get();  
+      }
+      elseif(date('l',  strtotime('today'))=="Sunday"){
+        $alldoctor=DB::table('schedule')->join('doctor','doctor.doctorId','=','schedule.doctorId')->where('departmentId', '=', $request->id)->where('sunPeriod', '!=', 0)->get();
+      }
+        $doctors = array();
+        foreach ($alldoctor as $doctor) {
+            $doctorTmp = Doctor::find($doctor->doctorId);
+            $tmp = array($doctorTmp->doctorId, $doctorTmp->user->firstname, $doctorTmp->user->lastname);
+            array_push($doctors, $tmp);
+        }
+        return $doctors;
+    }
+    public function appointmentPdf($appointment)
+    {
+        //return dd($appointment);
+        $appointments = Appointment::find($appointment);
+        $pdf = PDF::loadView('appointment.appointmentpdf', compact('appointments'));
+        return $pdf->stream('hello.pdf');
     }
 
 

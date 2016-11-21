@@ -62,7 +62,6 @@
                 <td>{{ $appointment -> appTime }}</td>
                 <td>{{ $appointment -> symptom }}</td>
                 <td>
-                    <a href = "{{ url('appointment/show/'.$appointment -> id) }}">ดูรายละเอียด</a>
                     <a href = "{{ url('appointment/'.$appointment -> appointmentId.'/edit') }}">เเก้ไข</a>
                     <form class="form-horizontal style-form" method="post" action="{{ url('deleteAppointment/'.$appointment -> appointmentId) }}">
                           <input type="hidden" name="_token" value="{{ csrf_token() }}">

@@ -202,10 +202,6 @@ function myFunction(params,fastestdate) {
                 var dd = date.getDate();
                 var mm = date.getMonth()+1;
                 var yy = date.getFullYear();
-                //ทำให้ format ตรง จาก วันที่ 3 ให้เป็น  03
-                if(dd<10) dd = '0'+dd;
-                if(mm<10) mm = '0'+mm;
-
                 var thisDate = yy+'-'+mm+'-'+dd;
                 var arrayOfDisabledDates = params[9];
                 if(arrayOfDisabledDates.indexOf(thisDate)!=-1) return false;

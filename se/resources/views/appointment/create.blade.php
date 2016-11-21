@@ -107,7 +107,7 @@
                                 <div class = "form-group">
                                     <div class = "col-sm-10">
                                         <input type="submit" class="btn btn-primary pull-right" value="บันทึก">
-                                        <a href = "" class="btn btn-primary">กลับ</a>
+                                        <a href = "/appointment" class="btn btn-primary">กลับ</a>
                                     </div>
                                 </div>
                   </form>

@@ -209,7 +209,7 @@ class ManageAccountController extends Controller
 		    			}
 		    		}
 		    		for($i = 0; $i < count($all_app); $i++){
-		    			/*PostponeAppointmentController::postponeAppointment($all_app[$i]);*/
+		    			PostponeAppointmentController::postponeAppointment($all_app[$i]);
 		    		}
 	    		}
 	    		$target_userType = $target_user->doctor;

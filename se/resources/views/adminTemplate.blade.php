@@ -21,11 +21,11 @@
     <link href="assets/css/addonAdminSection.css" rel="stylesheet">
 
 
-    {{--<link rel="stylesheet" type="text/css" href="assets/js/bootstrap-datepicker/css/datepicker.css"/>--}}
-    {{--<link rel="stylesheet" type="text/css" href="assets/js/bootstrap-daterangepicker/daterangepicker.css"/>--}}
+{{--<link rel="stylesheet" type="text/css" href="assets/js/bootstrap-datepicker/css/datepicker.css"/>--}}
+{{--<link rel="stylesheet" type="text/css" href="assets/js/bootstrap-daterangepicker/daterangepicker.css"/>--}}
 
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -50,22 +50,35 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        $( function() {
-            $( "#datepicker1" ).datepicker({
+        $(function () {
+            $("#datepicker1").datepicker({
                 dateFormat: "dd/mm/yy"
             });
-        } );
+        });
     </script>
 
 
-
-
-
+    <link rel="stylesheet" href="/assets/css/sweetalert.css">
+    <script src="/assets/js/sweetalert.min.js"></script>
+    <script src="/assets/js/jquery-1.8.3.min.js"></script>
 
 
 </head>
 
 <body>
+
+@if (session('userType') === 'admin')
+    <script>
+        swal("{{session('status')}}", "", "success");
+    </script>
+@else
+    <script>
+        {{session(['unauthorized' => 'e'])}}
+        window.location.href = "/homepage";
+    </script>
+@endif
+
+
 <section id="container" style="z-index: 1">
     <!-- **********************************************************************************************************************************************************
     TOP BAR CONTENT & NOTIFICATIONS
@@ -105,9 +118,10 @@
             <ul class="sidebar-menu" id="nav-accordion">
 
                 <div style="margin-top: 100px; margin-bottom: 20px">
-                <p class="centered" style=""><a href="/manageAccount"><img src="assets/img/lock_Large.png" class="img-circle"
-                                                                width="150"></a></p>
-                <h3 class="centered" style="color: white;">Administrator Mode</h3>
+                    <p class="centered" style=""><a href="/manageAccount"><img src="assets/img/lock_Large.png"
+                                                                               class="img-circle"
+                                                                               width="150"></a></p>
+                    <h3 class="centered" style="color: white;">Administrator Mode</h3>
                 </div>
 
                 <li class="mt">
@@ -169,15 +183,14 @@
     <!--main content end-->
 
 
-
     {{--<!--footer start-->--}}
     {{--<footer class="site-footer">--}}
-        {{--<div class="text-center">--}}
-            {{--2014 - Alvarez.is--}}
-            {{--<a href="blank.html#" class="go-top">--}}
-                {{--<i class="fa fa-angle-up"></i>--}}
-            {{--</a>--}}
-        {{--</div>--}}
+    {{--<div class="text-center">--}}
+    {{--2014 - Alvarez.is--}}
+    {{--<a href="blank.html#" class="go-top">--}}
+    {{--<i class="fa fa-angle-up"></i>--}}
+    {{--</a>--}}
+    {{--</div>--}}
     {{--</footer>--}}
     {{--<!--footer end-->--}}
 

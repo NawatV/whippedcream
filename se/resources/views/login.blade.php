@@ -21,7 +21,6 @@
     <link href="assets/css/loginPage.css" rel="stylesheet">
     <link href="assets/css/style-responsive.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="/assets/css/sweetalert.css">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -29,6 +28,7 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <link rel="stylesheet" href="/assets/css/sweetalert.css">
     <script src="/assets/js/sweetalert.min.js"></script>
     <script src="/assets/js/jquery-1.8.3.min.js"></script>
 

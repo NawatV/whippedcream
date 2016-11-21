@@ -8,7 +8,7 @@
 
 @if(session('userType') == 'patient')
     <li class="sub-menu">
-        <a class="leftnav" href="javascript:;">
+        <a class="leftnav" href="/myPatientInformation">
             <i class="fa fa-info-circle"></i><span>ข้อมูลส่วนตัว</span>
         </a>
     </li>
@@ -27,6 +27,12 @@
 
 @elseif(session('userType') == 'nurse')
     <li class="sub-menu">
+        <a class="leftnav" href="/searchPatientInformation">
+            <i class="fa fa-info-circle"></i><span>ข้อมูลผู้ป่วย</span>
+        </a>
+    </li>
+
+    <li class="sub-menu">
         <a class="leftnav" href="javascript:;">
             <i class="fa fa-calendar-check-o"></i><span>รายการนัดหมาย</span>
         </a>
@@ -38,11 +44,7 @@
         </a>
     </li>
 
-    <li class="sub-menu">
-        <a class="leftnav" href="javascript:;">
-            <i class="fa fa-info-circle"></i><span>ข้อมูลผู้ป่วย</span>
-        </a>
-    </li>
+
 @elseif(session('userType') == 'doctor')
     <li class="sub-menu">
         <a class="leftnav" href="javascript:;">

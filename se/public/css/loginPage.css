@@ -1,0 +1,19 @@
+.testbg {
+    background-color: orange;
+    color: navy;
+}
+
+.loginBg{
+    background-color: blue;
+}
+
+html,body{
+    height: 100%;
+}
+
+#login-page{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}

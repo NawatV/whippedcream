@@ -53,6 +53,49 @@ Route::group(['middleware' => 'login'], function () {
     Route::get('/manageDepartment', 'ManageDepartmentController@display_all_department');
     Route::post('/manageDepartment', 'ManageDepartmentController@edit_department');
 
+
+
+//    ===================================================================================================
+//    ===================================================================================================
+//    ===================================================================================================
+
+
+
+//ดูประวัติผู้ป่วย
+    Route::get('/searchPatientInformation', 'UserController@getSearchPatientInformation');
+    Route::post('/searchPatientInformation', 'UserController@findPatientFromHnIdName');
+
+
+//แก้ไขประวัติผู้ป่วย
+    Route::post('/editPatientInformation', 'UserController@searchPatientFromHnIdNameForEditProfile');
+    Route::post('/showNewProfile', 'UserController@editPatientInformation');
+
+
+//ดูประวัติผู้ป่วยตัวเอง
+    Route::get('/myPatientInformation', 'UserController@myPatientInformation');
+//แก้ประวัติผู้ป่วยตัวเอง
+    Route::post('/myEditedPatientInformation', 'UserController@editMyPatientInformation');
+    Route::post('/seeEditedMyPatientInformation', 'UserController@seeEditedMyPatientInformation');
+
+
+//แก้ไขประวัติคำวินิจฉัย
+//Route::get('/editDiagnosisHistory', 'DiagnosisHistoryController@editDiagnosisHistory');
+    Route::post('/findPatientFromHnIdNameForDiagnosis', 'DiagnosisHistoryController@findPatientFromHnIdNameForDiagnosis');
+//Route::post('/findPatientFromHnIdName/edit', 'DiagnosisHistoryController@editDiagnosis');
+    Route::get('/findPatientFromHnIdNameForDiagnosis/{diagnosis}/edit', 'DiagnosisHistoryController@editDiagnosisHistoryForm');
+    Route::post('/editDiagnosisHistory/{diagnosisId}/confirm', 'DiagnosisHistoryController@confirm');
+    Route::post('/editDiagnosisHistory/{diagnosisId}/delete', 'DiagnosisHistoryController@delete');
+
+
+//แก้ไขประวัติอาการทั่วไป
+//Route::get('/editDiagnosisHistory', 'DiagnosisHistoryController@editDiagnosisHistory');
+    Route::post('/findPatientFromHnIdNameForVitalSign', 'VitalSignHistoryController@findPatientFromHnIdNameForVitalSign');
+//Route::post('/findPatientFromHnIdName/edit', 'DiagnosisHistoryController@editDiagnosis');
+    Route::post('/seeVitalSignHistory', 'VitalSignHistoryController@seeVitalSignHistory');
+    Route::post('/seeEditVitalSignHistory', 'VitalSignHistoryController@seeEditVitalSignHistory');
+    Route::post('/editVitalSignHistory', 'VitalSignHistoryController@editVitalSignHistory');
+
+
     Route::get('/createDepartment', 'CreateDepartmentController@create_department_form');
     Route::post('/createDepartment', 'CreateDepartmentController@create_department');
     /*end-routes for admin*/
@@ -62,8 +105,6 @@ Route::group(['middleware' => 'login'], function () {
 //    ===================================================================================================
 
 //----vitalSign-----
-    Route::get('/dispensation', 'TreatmentController@getDispensationPage');
-    Route::post('/dispensation', 'TreatmentController@editPrescription');
 
     Route::get('/dispensation/list', 'TreatmentController@getNumberPrescription');
     Route::get('/dispensation/{id}', 'TreatmentController@getPrescription');
@@ -114,7 +155,21 @@ Route::group(['middleware' => 'login'], function () {
 //    ===================================================================================================
 
 
+    //แก้ไขประวัติการสั่งยา
+    Route::get('/editPrescriptionHistory', 'PrescriptionHistoryController@editPrescriptionHistory');
 
+    Route::get('/editDiagnosisHistory', 'DiagnosisHistoryController@editDiagnosisHistory');
+
+//ดูประวัติการสั่งยาของแพทย์
+    Route::get('/viewPrescriptionHistory', 'PrescriptionHistoryController@viewPrescriptionHistory');
+
+//ดูประวัติคำวินิจฉัย
+    Route::get('/viewDiagnosisHistory', 'DiagnosisHistoryController@viewDiagnosisHistory');
+
+
+    //    ===================================================================================================
+//    ===================================================================================================
+//    ===================================================================================================
 
 
 });

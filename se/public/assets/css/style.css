@@ -153,8 +153,8 @@ a, a:hover, a:focus {
 
 .btn-theme04 {
     color: #fff;
-    background-color: #ed5565;
-    border-color: #da4453;
+    background-color: #5cb85c;
+    border-color: #428442;
 }
 
 .btn-theme04:hover,
@@ -163,8 +163,8 @@ a, a:hover, a:focus {
 .btn-theme04.active,
 .open .dropdown-toggle.btn-theme04 {
     color: #fff;
-    background-color: #da4453;
-    border-color: #da4453;
+    background-color: #428442;
+    border-color: #2f5e2f;
 }
 
 .btn-clear-g {
@@ -2363,7 +2363,7 @@ label {
 }
 
 .site-min-height {
-    min-height: 900px;
+    /*min-height: 900px;*/
 }
 
 /*admin*/
@@ -2403,12 +2403,14 @@ label {
     padding-left: 25px;
     padding-bottom: 25px;
     padding-top: 25px;
+    /*background-color: darkred;*/
+    /*height: auto;*/
+    /*min-height: 100%;*/
 }
 .account-list-panel {
     position: relative;
     top: -20px;
-    height: 500px;
-    border: 1px solid white; 
+    border: 1px solid white;
     padding-top: 10px;
     background-color: #ffffff;
     overflow-y: scroll;
@@ -2500,3 +2502,4 @@ label {
     padding-bottom: 5px;
     border-radius: 10px;
 }
+

@@ -12,6 +12,7 @@ class OtherController extends Controller
     }
 
     public function homepage(Request $request){
+
         return view('homepage', compact('request'));
     }
 

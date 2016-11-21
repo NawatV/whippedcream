@@ -30,7 +30,7 @@ class CreateAccountController extends Controller
         if((strlen($phoneNumber) != 10) or (!is_numeric($phoneNumber))){
             return False;
         }
-        if(substr($phoneNumber, 0, 2) != '08'){
+        if(substr($phoneNumber, 0, 2) != '08' or substr($phoneNumber, 0, 2) != '09' ){
             return False;
         }
         return True;

@@ -26,7 +26,7 @@
 @section('content')
     @if (session('status'))
         <script>
-            swal("{{session('status')}}", "สามารถกดเลือกที่เมนูทางซ้าย เพื่อทำนัดหมายได้เลย", "success");
+            swal("{{session('status')}}", "", "success");
         </script>
     @endif
 

@@ -28,26 +28,33 @@ class UserController extends Controller
         $username = $request->input('username');
         $password = $request->input('password');
 
-        if($request->input('username') == '' or $request->input('password') == ''){
+        if ($request->input('username') == '' or $request->input('password') == '') {
             return redirect()->back()->withInput()->withErrors(['']);
         }
 
 
         //query in DBs
         $user = User::where('username', $username)->first();
-        if($user == ''){
+        if ($user == '') {
             return redirect()->back()->withInput()->withErrors(['']);
         }
 
 
-        if(Hash::check($password, $user->password)){
+        if (Hash::check($password, $user->password)) {
             $request->session()->put([
                 'userId' => $user->userId,
                 'userType' => $user->userType,
                 'name' => $user->firstname
             ]);
 
-            return redirect('homepage')->with('status', 'เข้าสู่ระบบ สำเร็จ');
+            if ($user->userType === 'nurse' or $user->userType === 'pharmacist' or $user->userType === 'staff' or $user->userType === 'doctor' or $user->userType === 'patient'){
+                return redirect('homepage')->with('status', 'เข้าสู่ระบบ สำเร็จ');
+
+            }elseif ($user->userType === 'admin'){
+                return redirect('manageAccount')->with('status', 'เข้าสู่ระบบ สำเร็จ');
+            }
+
+            return redirect()->back()->with('e', 'มีบางอย่างผิดพลาด');
         }
 
         return redirect()->back()->withInput()->withErrors(['']);
@@ -62,9 +69,6 @@ class UserController extends Controller
 //        1. Register
 //        2. Login
 //        3. Redirect
-
-
-
 
 
         //------ get inputs-----------------
@@ -109,10 +113,8 @@ class UserController extends Controller
         $newUser->userType = $userType;
 
 
-
         $encryptedPassword = bcrypt($password);
         $newUser->password = $encryptedPassword;
-
 
 
         $newUser->save();

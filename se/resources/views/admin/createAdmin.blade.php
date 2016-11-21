@@ -100,13 +100,13 @@
                     <div class="col-xs-5 col-lg-5" align="left" style="padding-left: 5px">
                         <label class="col-xs-5 col-lg-5 control-label">ชื่อ</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" name="firstname">
+                            <input type="text" class="form-control" name="firstname" value="{{Session::get('old_value')['firstname']}}">
                         </div>
                     </div>
                     <div class="col-xs-7 col-lg-7" align="left">
                         <label class="col-xs-2 col-lg-2 control-label">นามสกุล</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="lastname">
+                            <input type="text" class="form-control" name="lastname" value="{{Session::get('old_value')['lastname']}}">
                         </div>
                     </div>
                 </div>
@@ -115,7 +115,7 @@
                     <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
                         <label class="col-xs-2 col-lg-2 control-label">เลขประจำตัวประชาชน</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="ssn">
+                            <input type="text" class="form-control" name="ssn" value="{{Session::get('old_value')['ssn']}}">
                         </div>
                     </div>
                 </div>
@@ -123,7 +123,7 @@
                     <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
                         <label class="col-xs-2 col-lg-2 control-label">เลขประจำตัวผู้คุมระบบ</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="adminNumber">
+                            <input type="text" class="form-control" name="adminNumber" value="{{Session::get('old_value')['adminNumber']}}">
                         </div>
                     </div>
                 </div>
@@ -152,13 +152,13 @@
                     <div class="col-xs-5 col-lg-5" align="left" style="padding-left: 5px">
                         <label class="col-xs-5 col-lg-5 control-label">อีเมล</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" name="email">
+                            <input type="text" class="form-control" name="email" value="{{Session::get('old_value')['email']}}">
                         </div>
                     </div>
                     <div class="col-xs-7 col-lg-7" align="left">
                         <label class="col-xs-3 col-lg-3 control-label">เบอร์โทรศัพท์มือถือ</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="phoneNumber" placeholder="08XXXXXXXX หรือ 09XXXXXXXX">
+                            <input type="text" class="form-control" name="phoneNumber" placeholder="08XXXXXXXX หรือ 09XXXXXXXX" value="{{Session::get('old_value')['phoneNumber']}}">
                         </div>
                     </div>
                 </div>
@@ -166,13 +166,13 @@
                     <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
                         <label class="col-xs-2 col-lg-2 control-label">ที่อยู่</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="address">
+                            <input type="text" class="form-control" name="address" value="{{Session::get('old_value')['address']}}">
                         </div>
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col-xs-12 col-lg-12" align="center">
-                        <button type="submit" class="btn btn-theme04 btn-lg">สร้างบัญชี</button>
+                        <button type="submit" class="btn btn-theme04 btn-lg" >สร้างบัญชี</button>
                     </div>
                 </div>
 

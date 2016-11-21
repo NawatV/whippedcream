@@ -31,7 +31,7 @@ class ManageAccountController extends Controller
                 $users[$i]['index'] = $i + 1;
             }
 
-            return view('admin.manageAccount', compact('users', 'name', 'dep', 'ssn', 'id', 'wanted_userType') );
+            return view('admin.manageAccount', compact('users', 'name', 'dep', 'ssn', 'id', 'wanted_userType'));
         }
         $input = self::clearNull($input);
         $name = strtolower($input['name']);

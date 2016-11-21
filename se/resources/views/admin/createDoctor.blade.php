@@ -98,15 +98,25 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="row form-group">
                     <div class="col-xs-5 col-lg-5" align="left" style="padding-left: 5px">
-                        <label class="col-xs-5 col-lg-5 control-label">ชื่อ</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control" name="firstname" value="{{old('firstname')}}">
+                        <label class="col-xs-2 col-lg-2 control-label">ชื่อ</label>
+                        <div class="col-sm-9">
+                            @if(Session::has('old_value'))
+                                <input type="text" class="form-control" name="firstname"
+                                       value="{{Session::get('old_value')['firstname']}}">
+                            @else
+                                <input type="text" class="form-control" name="firstname">
+                            @endif
                         </div>
                     </div>
                     <div class="col-xs-7 col-lg-7" align="left">
                         <label class="col-xs-2 col-lg-2 control-label">นามสกุล</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="lastname">
+                            @if(Session::has('old_value'))
+                                <input type="text" class="form-control" name="lastname"
+                                       value="{{Session::get('old_value')['lastname']}}">
+                            @else
+                                <input type="text" class="form-control" name="lastname">
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -115,7 +125,12 @@
                     <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
                         <label class="col-xs-2 col-lg-2 control-label">เลขประจำตัวประชาชน</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="ssn">
+                            @if(Session::has('old_value'))
+                                <input type="text" class="form-control" name="ssn"
+                                       value="{{Session::get('old_value')['ssn']}}">
+                            @else
+                                <input type="text" class="form-control" name="ssn">
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -123,7 +138,14 @@
                     <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
                         <label class="col-xs-2 col-lg-2 control-label">เลขประจำตัวแพทย์</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="doctorNumber">
+                            @if(Session::has('old_value'))
+                                <input type="text" class="form-control" name="doctorNumber"
+                                       value="{{Session::get('old_value')['doctorNumber']}}">
+                            @else
+                                <input type="text" class="form-control" name="doctorNumber">
+                            @endif
+
+
                         </div>
                     </div>
                 </div>
@@ -144,10 +166,32 @@
                     <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
                         <label class="col-xs-2 col-lg-2 control-label">เพศ</label>
                         <div class="col-xs-10 col-lg-10">
-                            <input type="radio" name="gender" value="ชาย" style="margin-top: 8px; margin-right: 3px">
-                            ชาย </input>
-                            <input type="radio" name="gender" value="หญิง"
-                                   style="margin-top: 8px; margin-right: 3px; margin-left: 40px"> หญิง </input>
+                            @if(Session::has('old_value'))
+                                @if(Session::get('old_value')['gender'] == 'ชาย')
+                                    <input type="radio" name="gender" value="ชาย" checked
+                                           style="margin-top: 8px; margin-right: 3px"> ชาย </input>
+                                    <input type="radio" name="gender" value="หญิง"
+                                           style="margin-top: 8px; margin-right: 3px; margin-left: 40px"> หญิง </input>
+                                @elseif(Session::get('old_value')['gender'] == 'หญิง')
+                                    <input type="radio" name="gender" value="ชาย"
+                                           style="margin-top: 8px; margin-right: 3px">
+                                    ชาย </input>
+                                    <input type="radio" name="gender" value="หญิง" checked
+                                           style="margin-top: 8px; margin-right: 3px; margin-left: 40px"> หญิง </input>
+                                @else
+                                    <input type="radio" name="gender" value="ชาย"
+                                           style="margin-top: 8px; margin-right: 3px">
+                                    ชาย </input>
+                                    <input type="radio" name="gender" value="หญิง"
+                                           style="margin-top: 8px; margin-right: 3px; margin-left: 40px"> หญิง </input>
+                                @endif
+                            @else
+                                <input type="radio" name="gender" value="ชาย"
+                                       style="margin-top: 8px; margin-right: 3px">
+                                ชาย </input>
+                                <input type="radio" name="gender" value="หญิง"
+                                       style="margin-top: 8px; margin-right: 3px; margin-left: 40px"> หญิง </input>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -155,22 +199,40 @@
                     <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
                         <label class="col-xs-2 col-lg-2 control-label">วันเกิด</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control input-group date" id="datepicker1" name="birthDate"
-                                   placeholder="DD/MM/YYYY (ปี ค.ศ.)">
+                            @if(Session::has('old_value'))
+                                <input type="text" class="form-control input-group date" id="datepicker1"
+                                       name="birthDate"
+                                       placeholder="MM/DD/YYYY (ปี ค.ศ.)"
+                                       value="{{Session::get('old_value')['birthDate']}}">
+                            @else
+                                <input type="text" class="form-control input-group date" id="datepicker1"
+                                       name="birthDate"
+                                       placeholder="MM/DD/YYYY (ปี ค.ศ.)">
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col-xs-5 col-lg-5" align="left" style="padding-left: 5px">
-                        <label class="col-xs-5 col-lg-5 control-label">อีเมล</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control" name="email">
+                        <label class="col-xs-2 col-lg-2 control-label">อีเมล</label>
+                        <div class="col-sm-9">
+                            @if(Session::has('old_value'))
+                                <input type="text" class="form-control" name="email"
+                                       value="{{Session::get('old_value')['email']}}">
+                            @else
+                                <input type="text" class="form-control" name="email">
+                            @endif
                         </div>
                     </div>
                     <div class="col-xs-7 col-lg-7" align="left">
                         <label class="col-xs-3 col-lg-3 control-label">เบอร์โทรศัพท์มือถือ</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="phoneNumber" placeholder="08XXXXXXXX หรือ 09XXXXXXXX">
+                            @if(Session::has('old_value'))
+                                <input type="text" class="form-control" name="phoneNumber" placeholder="08XXXXXXXX"
+                                       value="{{Session::get('old_value')['phoneNumber']}}">
+                            @else
+                                <input type="text" class="form-control" name="phoneNumber" placeholder="08XXXXXXXX">
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -178,7 +240,12 @@
                     <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
                         <label class="col-xs-2 col-lg-2 control-label">ที่อยู่</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="address">
+                            @if(Session::has('old_value'))
+                                <input type="text" class="form-control" name="address"
+                                       value="{{Session::get('old_value')['address']}}">
+                            @else
+                                <input type="text" class="form-control" name="address">
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -190,7 +257,8 @@
                                 <div class="col-xs-12 col-lg-12">
                                     <label class="col-xs-2 col-lg-2 control-label">วันจันทร์</label>
                                     <input type="checkbox" name="mon_mor" value="1"
-                                           style="margin-top: 8px; margin-right: 3px"> 9:00-11:30 น. </input>
+                                           style="margin-top: 8px; margin-right: 3px">
+                                    9:00-11:30 น. </input>
                                     <input type="checkbox" name="mon_af" value="2"
                                            style="margin-top: 8px; margin-right: 3px; margin-left: 40px"> 13:00-15:30
                                     น. </input>
@@ -200,7 +268,8 @@
                                 <div class="col-xs-12 col-lg-12">
                                     <label class="col-xs-2 col-lg-2 control-label">วันอังคาร</label>
                                     <input type="checkbox" name="tue_mor" value="1"
-                                           style="margin-top: 8px; margin-right: 3px"> 9:00-11:30 น. </input>
+                                           style="margin-top: 8px; margin-right: 3px">
+                                    9:00-11:30 น. </input>
                                     <input type="checkbox" name="tue_af" value="2"
                                            style="margin-top: 8px; margin-right: 3px; margin-left: 40px"> 13:00-15:30
                                     น. </input>
@@ -210,7 +279,8 @@
                                 <div class="col-xs-12 col-lg-12">
                                     <label class="col-xs-2 col-lg-2 control-label">วันพุธ</label>
                                     <input type="checkbox" name="wed_mor" value="1"
-                                           style="margin-top: 8px; margin-right: 3px"> 9:00-11:30 น. </input>
+                                           style="margin-top: 8px; margin-right: 3px">
+                                    9:00-11:30 น. </input>
                                     <input type="checkbox" name="wed_af" value="2"
                                            style="margin-top: 8px; margin-right: 3px; margin-left: 40px"> 13:00-15:30
                                     น. </input>
@@ -220,7 +290,8 @@
                                 <div class="col-xs-12 col-lg-12">
                                     <label class="col-xs-2 col-lg-2 control-label">วันพฤหัสบดี</label>
                                     <input type="checkbox" name="thu_mor" value="1"
-                                           style="margin-top: 8px; margin-right: 3px"> 9:00-11:30 น. </input>
+                                           style="margin-top: 8px; margin-right: 3px">
+                                    9:00-11:30 น. </input>
                                     <input type="checkbox" name="thu_af" value="2"
                                            style="margin-top: 8px; margin-right: 3px; margin-left: 40px"> 13:00-15:30
                                     น. </input>
@@ -230,7 +301,8 @@
                                 <div class="col-xs-12 col-lg-12">
                                     <label class="col-xs-2 col-lg-2 control-label">วันศุกร์</label>
                                     <input type="checkbox" name="fri_mor" value="1"
-                                           style="margin-top: 8px; margin-right: 3px"> 9:00-11:30 น. </input>
+                                           style="margin-top: 8px; margin-right: 3px">
+                                    9:00-11:30 น. </input>
                                     <input type="checkbox" name="fri_af" value="2"
                                            style="margin-top: 8px; margin-right: 3px; margin-left: 40px"> 13:00-15:30
                                     น. </input>
@@ -240,7 +312,8 @@
                                 <div class="col-xs-12 col-lg-12">
                                     <label class="col-xs-2 col-lg-2 control-label">วันเสาร์</label>
                                     <input type="checkbox" name="sat_mor" value="1"
-                                           style="margin-top: 8px; margin-right: 3px"> 9:00-11:30 น. </input>
+                                           style="margin-top: 8px; margin-right: 3px">
+                                    9:00-11:30 น. </input>
                                     <input type="checkbox" name="sat_af" value="2"
                                            style="margin-top: 8px; margin-right: 3px; margin-left: 40px"> 13:00-15:30
                                     น. </input>
@@ -250,7 +323,8 @@
                                 <div class="col-xs-12 col-lg-12">
                                     <label class="col-xs-2 col-lg-2 control-label">วันอาทิตย์</label>
                                     <input type="checkbox" name="sun_mor" value="1"
-                                           style="margin-top: 8px; margin-right: 3px"> 9:00-11:30 น. </input>
+                                           style="margin-top: 8px; margin-right: 3px">
+                                    9:00-11:30 น. </input>
                                     <input type="checkbox" name="sun_af" value="2"
                                            style="margin-top: 8px; margin-right: 3px; margin-left: 40px"> 13:00-15:30
                                     น. </input>
@@ -258,6 +332,8 @@
                             </div>
                         </div>
                     </div>
+
+
                 </div>
                 <div class="row form-group">
                     <div class="col-xs-12 col-lg-12" align="center">
@@ -267,4 +343,9 @@
             </form>
         </div>
     </div>
+
+
+
+
+
 @stop

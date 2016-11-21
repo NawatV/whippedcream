@@ -90,93 +90,152 @@
             </div>
         </div>
     @endif
+
     <!--create-account-form-panel is new-->
-    <div class="paddingFormCreate">
-        <div class="create-account-form-panel">
-            <h4 class="ml mb"><i class="fa fa-angle-right"></i> สร้างบัญชีผู้ใช้: เภสัชกร</h4>
-            <form class="form-horizontal style-form" method="post">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <div class="row form-group">
-                    <div class="col-xs-5 col-lg-5" align="left" style="padding-left: 5px">
-                        <label class="col-xs-5 col-lg-5 control-label">ชื่อ</label>
-                        <div class="col-sm-7">
+    <div class="create-account-form-panel">
+        <h4 class="ml mb"><i class="fa fa-angle-right"></i> สร้างบัญชีผู้ใช้: เภสัชกร</h4>
+        <form class="form-horizontal style-form" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <div class="row form-group">
+                <div class="col-xs-5 col-lg-5" align="left" style="padding-left: 5px">
+                    <label class="col-xs-2 col-lg-2 control-label">ชื่อ</label>
+                    <div class="col-sm-9">
+                        @if(Session::has('old_value'))
+                            <input type="text" class="form-control" name="firstname"
+                                   value="{{Session::get('old_value')['firstname']}}">
+                        @else
                             <input type="text" class="form-control" name="firstname">
-                        </div>
+                        @endif
                     </div>
-                    <div class="col-xs-7 col-lg-7" align="left">
-                        <label class="col-xs-2 col-lg-2 control-label">นามสกุล</label>
-                        <div class="col-sm-10">
+                </div>
+                <div class="col-xs-7 col-lg-7" align="left">
+                    <label class="col-xs-2 col-lg-2 control-label">นามสกุล</label>
+                    <div class="col-sm-10">
+                        @if(Session::has('old_value'))
+                            <input type="text" class="form-control" name="lastname"
+                                   value="{{Session::get('old_value')['lastname']}}">
+                        @else
                             <input type="text" class="form-control" name="lastname">
-                        </div>
+                        @endif
                     </div>
                 </div>
+            </div>
 
-                <div class="row form-group">
-                    <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
-                        <label class="col-xs-2 col-lg-2 control-label">เลขประจำตัวประชาชน</label>
-                        <div class="col-sm-10">
+            <div class="row form-group">
+                <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
+                    <label class="col-xs-2 col-lg-2 control-label">เลขประจำตัวประชาชน</label>
+                    <div class="col-sm-10">
+                        @if(Session::has('old_value'))
+                            <input type="text" class="form-control" name="ssn"
+                                   value="{{Session::get('old_value')['ssn']}}">
+                        @else
                             <input type="text" class="form-control" name="ssn">
-                        </div>
+                        @endif
                     </div>
                 </div>
-                <div class="row form-group">
-                    <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
-                        <label class="col-xs-2 col-lg-2 control-label">เลขประจำตัวเภสัชกร</label>
-                        <div class="col-sm-10">
+            </div>
+            <div class="row form-group">
+                <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
+                    <label class="col-xs-2 col-lg-2 control-label">เลขประจำตัวเภสัชกร</label>
+                    <div class="col-sm-10">
+                        @if(Session::has('old_value'))
+                            <input type="text" class="form-control" name="pharmacistNumber"
+                                   value="{{Session::get('old_value')['pharmacistNumber']}}">
+                        @else
                             <input type="text" class="form-control" name="pharmacistNumber">
-                        </div>
+                        @endif
                     </div>
                 </div>
+            </div>
 
-                <div class="row form-group">
-                    <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
-                        <label class="col-xs-2 col-lg-2 control-label">เพศ</label>
-                        <div class="col-xs-10 col-lg-10">
+            <div class="row form-group">
+                <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
+                    <label class="col-xs-2 col-lg-2 control-label">เพศ</label>
+                    <div class="col-xs-10 col-lg-10">
+                        @if(Session::has('old_value'))
+                            @if(Session::get('old_value')['gender'] == 'ชาย')
+                                <input type="radio" name="gender" value="ชาย" checked
+                                       style="margin-top: 8px; margin-right: 3px"> ชาย </input>
+                                <input type="radio" name="gender" value="หญิง"
+                                       style="margin-top: 8px; margin-right: 3px; margin-left: 40px"> หญิง </input>
+                            @elseif(Session::get('old_value')['gender'] == 'หญิง')
+                                <input type="radio" name="gender" value="ชาย"
+                                       style="margin-top: 8px; margin-right: 3px"> ชาย </input>
+                                <input type="radio" name="gender" value="หญิง" checked
+                                       style="margin-top: 8px; margin-right: 3px; margin-left: 40px"> หญิง </input>
+                            @else
+                                <input type="radio" name="gender" value="ชาย"
+                                       style="margin-top: 8px; margin-right: 3px"> ชาย </input>
+                                <input type="radio" name="gender" value="หญิง"
+                                       style="margin-top: 8px; margin-right: 3px; margin-left: 40px"> หญิง </input>
+                            @endif
+                        @else
                             <input type="radio" name="gender" value="ชาย" style="margin-top: 8px; margin-right: 3px">
                             ชาย </input>
                             <input type="radio" name="gender" value="หญิง"
                                    style="margin-top: 8px; margin-right: 3px; margin-left: 40px"> หญิง </input>
-                        </div>
+                        @endif
                     </div>
                 </div>
-                <div class="row form-group">
-                    <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
-                        <label class="col-xs-2 col-lg-2 control-label">วันเกิด</label>
-                        <div class="col-sm-10">
+            </div>
+            <div class="row form-group">
+                <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
+                    <label class="col-xs-2 col-lg-2 control-label">วันเกิด</label>
+                    <div class="col-sm-10">
+                        @if(Session::has('old_value'))
                             <input type="text" class="form-control input-group date" id="datepicker1" name="birthDate"
-                                   placeholder="DD/MM/YYYY (ปี ค.ศ.)">
-                        </div>
+                                   placeholder="MM/DD/YYYY (ปี ค.ศ.)"
+                                   value="{{Session::get('old_value')['birthDate']}}">
+                        @else
+                            <input type="text" class="form-control input-group date" id="datepicker1" name="birthDate"
+                                   placeholder="MM/DD/YYYY (ปี ค.ศ.)">
+                        @endif
                     </div>
                 </div>
-                <div class="row form-group">
-                    <div class="col-xs-5 col-lg-5" align="left" style="padding-left: 5px">
-                        <label class="col-xs-5 col-lg-5 control-label">อีเมล</label>
-                        <div class="col-sm-7">
+            </div>
+            <div class="row form-group">
+                <div class="col-xs-5 col-lg-5" align="left" style="padding-left: 5px">
+                    <label class="col-xs-2 col-lg-2 control-label">อีเมล</label>
+                    <div class="col-sm-9">
+                        @if(Session::has('old_value'))
+                            <input type="text" class="form-control" name="email"
+                                   value="{{Session::get('old_value')['email']}}">
+                        @else
                             <input type="text" class="form-control" name="email">
-                        </div>
-                    </div>
-                    <div class="col-xs-7 col-lg-7" align="left">
-                        <label class="col-xs-3 col-lg-3 control-label">เบอร์โทรศัพท์มือถือ</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="phoneNumber" placeholder="08XXXXXXXX หรือ 09XXXXXXXX">
-                        </div>
+                        @endif
                     </div>
                 </div>
-                <div class="row form-group">
-                    <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
-                        <label class="col-xs-2 col-lg-2 control-label">ที่อยู่</label>
-                        <div class="col-sm-10">
+                <div class="col-xs-7 col-lg-7" align="left">
+                    <label class="col-xs-3 col-lg-3 control-label">เบอร์โทรศัพท์มือถือ</label>
+                    <div class="col-sm-9">
+                        @if(Session::has('old_value'))
+                            <input type="text" class="form-control" name="phoneNumber" placeholder="08XXXXXXXX"
+                                   value="{{Session::get('old_value')['phoneNumber']}}">
+                        @else
+                            <input type="text" class="form-control" name="phoneNumber" placeholder="08XXXXXXXX">
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-xs-12 col-lg-12" align="left" style="padding-left: 5px">
+                    <label class="col-xs-2 col-lg-2 control-label">ที่อยู่</label>
+                    <div class="col-sm-10">
+                        @if(Session::has('old_value'))
+                            <input type="text" class="form-control" name="address"
+                                   value="{{Session::get('old_value')['address']}}">
+                        @else
                             <input type="text" class="form-control" name="address">
-                        </div>
+                        @endif
                     </div>
                 </div>
-                <div class="row form-group">
-                    <div class="col-xs-12 col-lg-12" align="center">
-                        <button type="submit" class="btn btn-theme04 btn-lg">สร้างบัญชี</button>
-                    </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-xs-12 col-lg-12" align="center">
+                    <button type="submit" class="btn btn-theme04 btn-lg">สร้างบัญชี</button>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
-@stop
 
+@stop

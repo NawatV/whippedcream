@@ -207,25 +207,83 @@ class AppointmentController extends Controller
 
     public function queryDoctorWalkIn(Request $request)
     {
+        $workday = "";
         $alldoctor = Doctor::where('departmentId', '=', $request->id);
         if (date('l', strtotime('today')) == "Monday") {
             $alldoctor = DB::table('schedule')->join('doctor', 'doctor.doctorId', '=', 'schedule.doctorId')->where('departmentId', '=', $request->id)->where('monPeriod', '!=', 0)->get();
+            $workday = "monPeriod";
         } elseif (date('l', strtotime('today')) == "Tuesday") {
             $alldoctor = DB::table('schedule')->join('doctor', 'doctor.doctorId', '=', 'schedule.doctorId')->where('departmentId', '=', $request->id)->where('tuePeriod', '!=', 0)->get();
+            $workday = "tuePeriod";
         } elseif (date('l', strtotime('today')) == "Wednesday") {
             $alldoctor = DB::table('schedule')->join('doctor', 'doctor.doctorId', '=', 'schedule.doctorId')->where('departmentId', '=', $request->id)->where('wedPeriod', '!=', 0)->get();
+            $workday = "wedPeriod";
         } elseif (date('l', strtotime('today')) == "Thursday") {
             $alldoctor = DB::table('schedule')->join('doctor', 'doctor.doctorId', '=', 'schedule.doctorId')->where('departmentId', '=', $request->id)->where('thuPeriod', '!=', 0)->get();
+            $workday = "thuPeriod";
         } elseif (date('l', strtotime('today')) == "Friday") {
             $alldoctor = DB::table('schedule')->join('doctor', 'doctor.doctorId', '=', 'schedule.doctorId')->where('departmentId', '=', $request->id)->where('friPeriod', '!=', 0)->get();
+            $workday = "friPeriod";
         } elseif (date('l', strtotime('today')) == "Saturday") {
             $alldoctor = DB::table('schedule')->join('doctor', 'doctor.doctorId', '=', 'schedule.doctorId')->where('departmentId', '=', $request->id)->where('satPeriod', '!=', 0)->get();
+            $workday = "satPeriod";
         } elseif (date('l', strtotime('today')) == "Sunday") {
             $alldoctor = DB::table('schedule')->join('doctor', 'doctor.doctorId', '=', 'schedule.doctorId')->where('departmentId', '=', $request->id)->where('sunPeriod', '!=', 0)->get();
+            $workday = "sunPeriod";
         }
         $doctors = array();
         foreach ($alldoctor as $doctor) {
             $doctorTmp = Doctor::find($doctor->doctorId);
+            $leavePeriodCount = Leaving::where('leaveDate', "=", date('Y-m-d', strtotime('today')))->where('doctorId', "=", $doctor->doctorId)->count();
+            $leavePeriod = Leaving::where('leaveDate', "=", date('Y-m-d', strtotime('today')))->where('doctorId', "=", $doctor->doctorId)->get();
+
+            if ($leavePeriodCount != 0) {
+                if ($workday == 'monPeriod') {
+                    if ($leavePeriod[0]->leavePeriod == "3") {
+                        continue;
+                    } elseif ($leavePeriod[0]->leavePeriod == $doctor->monPeriod) {
+                        continue;
+                    }
+                } elseif ($workday == 'tuePeriod') {
+                    if ($leavePeriod[0]->leavePeriod == "3") {
+                        continue;
+                    } elseif ($leavePeriod[0]->leavePeriod == $doctor->tuePeriod) {
+                        continue;
+                    }
+                } elseif ($workday == 'wedPeriod') {
+                    if ($leavePeriod[0]->leavePeriod == "3") {
+                        continue;
+                    } elseif ($leavePeriod[0]->leavePeriod == $doctor->wedPeriod) {
+                        continue;
+                    }
+                } elseif ($workday == 'thuPeriod') {
+                    if ($leavePeriod[0]->leavePeriod == "3") {
+                        continue;
+                    } elseif ($leavePeriod[0]->leavePeriod == $doctor->thuPeriod) {
+                        continue;
+                    }
+                } elseif ($workday == 'friPeriod') {
+                    if ($leavePeriod[0]->leavePeriod == "3") {
+                        continue;
+                    } elseif ($leavePeriod[0]->leavePeriod == $doctor->friPeriod) {
+                        continue;
+                    }
+                } elseif ($workday == 'satPeriod') {
+                    if ($leavePeriod[0]->leavePeriod == "3") {
+                        continue;
+                    } elseif ($leavePeriod[0]->leavePeriod == $doctor->satPeriod) {
+                        continue;
+                    }
+                } elseif ($workday == 'sunPeriod') {
+                    if ($leavePeriod[0]->leavePeriod == "3") {
+                        continue;
+                    } elseif ($leavePeriod[0]->leavePeriod == $doctor->sunPeriod) {
+                        continue;
+                    }
+                }
+            }
+
+
             $tmp = array($doctorTmp->doctorId, $doctorTmp->user->firstname, $doctorTmp->user->lastname);
             array_push($doctors, $tmp);
         }

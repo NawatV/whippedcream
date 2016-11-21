@@ -87,6 +87,22 @@ class PostponeAppointmentController extends Controller
 	            			$schedule_match = True;
 	            		}
 	            	}
+                    //check doc leaving
+                    $doc_leaving = $all_doctor[$i]->leaving;
+                    $leave = False;
+                    for($i3 = 0; $i3 < count($doc_leaving); $i3++){
+                        if($doc_leaving[$i3]['leaveDate'] == $date and $doc_leaving[$i3]['leavePeriod'] == $schedule){
+                            $leave = True;
+                            break;
+                        }
+                        else if($doc_leaving[$i3]['leaveDate'] == $date and $doc_leaving[$i3]['leavePeriod'] == 3){
+                            $leave = True;
+                            break;
+                        }
+                    }
+                    if($leave){
+                        continue;
+                    }
 	            	if($schedule_match){
 		            	$all_doc_app = $all_app[$i];
 		            	$all_cur_app = [];
@@ -141,6 +157,7 @@ class PostponeAppointmentController extends Controller
     	else{
     		$doctor_name = 'แพทย์หญิง' . $doctor_name;
     	}
+        $email = $target_user['email'];
     	$depName = $target_dep['departmentName'];
     	$depLocation = $target_dep['location'];
     	$date = $appointment['appDate'];
@@ -152,11 +169,11 @@ class PostponeAppointmentController extends Controller
     		$time = '13:00 - 15:30';
     	}
         $title = 'แจ้งการเปลี่ยนแปลงการนัดหมาย';
-        $content = 'ทางโรงพยาบาลได้เปลี่ยนวันนัดหมายของคุณ ' . $name . ' (HN: ' . $hn . ') กับทางแผนก' . $depName . ' (สถานที่: ' . $depLocation . ') เป็นวันที่ ' . $date . ' เวลา ' . $time . 'กับ' . $doctor_name;
+        $content = 'ทางโรงพยาบาลได้เปลี่ยนวันนัดหมายของคุณ ' . $name . ' (HN: ' . $hn . ') กับทางแผนก' . $depName . ' (สถานที่: ' . $depLocation . ') เป็นวันที่ ' . $date . ' เวลา ' . $time . ' กับ' . $doctor_name;
         $content .= '<p>Inside p tag</p>';
-        Mail::send('email.send', ['title' => $title, 'content' => $content], function ($message) {
+        Mail::send('email.send', ['title' => $title, 'content' => $content], function ($message){
             $message->from('whippedcream@hotmail.com', 'Tkk24');
-            $message->to($target_user['email']);
+            $message->to('me.supachai@gmail.com');
             $message->subject('Email from WhippedCream System');
         });
         return back();
@@ -191,9 +208,9 @@ class PostponeAppointmentController extends Controller
         $data = array(
             'key' => 'lj13D83fe7vi4QYpB4rP4S707XRhr5Ya',
             'secret' => 'LmqK5guuSIdvwy1iF538182D2Wu4Wm44',
-            'phone' => $target_user['phoneNumber'],
+            'phone' => '0897872095',
             'sender' => '0969155659',
-            'message' => 'ทางโรงพยาบาลได้เปลี่ยนวันนัดหมายของคุณ ' . $name . ' (HN: ' . $hn . ') กับทางแผนก' . $depName . ' (สถานที่: ' . $depLocation . ') เป็นวันที่ ' . $date . ' เวลา ' . $time . 'กับ' . $doctor_name
+            'message' => 'ทางโรงพยาบาลได้เปลี่ยนวันนัดหมายของคุณ ' . $name . ' (HN: ' . $hn . ') กับทางแผนก' . $depName . ' (สถานที่: ' . $depLocation . ') เป็นวันที่ ' . $date . ' เวลา ' . $time . ' กับ' . $doctor_name
         );
         $content = json_encode($data);
         $curl = curl_init($url);

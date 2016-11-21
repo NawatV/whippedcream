@@ -105,20 +105,33 @@ class AppointmentController extends Controller
         $schedules = $doctor -> schedule;
         $fastestDate = "no";
         $workDay = "no";
-        //Leaving
-        $leavings = DB::table('leaving')->select('leaveDate')->where('doctorId','=',$doctor->doctorId)->get();
-        $leavingDates = array();
-        foreach ($leavings as $leaving) {
-          array_push($leavingDates,$leaving->leaveDate);
+        //Leaving on morning find the lists > leavingMornDates
+        $leavingMornDatesQuerys =  DB::table('leaving')->select(DB::raw('leaveDate'))->where('doctorId','=',$doctor->doctorId)->where('leavePeriod','=',1)->get();
+        $leavingMornDates = array();
+        foreach ($leavingMornDatesQuerys as $leavingMornDatesQuery) {
+          array_push($leavingMornDates,$leavingMornDatesQuery->leaveDate);
         }
+        //Leaving on afternoon find the list ..
+        $leavingAfterDatesQuerys =  DB::table('leaving')->select(DB::raw('leaveDate'))->where('doctorId','=',$doctor->doctorId)->where('leavePeriod','=',2)->get();
+        $leavingAfterDates = array();
+        foreach ($leavingAfterDatesQuerys as $leavingAfterDatesQuery) {
+          array_push($leavingAfterDates,$leavingAfterDatesQuery->leaveDate);
+        }
+        //Leaveing on both
+        $leavingBothDatesQuerys =  DB::table('leaving')->select(DB::raw('leaveDate'))->where('doctorId','=',$doctor->doctorId)->where('leavePeriod','=',3)->get();
+        $leavingBothDates = array();
+        foreach ($leavingBothDatesQuerys as $leavingBothDatesQuery) {
+          array_push($leavingBothDates,$leavingBothDatesQuery->leaveDate);
+        }
+        //find fastset date and time in next month
         for ($x = 1; $x < 32; $x++) {
-          $day = date('l', strtotime($x.' days', strtotime('today')));
-          $date = date('Y-m-d', strtotime($x.' days', strtotime('today')));
+          $day = date('l',strtotime($x.' days', strtotime('today')));
+          $date = date("Y-m-d",strtotime($x.' days', strtotime('today')));
             if($day == "Sunday"
             && $schedules->sunPeriod == 1
-            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && Appointment::where('appDate', '=', $date)
             ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-            && !in_array($date,$leavingDates)  )
+            && !in_array($date,$leavingMornDates)  )
             {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
@@ -126,34 +139,44 @@ class AppointmentController extends Controller
             }
             elseif($day == "Sunday"
             && $schedules->sunPeriod == 2
-            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && Appointment::where('appDate', '=', $date)
             ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-            && !in_array($date,$leavingDates)  )
+            && !in_array($date,$leavingAfterDates)   )
             {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
             }
             elseif($day == "Sunday"
-            && $schedules->sunPeriod == 3  && !in_array($date,$leavingDates) ){
-              if(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && $schedules->sunPeriod == 3 && !in_array($date,$leavingBothDates)
+            && Appointment::where('appDate', '=', $date)
+            ->where('doctorId','=',$doctor->doctorId)->count() < 10 )
+            {
+              if(Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
+              && Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
+              && !in_array($date,$leavingMornDates) && !in_array($date,$leavingMornDates) )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=3;
                 break;
-              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              }elseif(Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5){
+              && ( Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
+              || in_array($date,$leavingAfterDates) )  )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
-              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              }elseif((Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
+              || in_array($date,$leavingMornDates))
+              && Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
+                )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
@@ -162,9 +185,9 @@ class AppointmentController extends Controller
             //Monday
             elseif($day == "Monday"
             && $schedules->monPeriod == 1
-            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && Appointment::where('appDate', '=', $date)
             ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-            && !in_array($date,$leavingDates)  )
+            && !in_array($date,$leavingMornDates)   )
             {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
@@ -172,34 +195,44 @@ class AppointmentController extends Controller
             }
             elseif($day == "Monday"
             && $schedules->monPeriod == 2
-            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && Appointment::where('appDate', '=', $date)
             ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-            && !in_array($date,$leavingDates) )
+            && !in_array($date,$leavingAfterDates)  )
             {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
             }
             elseif($day == "Monday"
-            && $schedules->monPeriod == 3  && !in_array($date,$leavingDates) ){
-              if(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && $schedules->monPeriod == 3  && !in_array($date,$leavingBothDates)
+            && Appointment::where('appDate', '=', $date)
+            ->where('doctorId','=',$doctor->doctorId)->count() < 10 )
+            {
+              if(Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
+              && Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
+              && !in_array($date,$leavingMornDates) && !in_array($date,$leavingAfterDates)  )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=3;
                 break;
-              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              }elseif(Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5){
+              && (Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
+              || in_array($date,$leavingAfterDates))  )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
-              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              }elseif((Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
+              || in_array($date,$leavingMornDates))
+              && Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
+              )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
@@ -208,9 +241,9 @@ class AppointmentController extends Controller
             //Tuesday
             elseif($day == "Tuesday"
             && $schedules->tuePeriod == 1
-            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && Appointment::where('appDate', '=', $date)
             ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-            && !in_array($date,$leavingDates)  )
+            && !in_array($date,$leavingMornDates)   )
             {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
@@ -218,34 +251,44 @@ class AppointmentController extends Controller
             }
             elseif($day == "Tuesday"
             && $schedules->tuePeriod == 2
-            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && Appointment::where('appDate', '=', $date)
             ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-            && !in_array($date,$leavingDates) )
+            && !in_array($date,$leavingAfterDates)  )
             {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
             }
             elseif($day == "Tuesday"
-            && $schedules->tuePeriod == 3 && !in_array($date,$leavingDates) ){
-              if(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && $schedules->tuePeriod == 3 && !in_array($date,$leavingBothDates)
+            && Appointment::where('appDate', '=', $date)
+            ->where('doctorId','=',$doctor->doctorId)->count() < 10 )
+            {
+              if(Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
+              && Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
+              && !in_array($date,$leavingMornDates) && !in_array($date,$leavingAfterDates) )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=3;
                 break;
-              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              }elseif(Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5){
+              && (Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
+              || in_array($date,$leavingAfterDates))  )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
-              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              }elseif((Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
+              || in_array($date,$leavingMornDates))
+              && Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
+                )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
@@ -254,9 +297,9 @@ class AppointmentController extends Controller
             //Wednesday
             elseif($day == "Wednesday"
             && $schedules->wedPeriod == 1
-            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && Appointment::where('appDate', '=', $date)
             ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-            && !in_array($date,$leavingDates) )
+            && !in_array($date,$leavingMornDates)  )
             {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
@@ -264,34 +307,44 @@ class AppointmentController extends Controller
             }
             elseif($day == "Wednesday"
             && $schedules->wedPeriod == 2
-            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && Appointment::where('appDate', '=', $date)
             ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-            && !in_array($date,$leavingDates)  )
+            && !in_array($date,$leavingAfterDates)   )
             {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
             }
             elseif($day == "Wednesday"
-            && $schedules->wedPeriod == 3 && !in_array($date,$leavingDates) ){
-              if(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && $schedules->wedPeriod == 3 && !in_array($date,$leavingBothDates)
+            && Appointment::where('appDate', '=', $date)
+            ->where('doctorId','=',$doctor->doctorId)->count() < 10 )
+            {
+              if(Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
+              && Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
+              && !in_array($date,$leavingMornDates) && !in_array($date,$leavingAfterDates)  )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=3;
                 break;
-              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              }elseif(Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5){
+              && (Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
+              || in_array($date,$leavingAfterDates))  )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
-              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              }elseif((Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
+              || in_array($date,$leavingMornDates))
+              && Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
+                )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
@@ -300,9 +353,9 @@ class AppointmentController extends Controller
             //Thursday
             elseif($day == "Thursday"
             && $schedules->thuPeriod == 1
-            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && Appointment::where('appDate', '=', $date)
             ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-            && !in_array($date,$leavingDates)  )
+            && !in_array($date,$leavingMornDates)   )
             {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
@@ -310,34 +363,43 @@ class AppointmentController extends Controller
             }
             elseif($day == "Thursday"
             && $schedules->thuPeriod == 2
-            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && Appointment::where('appDate', '=', $date)
             ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-            && !in_array($date,$leavingDates) )
+            && !in_array($date,$leavingAfterDates)  )
             {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
             }
             elseif($day == "Thursday"
-            && $schedules->thuPeriod == 3 && !in_array($date,$leavingDates)  ){
-              if(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && $schedules->thuPeriod == 3  && !in_array($date,$leavingBothDates)
+            && Appointment::where('appDate', '=', $date)
+            ->where('doctorId','=',$doctor->doctorId)->count() < 10 )
+            {
+              if(Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
+              && Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
+              && !in_array($date,$leavingMornDates) && !in_array($date,$leavingAfterDates) )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=3;
                 break;
-              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              }elseif(Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5){
+              && (Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
+              || in_array($date,$leavingAfterDates)) ){
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
-              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              }elseif((Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
+              || in_array($date,$leavingMornDates))
+              && Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
+                )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
@@ -346,9 +408,9 @@ class AppointmentController extends Controller
             //Friday
             elseif($day == "Friday"
             && $schedules->friPeriod == 1
-            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && Appointment::where('appDate', '=', $date)
             ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-            && !in_array($date,$leavingDates)  )
+            && !in_array($date,$leavingMornDates)   )
             {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
@@ -356,34 +418,44 @@ class AppointmentController extends Controller
             }
             elseif($day == "Friday"
             && $schedules->friPeriod == 2
-            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && Appointment::where('appDate', '=', $date)
             ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-            && !in_array($date,$leavingDates)  )
+            && !in_array($date,$leavingAfterDates)   )
             {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
             }
             elseif($day == "Friday"
-            && $schedules->friPeriod == 3 && !in_array($date,$leavingDates) ){
-              if(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && $schedules->friPeriod == 3 && !in_array($date,$leavingBothDates)
+            && Appointment::where('appDate', '=', $date)
+            ->where('doctorId','=',$doctor->doctorId)->count() < 10 )
+            {
+              if(Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
+              && Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
+              && !in_array($date,$leavingMornDates) && !in_array($date,$leavingAfterDates)  )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=3;
                 break;
-              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              }elseif(Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5){
+              && (Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
+              || in_array($date,$leavingAfterDates))  )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
-              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              }elseif((Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
+              || in_array($date,$leavingMornDates) )
+              && Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
+               )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
@@ -392,9 +464,9 @@ class AppointmentController extends Controller
             //Saturday
             elseif($day == "Saturday"
             && $schedules->satPeriod == 1
-            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && Appointment::where('appDate', '=', $date)
             ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-            && !in_array($date,$leavingDates)  )
+            && !in_array($date,$leavingMornDates)   )
             {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
@@ -402,37 +474,47 @@ class AppointmentController extends Controller
             }
             elseif($day == "Saturday"
             && $schedules->satPeriod == 2
-            && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && Appointment::where('appDate', '=', $date)
             ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-            && !in_array($date,$leavingDates)  ){
+            && !in_array($date,$leavingAfterDates)   ){
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
             }
             elseif($day == "Saturday"
-            && $schedules->satPeriod == 3  && !in_array($date,$leavingDates) ){
-              if(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+            && $schedules->satPeriod == 3  && !in_array($date,$leavingBothDates)
+            && Appointment::where('appDate', '=', $date)
+            ->where('doctorId','=',$doctor->doctorId)->count() < 10)
+            {
+              if(Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
+              && Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
+              && !in_array($date,$leavingMornDates) && !in_array($date,$leavingAfterDates) ){
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=3;
                 break;
-              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              }elseif(Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5){
+              && (Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
+              || in_array($date,$leavingAfterDates)) )
+              {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=1;
                 break;
-              }elseif(Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
+              }elseif((Appointment::where('appDate', '=', $date)
               ->where('appTime','=','09:00:00')->where('doctorId','=',$doctor->doctorId)->count() >= 5
-              && Appointment::where('appDate', '=', date("Y-m-d",strtotime($x.' days', strtotime('today'))))
-              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5){
+              || in_array($date,$leavingMornDates))
+              && Appointment::where('appDate', '=', $date)
+              ->where('appTime','=','13:00:00')->where('doctorId','=',$doctor->doctorId)->count() < 5
+               )
+               {
                 $fastestDate = date("Y-m-d", strtotime($x.' days', strtotime('today')));
                 $workDay=2;
                 break;
               }
+
             }
         }
 
@@ -445,59 +527,107 @@ class AppointmentController extends Controller
             && $hisApp->count >= 5){
               array_push($disabledDates,$hisApp->appDate);
             }else if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->monPeriod == 3
-            && $hisApp->count >= 10){
-              array_push($disabledDates,$hisApp->appDate);
+            ){
+              if($hisApp->count >= 10) array_push($disabledDates,$hisApp->appDate);
+              elseif( ((in_array(($hisApp->appDate),$leavingMornDates))
+              || (in_array(($hisApp->appDate),$leavingAfterDates)))
+              && $hisApp->count >= 5 ) array_push($disabledDates,$hisApp->appDate);
             }
           }elseif($day == "Sunday"){
             if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->sunPeriod < 3
             && $hisApp->count >= 5){
               array_push($disabledDates,$hisApp->appDate);
             }else if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->sunPeriod == 3
-            && $hisApp->count >= 10){
-              array_push($disabledDates,$hisApp->appDate);
+            ){
+              if($hisApp->count >= 10) array_push($disabledDates,$hisApp->appDate);
+              elseif( ((in_array(($hisApp->appDate),$leavingMornDates))
+              || (in_array(($hisApp->appDate),$leavingAfterDates)))
+              && $hisApp->count >= 5 ) array_push($disabledDates,$hisApp->appDate);
             }
           }elseif($day == "Tuesday"){
             if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->tuePeriod < 3
             && $hisApp->count >= 5){
               array_push($disabledDates,$hisApp->appDate);
             }else if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->tuePeriod == 3
-            && $hisApp->count >= 10){
-              array_push($disabledDates,$hisApp->appDate);
+            ){
+              if($hisApp->count >= 10) array_push($disabledDates,$hisApp->appDate);
+              elseif( ((in_array(($hisApp->appDate),$leavingMornDates))
+              || (in_array(($hisApp->appDate),$leavingAfterDates)))
+              && $hisApp->count >= 5 ) array_push($disabledDates,$hisApp->appDate);
             }
           }elseif($day == "Wednesday"){
             if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->wedPeriod < 3
             && $hisApp->count >= 5){
               array_push($disabledDates,$hisApp->appDate);
             }else if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->wedPeriod == 3
-            && $hisApp->count >= 10){
-              array_push($disabledDates,$hisApp->appDate);
+            ){
+              if($hisApp->count >= 10) array_push($disabledDates,$hisApp->appDate);
+              elseif( ((in_array(($hisApp->appDate),$leavingMornDates))
+              || (in_array(($hisApp->appDate),$leavingAfterDates)))
+              && $hisApp->count >= 5 ) array_push($disabledDates,$hisApp->appDate);
             }
           }elseif($day == "Thursday"){
             if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->thuPeriod < 3
             && $hisApp->count >= 5){
               array_push($disabledDates,$hisApp->appDate);
             }else if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->thuPeriod == 3
-            && $hisApp->count >= 10){
-              array_push($disabledDates,$hisApp->appDate);
+            ){
+              if($hisApp->count >= 10) array_push($disabledDates,$hisApp->appDate);
+              elseif( ((in_array(($hisApp->appDate),$leavingMornDates))
+              || (in_array(($hisApp->appDate),$leavingAfterDates)))
+              && $hisApp->count >= 5 ) array_push($disabledDates,$hisApp->appDate);
             }
           }elseif($day == "Friday"){
             if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->friPeriod < 3
             && $hisApp->count >= 5){
               array_push($disabledDates,$hisApp->appDate);
             }else if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->friPeriod == 3
-            && $hisApp->count >= 10){
-              array_push($disabledDates,$hisApp->appDate);
+            ){
+              if($hisApp->count >= 10) array_push($disabledDates,$hisApp->appDate);
+              elseif( ((in_array(($hisApp->appDate),$leavingMornDates))
+              || (in_array(($hisApp->appDate),$leavingAfterDates)))
+              && $hisApp->count >= 5 ) array_push($disabledDates,$hisApp->appDate);
             }
           }elseif($day == "Saturday"){
             if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->satPeriod < 3
             && $hisApp->count >= 5){
               array_push($disabledDates,$hisApp->appDate);
-            }else if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->satPeriod == 3
-            && $hisApp->count >= 10){
-              array_push($disabledDates,$hisApp->appDate);
+            }else if(Schedule::where('doctorId','=',$doctor->doctorId)->get()[0]->satPeriod == 3)
+            {
+              if($hisApp->count >= 10) array_push($disabledDates,$hisApp->appDate);
+              elseif( ((in_array(($hisApp->appDate),$leavingMornDates))
+              || (in_array(($hisApp->appDate),$leavingAfterDates)))
+              && $hisApp->count >= 5 ) array_push($disabledDates,$hisApp->appDate);
             }
           }
         }
+
+        //เชคในลิส "วันในตอนเช้าที่หมอคนนี้ลาทั้งหมด" แล้วดูทีละวัน ถ้าวันนั้นตรงกับวันที่ออกตรวจประจำและช่วงเวลาออกตรวจก็เป็นเช้าด้วยก็จะยัดวัดนั้นเข้า disabledDates
+        foreach ($leavingMornDates as $leavingMornDate) {
+           if (date('l',strtotime($leavingMornDate)) == "Sunday" && $schedules->sunPeriod == 1) array_push($disabledDates,$leavingMornDate);
+           elseif (date('l',strtotime($leavingMornDate)) == "Monday" && $schedules->monPeriod == 1) array_push($disabledDates,$leavingMornDate);
+           elseif (date('l',strtotime($leavingMornDate)) == "Tuesday" && $schedules->tuePeriod == 1) array_push($disabledDates,$leavingMornDate);
+           elseif (date('l',strtotime($leavingMornDate)) == "Wednesday" && $schedules->wedPeriod == 1) array_push($disabledDates,$leavingMornDate);
+           elseif (date('l',strtotime($leavingMornDate)) == "Thursday" && $schedules->thuPeriod == 1) array_push($disabledDates,$leavingMornDate);
+           elseif (date('l',strtotime($leavingMornDate)) == "Friday" && $schedules->friPeriod == 1) array_push($disabledDates,$leavingMornDate);
+           elseif (date('l',strtotime($leavingMornDate)) == "Saturday" && $schedules->satPeriod == 1) array_push($disabledDates,$leavingMornDate);
+        }
+        //คล้ายๆข้างบน เป็น ตอนบ่าย
+        foreach ($leavingAfterDates as $leavingAfterDate) {
+           if (date('l',strtotime($leavingAfterDate)) == "Sunday" && $schedules->sunPeriod == 2) array_push($disabledDates,$leavingAfterDate);
+           elseif (date('l',strtotime($leavingAfterDate)) == "Monday" && $schedules->monPeriod == 2) array_push($disabledDates,$leavingAfterDate);
+           elseif (date('l',strtotime($leavingAfterDate)) == "Tuesday" && $schedules->tuePeriod == 2) array_push($disabledDates,$leavingAfterDate);
+           elseif (date('l',strtotime($leavingAfterDate)) == "Wednesday" && $schedules->wedPeriod == 2) array_push($disabledDates,$leavingAfterDate);
+           elseif (date('l',strtotime($leavingAfterDate)) == "Thursday" && $schedules->thuPeriod == 2) array_push($disabledDates,$leavingAfterDate);
+           elseif (date('l',strtotime($leavingAfterDate)) == "Friday" && $schedules->friPeriod == 2) array_push($disabledDates,$leavingAfterDate);
+           elseif (date('l',strtotime($leavingAfterDate)) == "Saturday" && $schedules->satPeriod == 2) array_push($disabledDates,$leavingAfterDate);
+        }
+        foreach ($leavingBothDates as $leavingBothDate) {
+           array_push($disabledDates,$leavingBothDate);
+        }
+
+
+
 
 
         $scheduleArray = array();
@@ -571,63 +701,75 @@ class AppointmentController extends Controller
         $dd = $request->date;
         $mm = $request ->month;
         $yy = $request ->year;
+        //แก้ให้ตรง format จาก 3 > 03
+        if($dd<10) $dd = '0'.$dd;
+        if($mm<10) $mm = '0'.$mm;
         $newDate = $yy.'-'.$mm.'-'.$dd;
+
         $numberOfAppOnNewDateMorn = Appointment::where('appDate', '=', $newDate)->where('appTime','=','09:00:00')->where('doctorId','=',$request->id)->count();
         $numberOfAppOnNewDateAfte = Appointment::where('appDate', '=', $newDate)->where('appTime','=','13:00:00')->where('doctorId','=',$request->id)->count();
+        $newDateInfo = Leaving::where('doctorId','=',$request->id)->where('leaveDate','=',$newDate)->get();
+        //กำหนดค่าเริ่มต้น
+        $newDateLeavePeriod = 0;
+        //ถ้ามีการขอลาในวันนั้น เก็บใส่ $newDateLeavePeriod ว่าลาช่วงไหน
+        if (sizeof($newDateInfo)!=0){
+          $newDateLeavePeriod = $newDateInfo[0]->leavePeriod;
+        }
+
         if( $day==0 && ($schedules->sunPeriod == 1 || $schedules->sunPeriod == 2) ) return $schedules->sunPeriod;
         elseif ( $day==0  && $schedules->sunPeriod == 3 ) {
           {
-            if($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte >= 5) return 1;
-            elseif($numberOfAppOnNewDateMorn >= 5 && $numberOfAppOnNewDateAfte < 5) return 2;
-            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5) return 3;
+            if($numberOfAppOnNewDateMorn < 5 && ($numberOfAppOnNewDateAfte >= 5 || $newDateLeavePeriod == 2)) return 1;
+            elseif(($numberOfAppOnNewDateMorn >= 5 || $newDateLeavePeriod == 1) && $numberOfAppOnNewDateAfte < 5) return 2;
+            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5 ) return 3;
           }
         }
         elseif ( $day==1 && ($schedules->monPeriod == 1 || $schedules->monPeriod == 2) ) return $schedules->monPeriod;
         elseif ( $day==1  && $schedules->monPeriod == 3 ) {
           {
-            if($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte >= 5) return 1;
-            elseif($numberOfAppOnNewDateMorn >= 5 && $numberOfAppOnNewDateAfte < 5) return 2;
-            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5) return 3;
+            if($numberOfAppOnNewDateMorn < 5 && ($numberOfAppOnNewDateAfte >= 5 || $newDateLeavePeriod == 2 )) return 1;
+            elseif( ($numberOfAppOnNewDateMorn >= 5 || $newDateLeavePeriod == 1) && $numberOfAppOnNewDateAfte < 5) return 2;
+            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5  ) return 3;
           }
         }
         elseif ( $day==2 && ($schedules->tuePeriod == 1 || $schedules->tuePeriod == 2) ) return $schedules->tuePeriod;
         elseif ( $day==2  && $schedules->tuePeriod == 3 ) {
           {
-            if($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte >= 5) return 1;
-            elseif($numberOfAppOnNewDateMorn >= 5 && $numberOfAppOnNewDateAfte < 5) return 2;
-            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5) return 3;
+            if($numberOfAppOnNewDateMorn < 5 && ($numberOfAppOnNewDateAfte >= 5 || $newDateLeavePeriod == 2)) return 1;
+            elseif(($numberOfAppOnNewDateMorn >= 5 || $newDateLeavePeriod == 1 )&& $numberOfAppOnNewDateAfte < 5) return 2;
+            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5 ) return 3;
           }
         }
         elseif ( $day==3 && ($schedules->wedPeriod == 1 || $schedules->wedPeriod == 2) ) return $schedules->wedPeriod;
         elseif ( $day==3  && $schedules->wedPeriod == 3 ) {
           {
-            if($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte >= 5) return 1;
-            elseif($numberOfAppOnNewDateMorn >= 5 && $numberOfAppOnNewDateAfte < 5) return 2;
-            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5) return 3;
+            if($numberOfAppOnNewDateMorn < 5 && ($numberOfAppOnNewDateAfte >= 5 || $newDateLeavePeriod == 2)) return 1;
+            elseif(($numberOfAppOnNewDateMorn >= 5 || $newDateLeavePeriod == 1 )&& $numberOfAppOnNewDateAfte < 5) return 2;
+            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5 ) return 3;
           }
         }
         elseif ( $day==4 && ($schedules->thuPeriod == 1 || $schedules->thuPeriod == 2) ) return $schedules->thuPeriod;
         elseif ( $day==4  && $schedules->thuPeriod == 3 ) {
           {
-            if($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte >= 5) return 1;
-            elseif($numberOfAppOnNewDateMorn >= 5 && $numberOfAppOnNewDateAfte < 5) return 2;
-            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5) return 3;
+            if($numberOfAppOnNewDateMorn < 5 && ($numberOfAppOnNewDateAfte >= 5 || $newDateLeavePeriod == 2)) return 1;
+            elseif(($numberOfAppOnNewDateMorn >= 5 || $newDateLeavePeriod == 1 )&& $numberOfAppOnNewDateAfte < 5) return 2;
+            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5 ) return 3;
           }
         }
         elseif ( $day==5 && ($schedules->friPeriod == 1 || $schedules->friPeriod == 2) ) return $schedules->friPeriod;
         elseif ( $day==5  && $schedules->friPeriod == 3 ) {
           {
-            if($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte >= 5) return 1;
-            elseif($numberOfAppOnNewDateMorn >= 5 && $numberOfAppOnNewDateAfte < 5) return 2;
-            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5) return 3;
+            if($numberOfAppOnNewDateMorn < 5 && ($numberOfAppOnNewDateAfte >= 5 || $newDateLeavePeriod == 2)) return 1;
+            elseif(($numberOfAppOnNewDateMorn >= 5 || $newDateLeavePeriod == 1)&& $numberOfAppOnNewDateAfte < 5) return 2;
+            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5 ) return 3;
           }
         }
         elseif ( $day==6 && ($schedules->satPeriod == 1 || $schedules->satPeriod == 2) ) return $schedules->satPeriod;
         elseif ( $day==6  && $schedules->satPeriod == 3 ) {
           {
-            if($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte >= 5) return 1;
-            elseif($numberOfAppOnNewDateMorn >= 5 && $numberOfAppOnNewDateAfte < 5) return 2;
-            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5) return 3;
+            if($numberOfAppOnNewDateMorn < 5 && ($numberOfAppOnNewDateAfte >= 5 || $newDateLeavePeriod == 2 )) return 1;
+            elseif(($numberOfAppOnNewDateMorn >= 5 || $newDateLeavePeriod == 1 ) && $numberOfAppOnNewDateAfte < 5) return 2;
+            elseif($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5  ) return 3;
           }
         }
 

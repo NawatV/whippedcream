@@ -32,8 +32,8 @@
     </li>
 
     <li class="sub-menu">
-        <a class="leftnav" href="javascript:;">
-            <i class="fa fa-calendar-check-o"></i><span>รายการนัดหมาย</span>
+        <a class="leftnav" href="/appointment/staffindex">
+            <i class="fa fa-calendar-check-o"></i><span>รายการนัดหมายวันนี้</span>
         </a>
     </li>
 
@@ -46,14 +46,20 @@
 
 @elseif(session('userType') == 'doctor')
     <li class="sub-menu">
+        <a class="leftnav" href="/searchPatientInformation">
+            <i class="fa fa-info-circle"></i><span>ข้อมูลผู้ป่วย</span>
+        </a>
+    </li>
+
+    <li class="sub-menu">
         <a class="leftnav" href="javascript:;">
             <i class="fa fa-calendar"></i><span>ตารางวันและเวลาออกตรวจ</span>
         </a>
     </li>
 
     <li class="sub-menu">
-        <a class="leftnav" href="javascript:;">
-            <i class="fa fa-calendar-check-o"></i><span>รายการนัดหมาย</span>
+        <a class="leftnav" href="/appointment/staffindex">
+            <i class="fa fa-calendar-check-o"></i><span>รายการนัดหมายวันนี้</span>
         </a>
     </li>
 
@@ -62,22 +68,16 @@
             <i class="fa fa-pencil-square-o"></i><span>บันทึกคำวินิจฉัยและสั่งยา</span>
         </a>
     </li>
-
+@elseif(session('userType') == 'pharmacist')
     <li class="sub-menu">
-        <a class="leftnav" href="javascript:;">
+        <a class="leftnav" href="/searchPatientInformation">
             <i class="fa fa-info-circle"></i><span>ข้อมูลผู้ป่วย</span>
         </a>
     </li>
-@elseif(session('userType') == 'pharmacist')
+
     <li class="sub-menu">
         <a class="leftnav" href="{{url('/dispensation')}}">
             <i class="fa fa-plus-square"></i><span>จ่ายยา</span>
-        </a>
-    </li>
-
-    <li class="sub-menu">
-        <a class="leftnav" href="javascript:;">
-            <i class="fa fa-info-circle"></i><span>ข้อมูลผู้ป่วย</span>
         </a>
     </li>
 @elseif(session('userType') == 'staff')
@@ -86,6 +86,11 @@
             {{--<i class="fa fa-info-circle"></i><span>ข้อมูลสต๊าฟ</span>--}}
         {{--</a>--}}
     {{--</li>--}}
+    <li class="sub-menu">
+        <a class="leftnav" href="/searchPatientInformation">
+            <i class="fa fa-info-circle"></i><span>ข้อมูลผู้ป่วย</span>
+        </a>
+    </li>
 
     <li class="sub-menu">
         <a class="leftnav" href="/appointment/staffindex">

@@ -15,7 +15,7 @@
 .paddingFormCreate{
     /*background-color: turquoise !important;*/
     /*margin: 1%;*/
-    padding: 3% 3% 0px;
+    padding: 3% 3% 3%;
     border-radius: 10px;
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f7f7f7+50,ffffff+98 */
     background: rgb(255,255,255); /* Old browsers */
@@ -25,6 +25,8 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
 
     box-shadow: 0px 0px 10px grey;
+
+
 }
 
 .testBackground{
@@ -33,6 +35,7 @@
 
 .appointmentTable{
     padding: 2% 0 0;
+
 }
 
 .textareaControl{

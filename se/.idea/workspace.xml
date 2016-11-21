@@ -27,8 +27,8 @@
       <file leaf-file-name="web.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/web.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="131" column="75" selection-start-line="131" selection-start-column="75" selection-end-line="131" selection-end-column="75" />
+            <state relative-caret-position="219">
+              <caret line="82" column="119" selection-start-line="82" selection-start-column="84" selection-end-line="82" selection-end-column="119" />
               <folding>
                 <element signature="e#7#386#0#PHP" expanded="true" />
               </folding>
@@ -36,23 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="createNurse.blade.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/views/admin/createNurse.blade.php">
+      <file leaf-file-name="DiagnosisHistoryController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DiagnosisHistoryController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="534">
-              <caret line="258" column="10" selection-start-line="258" selection-start-column="10" selection-end-line="258" selection-end-column="10" />
-              <folding>
-                <marker date="1479761387000" expanded="false" signature="14130:14147" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="createDoctor.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/admin/createDoctor.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
-              <caret line="93" column="33" selection-start-line="93" selection-start-column="16" selection-end-line="93" selection-end-column="33" />
+            <state relative-caret-position="396">
+              <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -66,7 +54,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/resources/views/appointment/staffindex1.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/createAdminDirect.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/FirstAdminController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/OtherController.php" />
@@ -74,8 +61,6 @@
         <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/resources/views/layouts/theme.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/TreatmentController.php" />
-        <option value="$PROJECT_DIR$/resources/views/searchPatientInformation.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/seePatientInformation.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/editPatientInformation.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/editVitalSignHistoryFoundPatient.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/editVitalSignHistoryFormForEdited.blade.php" />
@@ -93,7 +78,6 @@
         <option value="$PROJECT_DIR$/resources/views/editPrescriptionHistory.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/editVitalSignHistoryForm.blade.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/resources/views/leftnav.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/login.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/viewDiagnosisHistory.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/vitalsign.blade.php" />
@@ -106,7 +90,6 @@
         <option value="$PROJECT_DIR$/resources/views/appointment/create.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/appointment/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/myPatientInformation.blade.php" />
-        <option value="$PROJECT_DIR$/public/assets/css/afterLogin.css" />
         <option value="$PROJECT_DIR$/resources/views/myEditedPatientInformation.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/homepage.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CreateAccountController.php" />
@@ -117,6 +100,11 @@
         <option value="$PROJECT_DIR$/resources/views/admin/createStaff.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/createDoctor.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/createNurse.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/appointment/staffindex1.blade.php" />
+        <option value="$PROJECT_DIR$/public/assets/css/afterLogin.css" />
+        <option value="$PROJECT_DIR$/resources/views/searchPatientInformation.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/seePatientInformation.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/leftnav.blade.php" />
       </list>
     </option>
   </component>
@@ -362,7 +350,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="148244000" />
+    <option name="totallyTimeSpent" value="149685000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="828" extended-state="6" />
@@ -406,22 +394,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/editDiagnosisHistoryForm.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/editDiagnosisHistory.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="24" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/editDiagnosisHistoryFoundPatient.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="834">
@@ -476,30 +448,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="900">
           <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/leftnav.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="52" selection-start-line="0" selection-start-column="52" selection-end-line="0" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/searchPatientInformation.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-36">
-          <caret line="55" column="86" selection-start-line="55" selection-start-column="86" selection-end-line="55" selection-end-column="86" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/seePatientInformation.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="94" column="72" selection-start-line="94" selection-start-column="72" selection-end-line="94" selection-end-column="72" />
           <folding />
         </state>
       </provider>
@@ -651,16 +599,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/appointment/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="30" column="66" selection-start-line="30" selection-start-column="66" selection-end-line="30" selection-end-column="66" />
-          <folding>
-            <element signature="e#1474#1496#0#HTML" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="397">
@@ -691,14 +629,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="82" column="46" selection-start-line="82" selection-start-column="46" selection-end-line="82" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/assets/css/afterLogin.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -803,31 +733,91 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/admin/createNurse.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="131" column="75" selection-start-line="131" selection-start-column="75" selection-end-line="131" selection-end-column="75" />
+        <state relative-caret-position="594">
+          <caret line="257" column="0" selection-start-line="257" selection-start-column="0" selection-end-line="257" selection-end-column="0" />
           <folding>
-            <element signature="e#7#386#0#PHP" expanded="true" />
+            <marker date="1479761490000" expanded="false" signature="14130:14147" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/admin/createDoctor.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="93" column="33" selection-start-line="93" selection-start-column="16" selection-end-line="93" selection-end-column="33" />
+        <state relative-caret-position="219">
+          <caret line="79" column="46" selection-start-line="79" selection-start-column="46" selection-end-line="79" selection-end-column="46" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/admin/createNurse.blade.php">
+    <entry file="file://$PROJECT_DIR$/public/assets/css/afterLogin.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="534">
-          <caret line="258" column="10" selection-start-line="258" selection-start-column="10" selection-end-line="258" selection-end-column="10" />
+        <state relative-caret-position="294">
+          <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/searchPatientInformation.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-105">
+          <caret line="20" column="77" selection-start-line="20" selection-start-column="77" selection-end-line="20" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="82" column="119" selection-start-line="82" selection-start-column="84" selection-end-line="82" selection-end-column="119" />
           <folding>
-            <marker date="1479761387000" expanded="false" signature="14130:14147" ph="..." />
+            <element signature="e#7#386#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/seePatientInformation.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="102" column="57" selection-start-line="102" selection-start-column="57" selection-end-line="102" selection-end-column="57" />
+          <folding>
+            <element signature="e#339#345#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/appointment/staffindex1.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="21" column="23" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
+          <folding>
+            <element signature="e#1368#1390#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/appointment/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="48" selection-start-line="9" selection-start-column="4" selection-end-line="10" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/leftnav.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="42" column="12" selection-start-line="42" selection-start-column="12" selection-end-line="42" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DiagnosisHistoryController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

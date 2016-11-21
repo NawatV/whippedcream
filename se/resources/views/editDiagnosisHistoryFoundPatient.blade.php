@@ -47,7 +47,7 @@
                                         <form method="GET" class="form-horizontal style-form"
                                               action="findPatientFromHnIdNameForDiagnosis/{{$diagnoses[$i]->diagnosisId}}/edit"/>
 
-                                        <button type="submit">
+                                        <button type="submit" class="btn btn-danger btn-sm">
                                             <i class="fa fa-pencil-square"></i>
                                             แก้ไข
                                         </button>
@@ -55,20 +55,17 @@
                                         </form>
 
 
-                                        <form method="post" class="form-horizontal style-form"
-                                              action="editDiagnosisHistory/{{$diagnoses[$i]->diagnosisId}}/delete"/>
-                                               <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        {{--<form method="post" class="form-horizontal style-form"--}}
+                                              {{--action="editDiagnosisHistory/{{$diagnoses[$i]->diagnosisId}}/delete"/>--}}
+                                               {{--<input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
 
-                                        <button type="submit">
-                                            <i class="fa fa-pencil-square"></i>
-                                            ลบ
-                                        </button>
+                                        {{--<button type="submit">--}}
+                                            {{--<i class="fa fa-pencil-square"></i>--}}
+                                            {{--ลบ--}}
+                                        {{--</button>--}}
 
-                                        </form>
+                                        {{--</form>--}}
 
-                                        {{--<a href="{{url('/findPatientFromHnIdName/'.$diagnoses[$i]->diagnosisId.'/edit')}}">--}}
-                                        {{--แก้ไข--}}
-                                        {{--</a>--}}
                                     </td>
                                 </tr>
                             @endfor

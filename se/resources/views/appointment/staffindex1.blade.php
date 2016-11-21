@@ -8,6 +8,13 @@
 
 
 @section('content')
+    @if (session('createAppSuccess'))
+        <script>
+            swal("ทำการนัดหมายเรียบร้อย", "จะมี SMS และ E-mail ส่งถึง เพื่อสรุปรายละเอียดอีกครั้ง", "success")
+            {{session()->forget('createAppSuccess')}}
+        </script>
+    @endif
+
     <!-- BASIC FORM ELELEMNTS -->
     <div class="panel-body appointmentTable">
         <div class="paddingFormCreate centered">

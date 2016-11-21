@@ -44,7 +44,7 @@ class DiagnosisHistoryController extends Controller
     public function delete($diagnosisId)
     {
         $diag = Diagnosis::where('diagnosisId', $diagnosisId);
-        return dd($diag);
+//        return dd($diag);
         // return $diag;
         $diag->delete();
         return back();

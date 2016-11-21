@@ -52,7 +52,7 @@
     </li>
 
     <li class="sub-menu">
-        <a class="leftnav" href="javascript:;">
+        <a class="leftnav" href="/schedule">
             <i class="fa fa-calendar"></i><span>ตารางวันและเวลาออกตรวจ</span>
         </a>
     </li>

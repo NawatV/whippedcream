@@ -174,6 +174,15 @@ Route::group(['middleware' => 'login'], function () {
 
 });
 
+//-------------- Schedule -----------------------------------------
+Route::get('/schedule', 'ScheduleController@viewSchedule');
+Route::post('/schedule', 'ScheduleController@addAbsent');
+Route::post('/schedule/staff', 'ScheduleController@viewScheduleStaff');
+
+
+
+
+
 
 Route::get('/testCurlMessage/', 'DiagnosisHistoryController@sendSms');
 

@@ -164,8 +164,8 @@ class AppointmentController extends Controller
 
     public function staffStore(Request $request)
     {
-        //return dd($request->all());
-        $patient = Patient::where('hn', '=', $request->patientId)->first();
+//        return dd($request->all());
+        $patient = User::where('idNumber', $request->patientId)->first();
         $appointment = Appointment::find($request->hn);
         $appointment = new Appointment();
         $appointment->symptom = $request->symptom;
@@ -181,9 +181,67 @@ class AppointmentController extends Controller
             $appointment->appTime = "13:00";
         }
 
-        $appointment->patientId = $patient->patientId;
+
+        $appointment->patientId = $patient->patient->patientId;
+
+
         $appointment->save();
-        return redirect()->action('AppointmentController@index');
+
+
+
+
+        $user = User::where('idNumber', $request->patientId)->first();
+        $appDoctor = User::where('userId', $appointment->doctorId)->first();
+
+        $url = "https://sms.gipsic.com/api/send";
+        $msgContent = "นัดหมาย " . $appointment->appDate . " เวลา " . $appointment->appTime;
+        $message2 = "> ทำนัดหมายสำเร็จ! วันที่นัดคือ " . $appointment->appDate . " เวลา " . $appointment->appTime . " | ทำนัดกับแพทย์ " . $appDoctor->firstname . " " . $appDoctor->lastname . " <";
+
+        $data = array(
+            'key' => 'lj13D83fe7vi4QYpB4rP4S707XRhr5Ya',
+            'secret' => 'LmqK5guuSIdvwy1iF538182D2Wu4Wm44',
+            'phone' => $user->phoneNumber,
+            'sender' => '0969155659',
+            'message' => $msgContent
+        );
+
+        $content = json_encode($data);
+
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER,
+            array("Content-type: application/json"));
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
+
+        $json_response = curl_exec($curl);
+
+        $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        curl_close($curl);
+
+        $response = json_decode($json_response, true);
+
+        //Start sending email
+
+        $title = 'การนัดหมายเสร็จสมบูรณ์ -- Whippedcream system';
+        $content = $message2;
+
+        Mail::send('email.send', ['title' => $title, 'content' => $content], function ($message) use($title, $user) {
+            $message->from('whippedcream@hotmail.com', 'Tkk24');
+            $message->to($user->email);
+            $message->subject($title);
+        });
+
+        session(['createAppSuccess' => 'true']);
+
+
+
+
+
+
+        return redirect()->action('AppointmentController@staffIndex');
 
     }
 
@@ -197,8 +255,8 @@ class AppointmentController extends Controller
 
     public function walkInStore(Request $request)
     {
-        //return dd($request->all());
-        $patient = Patient::where('hn', '=', $request->patientId)->first();
+//        return dd($request->all());
+        $patient = User::where('idNumber', $request->patientId)->first();
         $appointment = Appointment::find($request->hn);
         $appointment = new Appointment();
         $appointment->symptom = $request->symptom;
@@ -214,9 +272,67 @@ class AppointmentController extends Controller
             $appointment->appTime = "13:00";
         }
 
-        $appointment->patientId = $patient->patientId;
+
+        $appointment->patientId = $patient->patient->patientId;
+
+
         $appointment->save();
-        return redirect()->action('AppointmentController@index');
+
+
+
+
+        $user = User::where('idNumber', $request->patientId)->first();
+        $appDoctor = User::where('userId', $appointment->doctorId)->first();
+
+        $url = "https://sms.gipsic.com/api/send";
+        $msgContent = "นัดหมาย " . $appointment->appDate . " เวลา " . $appointment->appTime;
+        $message2 = "> ทำนัดหมายสำเร็จ! วันที่นัดคือ " . $appointment->appDate . " เวลา " . $appointment->appTime . " | ทำนัดกับแพทย์ " . $appDoctor->firstname . " " . $appDoctor->lastname . " <";
+
+        $data = array(
+            'key' => 'lj13D83fe7vi4QYpB4rP4S707XRhr5Ya',
+            'secret' => 'LmqK5guuSIdvwy1iF538182D2Wu4Wm44',
+            'phone' => $user->phoneNumber,
+            'sender' => '0969155659',
+            'message' => $msgContent
+        );
+
+        $content = json_encode($data);
+
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER,
+            array("Content-type: application/json"));
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
+
+        $json_response = curl_exec($curl);
+
+        $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        curl_close($curl);
+
+        $response = json_decode($json_response, true);
+
+        //Start sending email
+
+        $title = 'การนัดหมายเสร็จสมบูรณ์ -- Whippedcream system';
+        $content = $message2;
+
+        Mail::send('email.send', ['title' => $title, 'content' => $content], function ($message) use($title, $user) {
+            $message->from('whippedcream@hotmail.com', 'Tkk24');
+            $message->to($user->email);
+            $message->subject($title);
+        });
+
+        session(['createAppSuccess' => 'true']);
+
+
+
+
+
+
+        return redirect()->action('AppointmentController@staffIndex');
     }
 
     public function show($id)

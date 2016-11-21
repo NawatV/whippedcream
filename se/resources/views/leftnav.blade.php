@@ -15,15 +15,16 @@
 
     <li class="sub-menu">
         <a class="leftnav" href="/appointment">
-            <i class="fa fa-calendar-plus-o"></i><span>สร้างการนัดหมาย</span>
+            <i class="fa fa-calendar-check-o"></i><span>รายการนัดหมาย</span>
         </a>
     </li>
 
     <li class="sub-menu">
-        <a class="leftnav" href="javascript:;">
-            <i class="fa fa-calendar-check-o"></i><span>รายการนัดหมาย</span>
+        <a class="leftnav" href="/appointment/create">
+            <i class="fa fa-calendar-plus-o"></i><span>สร้างการนัดหมาย</span>
         </a>
     </li>
+
 @elseif(session('userType') == 'nurse')
     <li class="sub-menu">
         <a class="leftnav" href="javascript:;">
@@ -79,27 +80,35 @@
         </a>
     </li>
 @elseif(session('userType') == 'staff')
+    {{--<li class="sub-menu">--}}
+        {{--<a class="leftnav" href="javascript:;">--}}
+            {{--<i class="fa fa-info-circle"></i><span>ข้อมูลสต๊าฟ</span>--}}
+        {{--</a>--}}
+    {{--</li>--}}
+
     <li class="sub-menu">
-        <a class="leftnav" href="javascript:;">
-            <i class="fa fa-info-circle"></i><span>ข้อมูลผู้ป่วย</span>
+        <a class="leftnav" href="/appointment/staffindex">
+            <i class="fa fa-calendar-check-o"></i><span>รายการนัดหมายวันนี้</span>
         </a>
     </li>
 
     <li class="sub-menu">
-        <a class="leftnav" href="javascript:;">
+        <a class="leftnav" href="/appointment/staffindexall">
+            <i class="fa fa-calendar-check-o"></i><span>รายการนัดหมายทั้งหมด</span>
+        </a>
+    </li>
+
+    <li class="sub-menu">
+        <a class="leftnav" href="/appointment/staffcreate">
             <i class="fa fa-calendar-plus-o"></i><span>สร้างการนัดหมาย</span>
         </a>
     </li>
 
     <li class="sub-menu">
-        <a class="leftnav" href="javascript:;">
+        <a class="leftnav" href="/appointment/walkincreate">
             <i class="fa fa-calendar-plus-o"></i><span>สร้างการนัดหมายแบบ Walk In</span>
         </a>
     </li>
 
-    <li class="sub-menu">
-        <a class="leftnav" href="javascript:;">
-            <i class="fa fa-calendar-check-o"></i><span>รายการนัดหมาย</span>
-        </a>
-    </li>
+
 @endif

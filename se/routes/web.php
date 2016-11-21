@@ -27,6 +27,10 @@ Route::post('/register', 'UserController@postRegisterForm');
 Route::group(['middleware' => 'login'], function () {
     Route::get('/homepage', 'OtherController@homepage');
 
+//    ===================================================================================================
+//    ===================================================================================================
+//    ===================================================================================================
+
     /*routes for admin*/
     Route::get('/manageAccount', 'ManageAccountController@display_users');
     Route::post('/manageAccount', 'ManageAccountController@edit_user');
@@ -53,6 +57,9 @@ Route::group(['middleware' => 'login'], function () {
     Route::post('/createDepartment', 'CreateDepartmentController@create_department');
     /*end-routes for admin*/
 
+//    ===================================================================================================
+//    ===================================================================================================
+//    ===================================================================================================
 
 //----vitalSign-----
     Route::get('/dispensation', 'TreatmentController@getDispensationPage');
@@ -70,37 +77,45 @@ Route::group(['middleware' => 'login'], function () {
     Route::post('/diagnosis', 'TreatmentController@saveDiagnosisForm');
 
 
+//    ===================================================================================================
+//    ===================================================================================================
+//    ===================================================================================================
+
+    //appointment
+//Route::resource('/appointment', 'AppointmentController');
+    Route::get('/appointment', 'AppointmentController@index');
+    Route::get('/appointment/create', 'AppointmentController@create');
+    Route::post('/appointment', 'AppointmentController@store');
+//staff appointment
+    Route::get('/appointment/staffindex', 'AppointmentController@staffIndex');
+    Route::get('/appointment/staffindexall', 'AppointmentController@staffIndexAll');
+    Route::get('/appointment/staffcreate', 'AppointmentController@staffCreate');
+    Route::post('/appointment/staffstore', 'AppointmentController@staffStore');
+//walkin appointment
+    Route::get('/appointment/walkincreate', 'AppointmentController@walkInCreate');
+    Route::post('/appointment/walkinstore', 'AppointmentController@walkInStore');
+
+    Route::get('/appointment/{appointment}/edit', 'AppointmentController@edit');
+    Route::post('/appointment/{appointment}', 'AppointmentController@update');
+    Route::post('/deleteAppointment/{appointment}', 'AppointmentController@destroy');
+//ajax
+    Route::get('/queryDoctorDateTime', 'AppointmentController@queryDoctorDateTime');
+    Route::get('/queryDoctor', 'AppointmentController@queryDoctor');
+    Route::get('/queryDoctorWalkIn', 'AppointmentController@queryDoctorWalkIn');
+    Route::get('/queryPeriod', 'AppointmentController@queryPeriod');
+    Route::get('/queryPeriodWalkIn', 'AppointmentController@queryPeriodWalkIn');
+//pdf
+    Route::get('/appointment/{appointment}/appointmentpdf', 'AppointmentController@appointmentPdf');
+
+
+
+
+
+
+
 });
 
 
-//appointment
-//Route::resource('/appointment', 'AppointmentController');
-Route::get('/appointment', 'AppointmentController@index');
-Route::get('/appointment/create', 'AppointmentController@create');
-Route::post('/appointment', 'AppointmentController@store');
-//staff appointment
-Route::get('/appointment/staffindex', 'AppointmentController@staffIndex');
-Route::get('/appointment/staffcreate', 'AppointmentController@staffCreate');
-Route::post('/appointment/staffstore', 'AppointmentController@staffStore');
-//walkin appointment
-Route::get('/appointment/walkincreate', 'AppointmentController@walkInCreate');
-Route::post('/appointment/walkinstore', 'AppointmentController@walkInStore');
-
-Route::get('/appointment/{appointment}/edit', 'AppointmentController@edit');
-Route::post('/appointment/{appointment}', 'AppointmentController@update');
-Route::post('/deleteAppointment/{appointment}', 'AppointmentController@destroy');
-//ajax
-Route::get('/queryDoctorDateTime', 'AppointmentController@queryDoctorDateTime');
-Route::get('/queryDoctor', 'AppointmentController@queryDoctor');
-Route::get('/queryDoctorWalkIn', 'AppointmentController@queryDoctorWalkIn');
-Route::get('/queryPeriod', 'AppointmentController@queryPeriod');
-Route::get('/queryPeriodWalkIn', 'AppointmentController@queryPeriodWalkIn');
-//pdf
-Route::get('/appointment/{appointment}/appointmentpdf', 'AppointmentController@appointmentPdf');
-// Route::get('/pdf', function(){
-//     $pdf = PDF::loadView('appointment.vista');
-//     return $pdf->download('archivo.pdf');
-// });
 
 
 Route::get('/blank', 'OtherController@blankPage');

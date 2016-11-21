@@ -30,8 +30,9 @@ class AppointmentController extends Controller
     public function index()
     {
         //return session('name');
-        //$appointment = Appointment::where('patientId', '=', session('userId'))->where('appDate', '=', date('Y-m-d', strtotime('today')))->get();
-        $appointment = Appointment::all();
+//        $appointment = Appointment::where('patientId', session('userId'))->where('appDate', '=', date('Y-m-d', strtotime('today')))->get();
+        $appointment = Appointment::where('patientId', session('userId'))->get();
+//        $appointment = Appointment::all();
         return view('appointment.index', [
             'appointments' => $appointment
         ]);
@@ -41,6 +42,15 @@ class AppointmentController extends Controller
     {
         //return session('name');
         $appointment = Appointment::where('appDate', '=', date('Y-m-d', strtotime('today')))->get();
+        return view('appointment.staffindex1', [
+            'appointments' => $appointment
+        ]);
+    }
+
+    public function staffIndexAll()
+    {
+        //return session('name');
+        $appointment = Appointment::where('appDate', '>=', date('Y-m-d', strtotime('today')))->get();
         return view('appointment.staffindex1', [
             'appointments' => $appointment
         ]);
@@ -172,7 +182,10 @@ class AppointmentController extends Controller
     public function destroy($appointment)
     {
         Appointment::destroy($appointment);
-        return redirect()->action('AppointmentController@index');
+//        if(session('userType') === 'staff'){
+//            return back();
+//        }
+        return back();
     }
 
     public function queryDoctor(Request $request)

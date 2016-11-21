@@ -22,7 +22,6 @@
 
     <link rel="stylesheet" href="/assets/css/sweetalert.css">
     <script src="/assets/js/sweetalert.min.js"></script>
-    <script src="/assets/js/jquery-1.8.3.min.js"></script>
 
     @yield('css')
 
@@ -88,7 +87,6 @@
 
 
 <!-- js placed at the end of the document so the pages load faster -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script class="include" type="text/javascript" src="{{url('assets/js/jquery.dcjqaccordion.2.7.js')}}"></script>
 <script src="{{url('assets/js/jquery.scrollTo.min.js')}}"></script>
@@ -100,7 +98,6 @@
 <script src="{{asset('assets/js/common-scripts.js')}}"></script>
 
 <!--script for this page-->
-<script src="{{url('assets/js/jquery-ui-1.9.2.custom.min.js')}}"></script>
 
 <!--custom switch-->
 <script src="{{asset('assets/js/jquery.scrollTo.min.js')}}"></script>
@@ -113,7 +110,6 @@
 
 <script src="{{url('assets/js/form-component.js')}}"></script>
 
-<script src="{{ url('assets/js/jquery.js')}}"></script>
 
 
 

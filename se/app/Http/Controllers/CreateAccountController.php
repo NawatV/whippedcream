@@ -14,48 +14,51 @@ use Request;
 
 class CreateAccountController extends Controller
 {
-<<<<<<< HEAD
     private function checkDateFormat($date)
     {
-        if(strlen($date) != 10){
+        if (strlen($date) != 10) {
             return False;
         }
         if (!preg_match("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/", $date)) {
             return False;
-        }    
+        }
         $valid = checkdate(substr($date, 0, 2), substr($date, 3, 2), substr($date, 6));
-        return $valid;    
+        return $valid;
     }
+
     private function checkPhoneNumberFormat($phoneNumber)
     {
-        if((strlen($phoneNumber) != 10) or (!is_numeric($phoneNumber))){
+        if ((strlen($phoneNumber) != 10) or (!is_numeric($phoneNumber))) {
             return False;
         }
 
-        if(substr($phoneNumber, 0, 2) === '08'){
+        if (substr($phoneNumber, 0, 2) === '08') {
             return True;
         }
-        if(substr($phoneNumber, 0, 2) === '09' ){
+        if (substr($phoneNumber, 0, 2) === '09') {
             return True;
         }
 
         return false;
     }
+
     private function checkSSNFormat($ssn)
     {
-        if((strlen($ssn) != 13) or (!is_numeric($ssn))){
+        if ((strlen($ssn) != 13) or (!is_numeric($ssn))) {
             return False;
         }
         return True;
     }
+
     private function checkEmailFormat($email)
     {
-        if(strpos($email, '@') === False or strpos($email, ' ') !== False){
+        if (strpos($email, '@') === False or strpos($email, ' ') !== False) {
             return False;
         }
         return True;
     }
-    private function generatePassword() 
+
+    private function generatePassword()
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
@@ -66,8 +69,6 @@ class CreateAccountController extends Controller
         return $randomString;
     }
 
-=======
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
     public function create_staff_form()
     {
         return view('admin.createStaff');
@@ -100,10 +101,9 @@ class CreateAccountController extends Controller
             return redirect('createStaff');
         }
         /*end*/
-        if($input['gender'] == 'ชาย'){
+        if ($input['gender'] == 'ชาย') {
             $new_user->gender = 'male';
-        }
-        else{
+        } else {
             $new_user->gender = 'female';
         }
         /*check date*/
@@ -166,56 +166,6 @@ class CreateAccountController extends Controller
         session()->flash('generated_username', $new_user->username);
         session()->flash('generated_password', $new_pass);
         return redirect('manageAccount');
-    }
-
-    private function checkSSNFormat($ssn)
-    {
-        if ((strlen($ssn) != 13) or (!is_numeric($ssn))) {
-            return False;
-        }
-        return True;
-    }
-
-    private function checkDateFormat($date)
-    {
-        if (strlen($date) != 10) {
-            return False;
-        }
-        if (!preg_match("/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/", $date)) {
-            return False;
-        }
-        $valid = checkdate(substr($date, 0, 2), substr($date, 3, 2), substr($date, 6));
-        return $valid;
-    }
-
-    private function checkPhoneNumberFormat($phoneNumber)
-    {
-        if ((strlen($phoneNumber) != 10) or (!is_numeric($phoneNumber))) {
-            return False;
-        }
-        if (substr($phoneNumber, 0, 2) != '08') {
-            return False;
-        }
-        return True;
-    }
-
-    private function checkEmailFormat($email)
-    {
-        if (strpos($email, '@') === False or strpos($email, ' ') !== False) {
-            return False;
-        }
-        return True;
-    }
-
-    private function generatePassword()
-    {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < 10; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
     }
 
     public function create_doctor_form()
@@ -294,10 +244,9 @@ class CreateAccountController extends Controller
             return redirect('createDoctor');
         }
         /*end*/
-        if($input['gender'] == 'ชาย'){
+        if ($input['gender'] == 'ชาย') {
             $new_user->gender = 'male';
-        }
-        else{
+        } else {
             $new_user->gender = 'female';
         }
         /*check date*/
@@ -413,10 +362,9 @@ class CreateAccountController extends Controller
             return redirect('createNurse');
         }
         /*end*/
-        if($input['gender'] == 'ชาย'){
+        if ($input['gender'] == 'ชาย') {
             $new_user->gender = 'male';
-        }
-        else{
+        } else {
             $new_user->gender = 'female';
         }
         /*check date*/
@@ -515,10 +463,9 @@ class CreateAccountController extends Controller
             return redirect('createPharmacist');
         }
         /*end*/
-        if($input['gender'] == 'ชาย'){
+        if ($input['gender'] == 'ชาย') {
             $new_user->gender = 'male';
-        }
-        else{
+        } else {
             $new_user->gender = 'female';
         }
         /*check date*/
@@ -615,10 +562,9 @@ class CreateAccountController extends Controller
             return redirect('createAdmin');
         }
         /*end*/
-        if($input['gender'] == 'ชาย'){
+        if ($input['gender'] == 'ชาย') {
             $new_user->gender = 'male';
-        }
-        else{
+        } else {
             $new_user->gender = 'female';
         }
         /*check date*/
@@ -657,13 +603,7 @@ class CreateAccountController extends Controller
             session()->flash('create_admin_error', 2);
             return redirect('createAdmin');
         }
-<<<<<<< HEAD
-        /*end*/ 
-        $new_pass = $input['password'];
-=======
-        /*end*/
         $new_pass = self::generatePassword();
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
         $new_user->password = bcrypt($new_pass);
         $new_user->address = $input['address'];
         /*thai or eng*/

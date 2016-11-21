@@ -1,5 +1,4 @@
 <div style="margin-top: 100px; margin-bottom: 20px">
-
     <p class="centered" style=""><img src="{{asset('assets/img/userLogo.png')}}"
                                       class="img-circle"
                                       width="150"></p>

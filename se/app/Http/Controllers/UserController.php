@@ -76,7 +76,6 @@ class UserController extends Controller
 //        2. Login
 //        3. Redirect
 
-
         //------ get inputs-----------------
 
         $firstname = $request->input('firstname');
@@ -94,13 +93,11 @@ class UserController extends Controller
 
         $userType = "patient"; //Only Patient
 
-
         $user = User::where('username', $username)->first(); //query in DB
         if (count($user) > 0) {
             return redirect()->back()->withInput()->withErrors(['ชื่อบัญชีผู้ใช้นี้มีอยู๋ในระบบแล้ว กรุณาลองเปลี่ยนเป็นชื่ออื่น ']);
             //these methods belongs to Laravel (go to the page with error msg)
         }
-
 
         $newUser = new User();
         //not include 'userId' since it's auto-increment
@@ -118,13 +115,10 @@ class UserController extends Controller
         $newUser->address = $address;
         $newUser->userType = $userType;
 
-
         $encryptedPassword = bcrypt($password);
         $newUser->password = $encryptedPassword;
 
-
         $newUser->save();
-
 
 //    patientId bloodType allergen hn
         $newUserId = User::where('idNumber', $idNumber)->value('userId');
@@ -139,7 +133,6 @@ class UserController extends Controller
 
         $newPatient->save();
 
-
         $user = User::where('idNumber', $idNumber)->first();
         $request->session()->put([
             'userId' => $user->userId,
@@ -147,16 +140,12 @@ class UserController extends Controller
             'name' => $user->firstname
         ]);
 
-
         return redirect('homepage')->with('status', 'ลงทะเบียน สำเร็จ');
-
-
     }
 
 
     public function myPatientInformation(Request $request)
     {
-
         $patients_hn = $request->session()->get('userId');
         $patients = User::where('userId', $patients_hn)->first();
         $patients2 = Patient::where('patientId', $patients_hn)->first(); // patients2 Patient query
@@ -168,14 +157,11 @@ class UserController extends Controller
         $patients_hn = $request->session()->get('userId');
         $patients = User::where('userId', $patients_hn)->first();
         $patients2 = Patient::where('patientId', $patients_hn)->first(); // patients2 Patient query
-
         return view('myEditedPatientInformation', compact('patients', 'patients2'));
-
     }
 
     public function seeEditedMyPatientInformation(Request $request)
     {
-
         $patients_hn = $request->input('userId');
         $patients = User::where('userId', $patients_hn)->first();
         $patients2 = Patient::where('patientId', $patients_hn)->first();
@@ -193,94 +179,51 @@ class UserController extends Controller
         $patients->save();
         $patients2->save();
 
-
         return view('myPatientInformation', compact('patients', 'patients2'));
-
     }
 
     // ของไม่ใช่ผู้ป่วย
     public function seePatientInformation()
     {
-
         return view('seePatientInformation');
-
     }
 
 
     public function getSearchPatientInformation()
     {
-//        $patients = Patient::all();
         $patients = array();
         return view('searchPatientInformation', compact('patients'));
-
     }
 
     public function getEditPatientInformation()
     {
-
         return view('editPatientInformation');
-
     }
 
     public function searchPatientFromHnIdNameForEditProfile(Request $request)
     {
-//        $patients = array();
-//        $patients = Patient::all();
-
         $patients_hn = $request->input('userId');
-
         $patients = User::where('userId', $patients_hn)->first();
         $patients2 = Patient::where('patientId', $patients_hn)->first(); // patients2 Patient query
-
-        // $appointments = Appointment::where('patientId', $patients_hn)->get();
-        // $diagnoses = Diagnosis::where('patientId', $patients_hn)->get();
-        //
-        // $doctors = array();
-        // foreach ($diagnoses as $diagnosis) {
-        // 		$doctorFromDiag = User::where('userId', $diagnosis->doctorId)->first();
-        // 		array_push($doctors, $doctorFromDiag);
-        // }
-
-//        $diagnoses = array();
-
-//        $prescription = Prescription::where('patientId', $patients_hn)->get();
-
-//        $name = $patients[0]->firstname;
-
-//        dd($name);
-
-
         return view('editPatientInformation', compact('patients', 'patients2'));
     }
 
     public function findPatientFromHnIdName(Request $request)
     {
-
         $patients_hn = Patient::where('hn', $request->input('hnNumber'))->value('patientId');
-
         $patients = User::where('userId', $patients_hn)->first(); // patients User query
-
-
         if ($patients == '') {
-
             $patients = User::where('idNumber', $request->input('idNumber'))->first();
-
             if ($patients == '') {
-
-
                 $patients = User::where('firstname', $request->input('firstname'))->where('lastname', $request->input('lastname'))->first();
-
                 if ($patients == '') {
                     $patients = array();
                     return view('searchPatientInformation', compact('patients'));
                 }
             }
-
             $patients_hn = Patient::where('patientId', $patients->userId)->value('patientId');
         }
-
         $patients2 = Patient::where('patientId', $patients_hn)->first(); // patients2 Patient query
-
         return view('seePatientInformation', compact('patients', 'patients2'));
     }
 
@@ -288,8 +231,6 @@ class UserController extends Controller
     //PatientProfileRequest $request cannot use
     public function editPatientInformation(PatientProfileRequest $request)
     {
-//        dd($diagnosis);
-//        return $diagnosis;
         $patients_hn = $request->input('userId');
         $patients = User::where('userId', $patients_hn)->first();
         $patients2 = Patient::where('patientId', $patients_hn)->first();
@@ -306,7 +247,6 @@ class UserController extends Controller
 
         $patients->save();
         $patients2->save();
-
 
         return view('seePatientInformation', compact('patients', 'patients2'));
     }

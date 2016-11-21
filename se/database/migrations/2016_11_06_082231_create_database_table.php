@@ -29,17 +29,10 @@ class CreateDatabaseTable extends Migration
         Schema::create('department', function (Blueprint $table) {
             $table->increments('departmentId');
             $table->string('departmentName');
-<<<<<<< HEAD
             $table->string('location');
-=======
-<<<<<<< HEAD
             $table->string('location');
-        });
-=======
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
         });
 
->>>>>>> 9475d4de8f09ca6b010512f737155b27c2ddfe24
         Schema::create('patient', function (Blueprint $table) {
             $table->integer('patientId')->unsigned();
             $table->char('bloodType',2)->nullable();
@@ -82,10 +75,6 @@ class CreateDatabaseTable extends Migration
             $table->primary('adminId');
             $table->foreign('adminId')->references('userId')->on('user');
         });
-<<<<<<< HEAD
-=======
-
->>>>>>> 9475d4de8f09ca6b010512f737155b27c2ddfe24
         Schema::create('schedule', function (Blueprint $table) {
             $table->increments('scheduleId');
             $table->integer('doctorId')->unsigned();

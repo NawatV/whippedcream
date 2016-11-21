@@ -18,7 +18,6 @@
                     <p style="color: red; text-align: center"> คำเตือน: กรุณาจดจำรหัสผ่านก่อนปิดหน้าต่างนี้ </p>
                 </div>
             </div>
-<<<<<<< HEAD
         </div>
     @endif
     @if(Session::get('delete_doc_error') == 1)
@@ -35,8 +34,6 @@
                         ไม่สามารถลบบัญชีได้ </h4>
                 </div>
             </div>
-=======
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
         </div>
     @endif
 
@@ -56,24 +53,14 @@
             <div class="row">
                 <div class="search-form-group">
                     <!--Name-->
-<<<<<<< HEAD
                     <label class="col-xs-2 col-lg-2 control-label mt2">ชื่อ-นามสกุล</label>
                     <div class="col-xs-3 col-lg-3">
-=======
-                    <label class="col-xs-1 col-lg-1 control-label mt2">ชื่อ-นามสกุล</label>
-                    <div class="col-xs-4 col-lg-4">
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
                         <input type="text" class="form-control" name='name' placeholder="{{$name}}"
                                onfocus="this.placeholder = ''">
                     </div>
                     <!--Department-->
-<<<<<<< HEAD
                     <label class="col-xs-offset-2 col-lg-offset-1 col-xs-2 col-lg-2 control-label mt2">แผนก</label>
                     <div class="col-xs-3 col-lg-3">
-=======
-                    <label class="col-xs-offset-1 col-lg-offset-1 col-xs-1 col-lg-1 control-label mt2">แผนก</label>
-                    <div class="col-xs-4 col-lg-4">
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
                         <input type="text" class="form-control" name='department' placeholder="{{$dep}}"
                                onfocus="this.placeholder = ''">
                     </div>
@@ -103,7 +90,6 @@
                     <label class="col-xs-2 col-lg-2 control-label mt2">ประเภทบัญชี</label>
                     <div class="col-xs-10 col-lg-10">
                         @if ($wanted_userType[0] != '')
-<<<<<<< HEAD
                             <input type="checkbox" name="userType_Pa" value="patient" checked
                                    style="margin-top: 9px; margin-right: 3px"> ผู้ป่วย </input>
                         @else
@@ -143,47 +129,6 @@
                                    style="margin-top: 9px; margin-right: 3px; margin-left: 40px"> ผู้คุมระบบ </input>
                         @else
                             <input type="checkbox" name="userType_A" value="admin"
-=======
-                            <input type="checkbox" name="userType_Pa" value="ผู้ป่วย" checked
-                                   style="margin-top: 9px; margin-right: 3px"> ผู้ป่วย </input>
-                        @else
-                            <input type="checkbox" name="userType_Pa" value="ผู้ป่วย"
-                                   style="margin-top: 9px; margin-right: 3px"> ผู้ป่วย </input>
-                        @endif
-                        @if ($wanted_userType[1] != '')
-                            <input type="checkbox" name="userType_S" value="เจ้าหน้าที่" checked
-                                   style="margin-top: 9px; margin-right: 3px; margin-left: 40px"> เจ้าหน้าที่ </input>
-                        @else
-                            <input type="checkbox" name="userType_S" value="เจ้าหน้าที่"
-                                   style="margin-top: 9px; margin-right: 3px; margin-left: 40px"> เจ้าหน้าที่ </input>
-                        @endif
-                        @if ($wanted_userType[2] != '')
-                            <input type="checkbox" name="userType_D" value="แพทย์" checked
-                                   style="margin-top: 9px; margin-right: 3px; margin-left: 40px"> แพทย์ </input>
-                        @else
-                            <input type="checkbox" name="userType_D" value="แพทย์"
-                                   style="margin-top: 9px; margin-right: 3px; margin-left: 40px"> แพทย์ </input>
-                        @endif
-                        @if ($wanted_userType[3] != '')
-                            <input type="checkbox" name="userType_N" value="พยาบาล" checked
-                                   style="margin-top: 9px; margin-right: 3px; margin-left: 40px"> พยาบาล </input>
-                        @else
-                            <input type="checkbox" name="userType_N" value="พยาบาล"
-                                   style="margin-top: 9px; margin-right: 3px; margin-left: 40px"> พยาบาล </input>
-                        @endif
-                        @if ($wanted_userType[4] != '')
-                            <input type="checkbox" name="userType_Ph" value="เภสัชกร" checked
-                                   style="margin-top: 9px; margin-right: 3px; margin-left: 40px"> เภสัชกร </input>
-                        @else
-                            <input type="checkbox" name="userType_Ph" value="เภสัชกร"
-                                   style="margin-top: 9px; margin-right: 3px; margin-left: 40px"> เภสัชกร </input>
-                        @endif
-                        @if ($wanted_userType[5] != '')
-                            <input type="checkbox" name="userType_A" value="ผู้คุมระบบ" checked
-                                   style="margin-top: 9px; margin-right: 3px; margin-left: 40px"> ผู้คุมระบบ </input>
-                        @else
-                            <input type="checkbox" name="userType_A" value="ผู้คุมระบบ"
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
                                    style="margin-top: 9px; margin-right: 3px; margin-left: 40px"> ผู้คุมระบบ </input>
                         @endif
                     </div>
@@ -213,26 +158,9 @@
             </div>
             <div class="account-list-panel">
 
-<<<<<<< HEAD
-
-            {{--@foreach($users as $user)--}}
-            {{--@if($user->userType == 'admin')--}}
-            {{--{{dd($user->patient->hn)}}--}}
-            {{--@endif--}}
-            {{--@endforeach--}}
-
-
-            {{--@if($users == '')--}}
-            {{--DoNothing--}}
-            {{--@else--}}
             @foreach($users as $user)
                 <!--edit popup-->
                     @if ($user->userType != 'patient' and $user->userType != 'admin')
-=======
-            @foreach($users as $user)
-                <!--edit popup-->
-                    @if ($user->userType != 'ผู้ป่วย' and $user->userType != 'ผู้คุมระบบ')
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
                         <div id="edit_right_popup{{$user->index}}" class="admin-popup-position" style="z-index: 2">
                             <div id="admin-popup-wrapper">
                                 <div id="admin-popup-container">
@@ -242,19 +170,11 @@
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="hidden" name="username" value="{{ $user->username }}">
                                         <input type="hidden" name="operation" value="change_right">
-<<<<<<< HEAD
                                         @if ($user->userType == 'doctor' or $user->userType == 'nurse')
                                             <div style="padding-left: 14px; margin-bottom: 8px; margin-top: 14px">
                                                 <label style="margin-right: 8px"> แผนก </label>
                                                 <!--must test if not change dept-->
                                                 @if ($user->userType == 'doctor')
-=======
-                                        @if ($user->userType == 'แพทย์' or $user->userType == 'พยาบาล')
-                                            <div style="padding-left: 14px; margin-bottom: 8px; margin-top: 14px">
-                                                <label style="margin-right: 8px"> แผนก </label>
-                                                <!--must test if not change dept-->
-                                                @if ($user->userType == 'แพทย์')
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
                                                     <input type="text" name="new_department"
                                                            placeholder="{{ $user->doctor->department->departmentName }}">
                                                 @else
@@ -265,11 +185,7 @@
                                         @endif
                                         <div class="row">
                                             <div class="col-xs-6 col-lg-6">
-<<<<<<< HEAD
                                                 @if ($user->userType == 'doctor' or $user->userType == 'nurse' or $user->userType == 'staff')
-=======
-                                                @if ($user->userType == 'แพทย์' or $user->userType == 'พยาบาล' or $user->userType == 'เจ้าหน้าที่')
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
                                                     <div class="col-xs-12 col-lg-12">
                                                         <input type="checkbox" name="gen_H" value="Allow" checked
                                                                style="margin-top: 9px; margin-right: 3px">
@@ -293,11 +209,7 @@
                                                            style="margin-top: 9px; margin-right: 3px">
                                                     แก้ไขข้อมูลทั่วไปของผู้ป่วย </input>
                                                 </div>
-<<<<<<< HEAD
                                                 @if ($user->userType == 'doctor')
-=======
-                                                @if ($user->userType == 'แพทย์')
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
                                                     <div class="col-xs-12 col-lg-12">
                                                         <input type="checkbox" name="dia_E" value="Allow" checked
                                                                style="margin-top: 9px; margin-right: 3px">
@@ -309,11 +221,7 @@
                                                         แก้ไขประวัติการสั่งยา </input>
                                                     </div>
                                                 @endif
-<<<<<<< HEAD
                                                 @if ($user->userType == 'nurse')
-=======
-                                                @if ($user->userType == 'พยาบาล')
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
                                                     <div class="col-xs-12 col-lg-12">
                                                         <input type="checkbox" name="gen_E" value="Allow" checked
                                                                style="margin-top: 9px; margin-right: 3px">
@@ -347,12 +255,8 @@
 
                                     <div align="center" style="margin-top: 16px">
                                         <button type="button" class="btn btn-theme04 btn-lg"
-<<<<<<< HEAD
                                                 onclick="toggle_visibility('delete_user_popup{{$user->index}}');">
                                             ยกเลิก
-=======
-                                                onclick="toggle_visibility('delete_user_popup{{$user->index}}');">ยกเลิก
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
                                         </button>
                                         <span style="margin-right: 10px"></span>
                                         <button type="submit" class="btn btn-success btn-lg">ยืนยัน</button>
@@ -372,7 +276,6 @@
                                    style="padding-left: 12px">{{$user->firstname}} {{$user->lastname}}</p>
                                 <p class="account-excerpt col-xs-3 col-lg-3"
                                    style="padding-left: 16px">{{$user->username}}</p>
-<<<<<<< HEAD
                                 @if ($user->userType == 'patient')
                                     <p class="account-excerpt col-xs-1 col-lg-1" style="padding-left: 20px">
                                         ผู้ป่วย</p>
@@ -395,13 +298,6 @@
                             </a>
                             <p class="account-excerpt col-xs-1 col-lg-2" style="padding-left: 22px">
                                 @if ($user->userType != 'patient' and $user->userType != 'admin')
-=======
-                                <p class="account-excerpt col-xs-1 col-lg-1"
-                                   style="padding-left: 20px">{{$user->userType}}</p>
-                            </a>
-                            <p class="account-excerpt col-xs-1 col-lg-2" style="padding-left: 22px">
-                                @if ($user->userType != 'ผู้ป่วย' and $user->userType != 'ผู้คุมระบบ')
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
                                     <a href="#" onclick="toggle_visibility('edit_right_popup{{$user->index}}');">
                                         <i class="fa fa-pencil-square"></i> แก้ไขสิทธิ์ <span
                                                 style="margin-right: 10px"></span>
@@ -423,18 +319,13 @@
                                 </div>
                                 <!--info section-->
                                 <div class="col-xs-9 col-lg-9" align="left" style="margin-top: 8px">
-<<<<<<< HEAD
                                     @if ($user->userType == 'patient')
-=======
-                                    @if ($user->userType == 'ผู้ป่วย')
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
                                         <div class="col-xs-4 col-lg-4">
                                             <p>เลขประจำตัวผู้ป่วย: {{$user->patient->hn}}</p>
                                         </div>
                                         <div class="col-xs-8 col-lg-8">
                                             <p>เลขประจำตัวประชาชน: {{$user->idNumber}}</p>
                                         </div>
-<<<<<<< HEAD
                                         @if ($user->gender == 'male')
                                             <div class="col-xs-4 col-lg-4">
                                                 <p>เพศ: ชาย</p>
@@ -444,11 +335,6 @@
                                                 <p>เพศ: หญิง</p>
                                             </div>
                                         @endif
-=======
-                                        <div class="col-xs-4 col-lg-4">
-                                            <p>เพศ: {{$user->gender}}</p>
-                                        </div>
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
                                         <div class="col-xs-4 col-lg-4">
                                             <p>วันเกิด: {{$user->birthDate}}</p>
                                         </div>
@@ -463,12 +349,8 @@
                                                   style="margin-right: 5px"></i> {{$user->phoneNumber}}</p>
                                         </div>
                                         <div class="col-xs-8 col-lg-8">
-<<<<<<< HEAD
                                             <p><i class="fa fa-envelope"
                                                   style="margin-right: 5px"></i> {{$user->email}}
-=======
-                                            <p><i class="fa fa-envelope" style="margin-right: 5px"></i> {{$user->email}}
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
                                             </p>
                                         </div>
                                         <div class="col-xs-12 col-lg-12">
@@ -476,7 +358,6 @@
                                                   style="margin-right: 5px"></i> {{$user->address}}</p>
                                         </div>
                                     @else
-<<<<<<< HEAD
                                         @if ($user->userType == 'staff')
                                             <div class="col-xs-4 col-lg-4">
                                                 <p>เลขประจำตัวเจ้าหน้าที่: {{$user->staff->staffNumber}}</p>
@@ -494,25 +375,6 @@
                                                 <p>เลขประจำตัวเภสัชกร: {{$user->pharmacist->pharmacistNumber}}</p>
                                             </div>
                                         @elseif ($user->userType == 'admin')
-=======
-                                        @if ($user->userType == 'เจ้าหน้าที่')
-                                            <div class="col-xs-4 col-lg-4">
-                                                <p>เลขประจำตัวเจ้าหน้าที่: {{$user->staff->staffNumber}}</p>
-                                            </div>
-                                        @elseif ($user->userType == 'แพทย์')
-                                            <div class="col-xs-4 col-lg-4">
-                                                <p>เลขประจำตัวแพทย์: {{$user->doctor->doctorNumber}}</p>
-                                            </div>
-                                        @elseif ($user->userType == 'พยาบาล')
-                                            <div class="col-xs-4 col-lg-4">
-                                                <p>เลขประจำตัวพยาบาล: {{$user->nurse->nurseNumber}}</p>
-                                            </div>
-                                        @elseif ($user->userType == 'เภสัชกร')
-                                            <div class="col-xs-4 col-lg-4">
-                                                <p>เลขประจำตัวเภสัชกร: {{$user->pharmacist->pharmacistNumber}}</p>
-                                            </div>
-                                        @else
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
                                             <div class="col-xs-4 col-lg-4">
                                                 <p>เลขประจำตัวผู้คุมระบบ: {{$user->admin->adminNumber}}</p>
                                             </div>
@@ -520,7 +382,6 @@
                                         <div class="col-xs-8 col-lg-8">
                                             <p>เลขประจำตัวประชาชน: {{$user->idNumber}}</p>
                                         </div>
-<<<<<<< HEAD
                                         @if ($user->gender == 'male')
                                             <div class="col-xs-4 col-lg-4">
                                                 <p>เพศ: ชาย</p>
@@ -538,19 +399,6 @@
                                                 <p>แผนก: {{$user->doctor->department->departmentName}}</p>
                                             </div>
                                         @elseif ($user->userType == 'nurse')
-=======
-                                        <div class="col-xs-4 col-lg-4">
-                                            <p>เพศ: {{$user->gender}}</p>
-                                        </div>
-                                        <div class="col-xs-8 col-lg-8">
-                                            <p>วันเกิด: {{$user->birthDate}}</p>
-                                        </div>
-                                        @if ($user->userType == 'แพทย์')
-                                            <div class="col-xs-12 col-lg-12">
-                                                <p>แผนก: {{$user->doctor->department->departmentName}}</p>
-                                            </div>
-                                        @elseif ($user->userType == 'พยาบาล')
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
                                             <div class="col-xs-12 col-lg-12">
                                                 <p>แผนก: {{$user->nurse->department->departmentName}}</p>
                                             </div>
@@ -562,12 +410,8 @@
                                         </div>
                                         <div class="col-xs-8 col-lg-8">
                                             <p><i class="fa fa-envelope"
-<<<<<<< HEAD
                                                   style="margin-top: 10px; margin-right: 5px"></i> {{$user->email}}
                                             </p>
-=======
-                                                  style="margin-top: 10px; margin-right: 5px"></i> {{$user->email}}</p>
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
                                         </div>
                                         <div class="col-xs-12 col-lg-12">
                                             <p><i class="fa fa-address-book"
@@ -579,11 +423,6 @@
                         </div>
                     </div>
                 @endforeach
-<<<<<<< HEAD
-                {{--@endif--}}
-=======
-
->>>>>>> f2d65c9b791b70eba4e564cff4ef77a1ab8b3909
             </div>
         </div>
     </div>

@@ -1,47 +1,8 @@
 @extends('layouts.theme')
 
 @section('name')
-    นายแพทย์
+    {{session('name')}}
 @endsection
-
-@section('leftnav')
-    <li class="sub-menu">
-        <a href="javascript:;">
-            <i class="fa fa-calendar"></i><span>ตารางวันและเวลา</span>
-        </a>
-    </li>
-
-    <li class="sub-menu">
-        <a class="active" href="javascript:;">
-            <i class="fa fa-plus-circle"></i><span>สร้างการนัดหมาย</span>
-        </a>
-    </li>
-
-    <li class="sub-menu">
-        <a href="javascript:;">
-            <i class="fa fa-pencil-square"></i><span>การนัดหมาย</span>
-        </a>
-    </li>
-
-    <li class="sub-menu">
-        <a href="javascript:;">
-            <i class="fa fa-heart"></i><span>บันทึกคำวินิจฉัยและใบสั่งยา</span>
-        </a>
-    </li>
-
-    <li class="sub-menu">
-        <a href="javascript:;">
-            <i class="fa fa-group"></i><span>ข้อมูลผู้ป่วย</span>
-        </a>
-    </li>
-
-    <li class="sub-menu">
-        <a href="javascript:;">
-            <i class="fa fa-plus-square"></i><span>จ่ายยา</span>
-        </a>
-    </li>
-@endsection
-
 
 @section('content')
     <!-- BASIC FORM ELELEMNTS -->
@@ -53,9 +14,6 @@
                     <h1>ดูอาการทั่วไป</h1>
 
                     <br>
-
-
-
                         <div class="form-horizontal style-form">
                             <div class="form-group">
                                     <label class="col-sm-2 col-sm-2 control-label">รหัสประจำตัวผู้ป่วย</label>

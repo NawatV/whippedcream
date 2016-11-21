@@ -46,7 +46,6 @@ class PatientProfileRequest extends FormRequest
     }
 
 
-
     public function messages()
     {
       return [

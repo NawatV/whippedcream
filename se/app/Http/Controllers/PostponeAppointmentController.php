@@ -3,26 +3,34 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PostponeAppointmentController extends Controller
 {
     public static function postponeAppointment($appointment)
     {
+        date_default_timezone_set('Asia/Bangkok');
         //get all doctor in the same dep
         $target_doc = $appointment->doctor;
         $target_dep = $target_doc->department;
         $all_doctor = $target_dep->doctor;
         $all_app = [];
         for($i = 0; $i < count($all_doctor); $i++){
-        	array_push($all_app, $all_doctor[i]->appointment);
+        	array_push($all_app, $all_doctor[$i]->appointment);
         }
         //get date and time of postponed appointment
         $base_date = $appointment['appDate'];
         $base_date = new \DateTime($base_date);
         $base_time = $appointment['appTime'];
+        if($base_time = '09:00:00'){
+            $base_time = 1;
+        }
+        else{
+            $base_time = 2;
+        }
         //loop date
         $postponed = False;
-        while(!postponed){
+        while(!$postponed){
         	$date = $base_date;
         	$date = $date->format('w Y-m-d');
         	$dow = substr($date, 0, 1);
@@ -38,6 +46,9 @@ class PostponeAppointmentController extends Controller
 	            	$time = '13:00';
 	            }
 	            for($i = 0; $i < count($all_doctor); $i++){
+                    if($all_doctor[$i]['doctorNumber'] == $target_doc['doctorNumber']){
+                        continue;
+                    }
 	            	//check doc schedule
 	            	$doc_schedule = $all_doctor[$i]->schedule;
 	            	$schedule_match = False;
@@ -77,7 +88,7 @@ class PostponeAppointmentController extends Controller
 	            		}
 	            	}
 	            	if($schedule_match){
-		            	$all_doc_app = $all_app[i];
+		            	$all_doc_app = $all_app[$i];
 		            	$all_cur_app = [];
 		            	for($i2 = 0; $i2 < count($all_doc_app); $i2++){
 		            		if($all_doc_app[$i2]['appDate'] == $date and $all_doc_app[$i2]['appTime'] == $time){
@@ -90,10 +101,11 @@ class PostponeAppointmentController extends Controller
 		            	}
 		                //if available -> change date & time
 		                else{
-		                   $appointment->appDate = $date;
-		                   $appointment->appTime = $time;
-		                   $postponed = True;
-		                   break;
+                            $appointment->doctorId = $all_doctor[$i]['doctorId'];
+		                    $appointment->appDate = $date;
+		                    $appointment->appTime = $time;
+		                    $postponed = True;
+		                    break;
 		                }
 		            }
 	            }
@@ -114,7 +126,7 @@ class PostponeAppointmentController extends Controller
         self::sendSms($appointment);
     }
 
-    public function sendEmail($appointment)
+    public static function sendEmail($appointment)
     {
         $target_patient = $appointment->patient;
     	$target_user = $target_patient->user;
@@ -144,13 +156,13 @@ class PostponeAppointmentController extends Controller
         $content .= '<p>Inside p tag</p>';
         Mail::send('email.send', ['title' => $title, 'content' => $content], function ($message) {
             $message->from('whippedcream@hotmail.com', 'Tkk24');
-            $message->to('pisanu15193@yahoo.com');
+            $message->to($target_user['email']);
             $message->subject('Email from WhippedCream System');
         });
         return back();
     }
 
-    public function sendSms($appointment)
+    public static function sendSms($appointment)
     {
     	$target_patient = $appointment->patient;
     	$target_user = $target_patient->user;

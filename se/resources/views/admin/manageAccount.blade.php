@@ -18,6 +18,21 @@
   </div>
 </div>
 @endif
+@if(Session::get('delete_doc_error') == 1)
+<div id="error-popup" class="admin-popup-position-dont-hide" style="z-index: 2">
+  <div id="admin-error-popup-wrapper">
+    <div id="admin-error-popup-container" align="center">
+      <div style="font-size: 18px; float: right; position: relative; left: 10px">
+        <a href="#" onclick="toggle_visibility('error-popup');" style="text-decoration: none">
+          <i class="fa fa-times-circle"></i>
+        </a>
+      </div>
+      <p style="font-size: 120px; color: #ed5565"><i class="fa fa-exclamation-circle"></i></p>
+      <h4 style="position: relative; bottom: 26px"> แพทย์ยังมีการนัดหมายในวันนี้อยู่ <br> ไม่สามารถลบบัญชีได้ </h4>
+    </div>  
+  </div>
+</div>
+@endif
 
 <div class="row">
 <!--start of  search form-->
@@ -301,7 +316,7 @@
                         <div class="col-xs-4 col-lg-4">
                           <p>เลขประจำตัวเภสัชกร: {{$user->pharmacist->pharmacistNumber}}</p>
                         </div>
-                      @else
+                      @elseif ($user->userType == 'admin')
                         <div class="col-xs-4 col-lg-4">
                           <p>เลขประจำตัวผู้คุมระบบ: {{$user->admin->adminNumber}}</p>
                         </div>

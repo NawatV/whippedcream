@@ -32,7 +32,8 @@ Route::get('/appoint', function () {
 
 //-------------- Schedule -----------------------------------------
 Route::get('/schedule', 'ScheduleController@viewSchedule');
-Route::post('/schedule', 'ScheduleController@addAbsent');    
+Route::post('/schedule', 'ScheduleController@addAbsent');
+Route::post('/schedule/staff', 'ScheduleController@viewScheduleStaff');     
 
 /*It causes (Route(in the group)--must pass-->Middleware-->Function )
 	   https://laravel.com/docs/5.3/routing  */

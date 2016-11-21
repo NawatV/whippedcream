@@ -1,6 +1,7 @@
 <?php
   //---- for transfering the data into symbols  
   //Schedule
+if($pack != NULL){
   $mon = $pack['sche'] -> monPeriod;
   $tue = $pack['sche'] -> tuePeriod;
   $wed = $pack['sche'] -> wedPeriod;
@@ -40,22 +41,38 @@
 
   }
 
-  //return dd($pack['abs'][0]);
-
-  //LeavingDate
-  /*
-  for($i=0; $i < sizeof($pack['abs']); $i++){
-    if($pack['abs'][$i] ==1) 
-      return dd("success");
-  }
-  */
   $abs = $pack['abs'];  //Haven't check error cases yet
   $c =0 ;
   foreach($pack['abs'] as $i) {
     if($i->leavePeriod == "1") $abs[$c] -> leavePeriod = "morning"; 
     else if($i->leavePeriod == "2") $abs[$c] -> leavePeriod = "afternoon";
+    else if($i->leavePeriod =="3") $abs[$c] -> leavePeriod = "the whole day";
     $c ++;
-  }  
+  }
+
+}
+
+else {
+  $week = array();
+  for($i=0; $i<=6; $i++){
+    $week[$i][0]=" ";
+    $week[$i][1]=" "; 
+  }
+
+  //here----
+  /*
+  $abs = $pack['abs'];  //Haven't check error cases yet
+  $c =0 ;
+  foreach($pack['abs'] as $i) {
+    if($i->leavePeriod == "1") $abs[$c] -> leavePeriod = "morning"; 
+    else if($i->leavePeriod == "2") $abs[$c] -> leavePeriod = "afternoon";
+    else if($i->leavePeriod =="3") $abs[$c] -> leavePeriod = "the whole day";
+    $c ++;
+  }*/
+  $abs = array();
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -112,6 +129,19 @@
             <a href="index.html" class="logo"><b>Whipped Cream</b></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
+
+            <!--serach box for staff-->
+             <form class="navbar-form navbar-right" method="post" action="/schedule/staff" >
+
+              <input type="hidden" name="_token" value="{{csrf_token()}}">
+              <input type="text" name="searchId" class="form-control" placeholder="Search...">
+
+            <button class="btn btn-default" type="submit" id="searchButton" >
+                <img src="img/searchButton.png">
+            </button>
+
+          </form>
+
 
             </div>
             <div class="top-menu">
@@ -253,46 +283,48 @@
                     @endforeach
 
                 <div class="col-lg-10">
-                    <form class="form-login" action="/schedule/addAbsent" method="post">
-                    
-                    <div class=col-md-6>
-                        <input type="text" class="form-control" placeholder="absentDate" name="absentdate" id="datepicker">
 
-                        <div class="dropdown">
+                    <form class="form-login "method="post" action="/schedule" > 
 
-                          <input type="text" class="form-control" placeholder="absentPeriod" name="absentPeriod">
+                      <!--<div class="form-group">-->
+                      <!--<div class=col-md-6>-->
 
-                          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Period
-                            <span class="caret"></span></button>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Morning</a></li>
-                                <li><a href="#">Afternoon</a></li>
-                              </ul>
-                        </div>
+                              <!--MUST HAVE IT"S AN EXCEPTION-->
+                              <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            
+                              <input type="text" class="form-control" placeholder="absentDate" name="absentdate" id="datepicker">
+                            <!--
+                            <div class="input-group">
+                              <input type="text" class="form-control" placeholder="absentPeriod" name="absentdate" id="option1">
 
-                    </div>
+                              <input type="text" class="form-control" placeholder="absentPeriod" name="absentdate" id="option2">
 
+                              <div id="option1" class="form-control group">morning</div>
+                              <div id="option2" class="form-control group">afternoon</div>
+                              <select id="selectMe">
+                                <option value="option1">morning</option>
+                                <option value="option2">afternoon</option>
+                              </select>
+                              
+                            </div>                        
+                            -->
+
+                                <input type="checkbox" name="absentperiod" value="1">Morning<br>
+                                <input type="checkbox" name="absentperiod" value="2">Afternoon<br>
+                                <input type="checkbox" name="absentperiod" value="3">The whole day<br>
+                                 <button class="btn btn-theme col-sm-5" type="submit"></i>add</button>                        
+
+                        <!--</div>-->
+                    <!--
                     <div class=col-md-5>
                          <div class="form-group">
                             <button class="btn btn-theme col-sm-5" type="submit"></i>add</button>
                          </div>
                     </div>
-                    
+                    -->
                     </form>
                   </div>
 
-                        <!--
-                        <label class="col-sm-2 col-sm-2 control-label">Absent Date</label>
-                            <div class="-group date" data-provide="datepicker">
-                            <input type="text" class="form-control" id="datepicker" >
-
-                                  <div class="input-group-addon" type="submit" >
-                                  <span class="glyphicon glyphicon-plus"></span>
-
-                                  </div>
-                                  
-                             </div>
-                        -->
 
                       </div>
                         
@@ -310,6 +342,25 @@
 
       <!--footer end-->
   </section>
+
+<!-- for dropdownlist and change content -->
+  <script type="text/javascript">
+    $(document).ready(function () {
+  $('.group').hide();
+  $('#option1').show();
+  $('#selectMe').change(function () {
+    $('.group').hide();
+    $('#'+$(this).val()).show();
+  })
+});
+</script>
+
+<!-- force to choose at most 1 (checkbox) -->
+<script type="text/javascript">
+$('input[type="checkbox"]').on('change', function() {
+   $(this).siblings('input[type="checkbox"]').prop('checked', false);
+});
+</script>
 
     <!-- js placed at the end of the document so the pages load faster -->
     <script src="assets/js/jquery.js"></script>

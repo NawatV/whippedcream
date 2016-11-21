@@ -88,7 +88,9 @@ Route::group(['middleware' => 'login'], function () {
     Route::post('/appointment', 'AppointmentController@store');
 //staff appointment
     Route::get('/appointment/staffindex', 'AppointmentController@staffIndex');
-    Route::get('/appointment/staffindexall', 'AppointmentController@staffIndexAll');
+    Route::get('/appointment/staffindexall', 'AppointmentController@staffSearchPatient');
+    Route::get('/appointment/staffsearchpatientfound', 'AppointmentController@staffSearchPatientFound');
+
     Route::get('/appointment/staffcreate', 'AppointmentController@staffCreate');
     Route::post('/appointment/staffstore', 'AppointmentController@staffStore');
 //walkin appointment
@@ -107,7 +109,9 @@ Route::group(['middleware' => 'login'], function () {
 //pdf
     Route::get('/appointment/{appointment}/appointmentpdf', 'AppointmentController@appointmentPdf');
 
-
+//    ===================================================================================================
+//    ===================================================================================================
+//    ===================================================================================================
 
 
 

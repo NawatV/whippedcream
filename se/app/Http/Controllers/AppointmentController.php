@@ -935,7 +935,29 @@ class AppointmentController extends Controller
                 elseif ($numberOfAppOnNewDateMorn < 5 && $numberOfAppOnNewDateAfte < 5) return 3;
             }
         }
+    }
 
+    public function staffSearchPatient(){
+        $patients = array();
+        return view('appointment.staffsearchpatient',compact('patients'));
+    }
+
+    public function staffSearchPatientFound(Request $request){
+        $patients_hn = Patient::where('hn', $request->input('hnNumber'))->value('patientId');
+        $patients = User::where('userId', $patients_hn)->first();
+        if ($patients == '') {
+            $patients = User::where('idNumber', $request->input('idNumber'))->first();
+            if ($patients == '') {
+                $patients = User::where('firstname', $request->input('firstname'))->where('lastname', $request->input('lastname'))->first();
+                if ($patients == '') {
+                    $patients = array();
+                    return view('appointment.staffsearchpatient', compact('patients'));
+                }
+            }
+            $patients_hn = Patient::where('patientId', $patients->userId)->value('patientId');
+        }
+        $appointments = Appointment::where('patientId', $patients_hn)->get();
+        return view('appointment.staffindex1',compact('appointments'));
     }
 
 }

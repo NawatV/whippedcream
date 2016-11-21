@@ -1,6 +1,71 @@
+<?php
+  //---- for transfering the data into symbols  
+  //Schedule
+  $mon = $pack['sche'] -> monPeriod;
+  $tue = $pack['sche'] -> tuePeriod;
+  $wed = $pack['sche'] -> wedPeriod;
+  $thu = $pack['sche'] -> thuPeriod;
+  $fri = $pack['sche'] -> friPeriod;
+  $sat = $pack['sche'] -> satPeriod;
+  $sun = $pack['sche'] -> sunPeriod;
+
+  $weektmp = array();
+  $weektmp[0] = $mon;
+  $weektmp[1] = $tue;
+  $weektmp[2] = $wed;
+  $weektmp[3] = $thu;
+  $weektmp[4] = $fri;
+  $weektmp[5] = $sat;
+  $weektmp[6] = $sun;
+
+  $week = array();
+
+  for($i=0; $i<=6; $i++){
+      if($weektmp[$i]==0){
+          $week[$i][0] = " ";
+          $week[$i][1] = " ";
+      }
+      else if($weektmp[$i]==1){
+          $week[$i][0] = "+";
+          $week[$i][1] = " ";
+      }
+      else if($weektmp[$i]==2){
+          $week[$i][0] = " ";
+          $week[$i][1] = "+";
+      }
+      else if($weektmp[$i]==3){
+          $week[$i][0] = "+";
+          $week[$i][1] = "+";
+      }
+
+  }
+
+  //return dd($pack['abs'][0]);
+
+  //LeavingDate
+  /*
+  for($i=0; $i < sizeof($pack['abs']); $i++){
+    if($pack['abs'][$i] ==1) 
+      return dd("success");
+  }
+  */
+  $abs = $pack['abs'];  //Haven't check error cases yet
+  $c =0 ;
+  foreach($pack['abs'] as $i) {
+    if($i->leavePeriod == "1") $abs[$c] -> leavePeriod = "morning"; 
+    else if($i->leavePeriod == "2") $abs[$c] -> leavePeriod = "afternoon";
+    $c ++;
+  }  
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
+      <!--for calendar-->
+      <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -25,6 +90,13 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <script>
+        $(function () {
+            $("#datepicker").datepicker();
+        });
+    </script>
+
   </head>
 
   <body>
@@ -137,28 +209,29 @@
                               </tr>
                               </thead>
                               <tbody>
+
                               <tr>
                                   <td>Morning</td>
-                                  <td class = "centered"></td>
-                                  <td class = "centered">+</td>
-                                  <td class = "centered"></td>
-                                  <td class = "centered">+</td>
-                                  <td class = "centered"></td>
-                                  <td class = "centered">+</td>
-                                  <td class = "centered">+</td>
+                                  <td class = "centered">{{$week[0][0]}}</td>
+                                  <td class = "centered">{{$week[1][0]}}</td>
+                                  <td class = "centered">{{$week[2][0]}}</td>
+                                  <td class = "centered">{{$week[3][0]}}</td>
+                                  <td class = "centered">{{$week[4][0]}}</td>
+                                  <td class = "centered">{{$week[5][0]}}</td>
+                                  <td class = "centered">{{$week[6][0]}}</td>
 
                               </tr>
                               <tr>
                                   <td>Afternoon</td>
-                                  <td class = "centered">+</td>
-                                  <td class = "centered">+</td>
-                                  <td class = "centered"></td>
-                                  <td class = "centered"></td>
-                                  <td class = "centered"></td>
-                                  <td class = "centered"></td>
-                                  <td class = "centered">+</td>
+                                  <<td class = "centered">{{$week[0][1]}}</td>
+                                  <td class = "centered">{{$week[1][1]}}</td>
+                                  <td class = "centered">{{$week[2][1]}}</td>
+                                  <td class = "centered">{{$week[3][1]}}</td>
+                                  <td class = "centered">{{$week[4][1]}}</td>
+                                  <td class = "centered">{{$week[5][1]}}</td>
+                                  <td class = "centered">{{$week[6][1]}}</td>
                               </tr>
-
+                            
                               </tbody>
                           </table>
                           </section>
@@ -168,30 +241,67 @@
                   </div><!-- /content-panel -->
                </div><!-- /col-lg-4 -->
         </div><!-- /row -->
+
          <div class="row mt">
             <div class="col-lg-10">
                 <div class="form-panel">
                       <h4 class="mb"><i class="fa fa-angle-right"></i> Absent</h4>
+                      <div class="form-group">
 
-                       <div class="form-group">
-                        <h5> Absent Date : 01 / 12 / 2016 - Morning</h5>
-                      <h5> Absent Date : 06 / 12 / 2016 - Afternoon</h5>
-                              <label class="col-sm-2 col-sm-2 control-label">Absent Date</label>
+                    @foreach ($abs as $d)
+                        <h5>Absent Date {{$d -> leaveDate}} - {{$d-> leavePeriod }}</h5>
+                    @endforeach
 
-                                  <div class="input-group date" data-provide="datepicker">
-                                  <input type="text" class="form-control">
-                                 <div class="input-group-addon">
-                               <span class="glyphicon glyphicon-plus"></span>
-                                </div>
-                                </div>
+                <div class="col-lg-10">
+                    <form class="form-login" action="/schedule/addAbsent" method="post">
+                    
+                    <div class=col-md-6>
+                        <input type="text" class="form-control" placeholder="absentDate" name="absentdate" id="datepicker">
 
-                          </div>
+                        <div class="dropdown">
+
+                          <input type="text" class="form-control" placeholder="absentPeriod" name="absentPeriod">
+
+                          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Period
+                            <span class="caret"></span></button>
+                              <ul class="dropdown-menu">
+                                <li><a href="#">Morning</a></li>
+                                <li><a href="#">Afternoon</a></li>
+                              </ul>
+                        </div>
+
+                    </div>
+
+                    <div class=col-md-5>
+                         <div class="form-group">
+                            <button class="btn btn-theme col-sm-5" type="submit"></i>add</button>
+                         </div>
+                    </div>
+                    
+                    </form>
+                  </div>
+
+                        <!--
+                        <label class="col-sm-2 col-sm-2 control-label">Absent Date</label>
+                            <div class="-group date" data-provide="datepicker">
+                            <input type="text" class="form-control" id="datepicker" >
+
+                                  <div class="input-group-addon" type="submit" >
+                                  <span class="glyphicon glyphicon-plus"></span>
+
+                                  </div>
+                                  
+                             </div>
+                        -->
+
+                      </div>
+                        
                 </div><!-- /form-panel -->
-              </div><!-- /col-lg-12 -->
-              </div>
+          </div><!-- /col-lg-12 -->
+        </div>
 
 
-		</section><! --/wrapper -->
+		</section> 
 
       </section><!-- /MAIN CONTENT -->
 

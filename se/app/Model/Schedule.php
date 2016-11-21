@@ -13,7 +13,15 @@ class Schedule extends Model
 
   public function doctor()
   {
+  			   //->belongsTo('App\User', 'foreign_key', 'other_key');
+  	//https://laravel.com/docs/5.3/eloquent-relationships#updating-belongs-to-relationships
     return $this->belongsTo('App\Model\Doctor', 'doctorId', 'doctorId');
   }
+
+ public function staff()
+  {
+    //return $this->belongsTo('App\Model\Staff', 'doctorId', 'doctorId'); ?
+  }
+
 
 }

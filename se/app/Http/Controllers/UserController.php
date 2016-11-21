@@ -1,38 +1,42 @@
 <?php
 
+//Flow: No.2-Controller
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\User;
-
+use App\Model\User;			
+//Link to Model->"User.php": You can see the relationships here.
 
 class UserController extends Controller
 {
-    //
+    //----Login-----
     public function loginForm()
     {
         return view('login');
     }
-
+    //----Register----
+    //BUG
     public function registerForm()
     {
         return view('register');
     }
-
+	
     public function postLoginForm(Request $request)
     {
         //------ get inputs-----------------
         $username = $request->input('username');
         $password = $request->input('password');
 
-        //query in DBs
+        //------- query in DBs : https://laravel.com/docs/5.3/queries#deletes --------
         $user = User::where([['username', '=', $username], ['password', '=', $password]])->first();
 
+        //------- check if this user doesn't exist ----- 
         if (count($user) <= 0) {
             return redirect()->back()->withInput()->withErrors(['']);
             //these methods belongs to Laravel (go to the page with error msg)
         }
-
+        //-------- store data in the session : https://laravel.com/docs/5.3/session --------
         $request->session()->put([
             'userId' => $user->userId,
             'userType' => $user->userType,
@@ -42,7 +46,8 @@ class UserController extends Controller
         return redirect('schedule');
     }
 
-    public function postRegisterForm(RegisterRequest $request)
+    /*BUG
+    public function postRegisterForm(Request $request)
     {
         //------ get inputs-----------------
         $userId = $request->input('userId');
@@ -52,7 +57,7 @@ class UserController extends Controller
         $firstname = $request->input('firstname');
         $lastname = $request->input('lastname');
         $gender = $request->input('gender');
-        $birthDate = date('Y-m-d');
+        $birthDate = $request->input('birthDate');
         $phoneNumber = $request->input('phoneNumber');
         $email = $request->input('email');
         $address = $request->input('address');
@@ -90,9 +95,15 @@ class UserController extends Controller
         //*3. save $RegisterData
         $registerData->save();
 
+
+//        save ค่า Regis
+
+        //ทำคำสั่ง login
+
+        // redirect to Home
+
         return redirect('register');
     }
-
-
-
+    */
+    
 }

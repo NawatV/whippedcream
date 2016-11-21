@@ -1,49 +1,58 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| This file is where you may define all of the routes that are handled
-| by your application. Just tell Laravel the URIs it should respond
-| to using a Closure or controller method. Build something great!
-|
-*/
+/* 	//Flow: No.1-Route
+	
+	Web Routes : This file is where you may define all of the routes that are handled
+   				  by your application. 
+   			   :  The order has an effect to the system's flow 
+   	Everything is in "https://laravel.com/docs/5.3"                               */
 
-
-
-//-----Login------
+//-------------- Login ----------------------------------------------
 Route::get('/', 'UserController@loginForm');
 Route::get('/login', 'UserController@loginForm');
 Route::post('/login', 'UserController@postLoginForm');
+
+/*It causes (Route(in the group)--must pass-->Middleware-->Function )
+	   https://laravel.com/docs/5.3/routing  */
+Route::group(['middleware' => 'login'], function (){
+	/*
+	Route::get('/', function ()    {
+        // Uses Auth Middleware
+    });
+    */
+});
 
 //-----Register------
 Route::get('/register', 'UserController@registerForm');
 Route::post('/register', 'UserController@postRegisterForm');
 
-//Need to login first
-Route::group(['middleware' => 'login'], function (){
-
-});
-
-
-
-
-
-
-
-
-
-
 Route::get('/appoint', function () {
     return view('appoint');
 });
 
+//-------------- Schedule -----------------------------------------
+Route::get('/schedule', 'ScheduleController@viewSchedule');
+Route::post('/schedule', 'ScheduleController@addAbsent');    
 
-Route::get('/schedule', function () {
-    return view('schedule');
+/*It causes (Route(in the group)--must pass-->Middleware-->Function )
+	   https://laravel.com/docs/5.3/routing  */
+Route::group(['middleware' => 'schedule'], function (){
+	/*
+	Route::get('/', function ()    {
+        // Uses Auth Middleware
+    });
+    */
 });
+
+// **************
+/*
+//ajax
+Route::get('/queryDoctorDateTime', 'AppointmentController@queryDoctorDateTime');
+Route::get('/queryDoctor', 'AppointmentController@queryDoctor');
+Route::get('/queryPeriod', 'AppointmentController@queryPeriod');
+*/
+//**************
+
 Route::get('/dispention', function () {
     return view('dispention');
 });
@@ -54,8 +63,6 @@ Route::get('/blank', function () {
     return view('blank');
 });
 
-
-
 //----vitalSign-----
 Route::get('/vitalsign', 'TreatmentController@getVitalSignForm');
 Route::post('/vitalsign', 'TreatmentController@saveVitalSignForm');
@@ -64,17 +71,7 @@ Route::get('/diagnosis', 'TreatmentController@getDiagnosisForm');
 Route::post('/diagnosis', 'TreatmentController@saveDiagnosisForm');
 
 
-
-
-
-
-
-
-
-//========================================================================================================
-//=========================== เอา Route ทั้งหมด ไว้ข้างบน เท่านั้น !!! =======================================
-//========================================================================================================
-
+//----- Else case -----
 Route::any('{catchall}', function() {
     return Response::view('errors.404', array(), 404);
 })->where('catchall', '.*');

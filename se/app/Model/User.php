@@ -1,5 +1,7 @@
 <?php
 
+//Flow: No.3-Model
+
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +15,8 @@ class User extends Model
 
     public function patient()
     {
+                    //->hasOne ("related model", "foriegn key", "local key");
+                        //hasOne = table:user generalizes(hasOne) table:patient) 
         return $this->hasOne('App\Model\Patient', 'patientId', 'userId');
     }
 

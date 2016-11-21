@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -11,32 +11,37 @@
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <!--external css-->
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Kanit:400,700" rel="stylesheet">
-    <!--  <link rel="stylesheet" type="text/css" href="assets/js/bootstrap-datepicker/css/datepicker.css" />
-     <link rel="stylesheet" type="text/css" href="assets/js/bootstrap-daterangepicker/daterangepicker.css" /> -->
+    <link rel="stylesheet" type="text/css" href="assets/js/bootstrap-daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
 
     <!-- Custom styles for this template -->
     <link href="assets/css/registerPage.css" rel="stylesheet">
     <link href="assets/css/style-responsive.css" rel="stylesheet">
 
     <link rel="stylesheet" href="/assets/css/sweetalert.css">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
     <script src="/assets/js/sweetalert.min.js"></script>
     <script src="/assets/js/jquery-1.8.3.min.js"></script>
 
 
+
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#datepicker").datepicker();
+        });
+    </script>
+
 </head>
 
-<body>
 
+<body>
 <div class="login-page">
     <div class="form-register">
 
@@ -47,7 +52,9 @@
         <div class="row mt">
 
 
-            <form class="form-horizontal style-form" method="get">
+            <form class="form-horizontal style-form" action="register" method="post">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">ชี่อ</label>
                     <div class="col-sm-4">
@@ -72,7 +79,7 @@
                     <label class="col-sm-2 col-sm-2 control-label">วัน/เดือน/ปี เกิด</label>
                     <div class="col-sm-4">
                         <div class="input-group date" data-provide="datepicker">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" id="datepicker" name="birthDate">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </div>
@@ -164,7 +171,8 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">ยืนยันรหัสผ่าน</label>
                     <div class="col-sm-4">
-                        <input type="password" class="form-control" placeholder="confirm password" name="confirmPassword">
+                        <input type="password" class="form-control" placeholder="confirm password"
+                               name="confirmPassword">
                     </div>
                 </div>
 
@@ -173,7 +181,6 @@
                     <button type="submit" class="btn btn-primary btn-block btn-lg">
                         บันทึก
                     </button>
-
                 </div>
 
             </form>
@@ -184,12 +191,5 @@
 
 </div>
 
-
-<!-- js placed at the end of the document so the pages load faster -->
-<script src="assets/js/jquery.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-
-
 </body>
-
 </html>

@@ -94,14 +94,16 @@
 <script src="{{url('assets/js/jquery.scrollTo.min.js')}}"></script>
 <script src="{{url('assets/js/jquery.nicescroll.js')}}" type="text/javascript"></script>
 
+
+
 <!--common script for all pages-->
-<script src="{{url('assets/js/common-scripts.js')}}"></script>
+<script src="{{asset('assets/js/common-scripts.js')}}"></script>
 
 <!--script for this page-->
 <script src="{{url('assets/js/jquery-ui-1.9.2.custom.min.js')}}"></script>
 
 <!--custom switch-->
-<script src="{{url('assets/js/bootstrap-switch.js')}}"></script>
+<script src="{{asset('assets/js/jquery.scrollTo.min.js')}}"></script>
 
 <!--custom tagsinput-->
 <script src="{{url('assets/js/jquery.tagsinput.js')}}"></script>
@@ -110,6 +112,10 @@
 <script type="text/javascript" src="{{url('assets/js/bootstrap-inputmask/bootstrap-inputmask.min.js')}}"></script>
 
 <script src="{{url('assets/js/form-component.js')}}"></script>
+
+<script src="{{ url('assets/js/jquery.js')}}"></script>
+
+
 
 <script>
     $(document).ready(function () {

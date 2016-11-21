@@ -4,6 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Model\Appointment;
+use App\Model\Doctor;
+use App\Model\Patient;
+use App\Model\User;
+use App\Model\Department;
+use DB;
+use App\Model\Schedule;
+use App\Model\Leaving;
+use Barryvdh\DomPDF\Facade as PDF;
+
 class OtherController extends Controller
 {
     //
@@ -12,8 +22,14 @@ class OtherController extends Controller
     }
 
     public function homepage(Request $request){
-
         return view('homepage', compact('request'));
+    }
+
+    public function testpage(Request $request){
+        $department = Department::all();
+        return view('appointment.create', [
+            'departments' => $department
+        ]);
     }
 
     public function logout(){

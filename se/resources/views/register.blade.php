@@ -36,7 +36,6 @@
                 dateFormat: "dd/mm/yy"
             });
         });
-
     </script>
 
 </head>

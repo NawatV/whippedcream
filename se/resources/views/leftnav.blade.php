@@ -1,6 +1,6 @@
 <div style="margin-top: 100px; margin-bottom: 20px">
 
-    <p class="centered" style=""><img src="assets/img/userLogo.png"
+    <p class="centered" style=""><img src="{{asset('assets/img/userLogo.png')}}"
                                       class="img-circle"
                                       width="150"></p>
     <h3 class="centered" style="color: white;">คุณ{{session('name')}}</h3>
@@ -14,7 +14,7 @@
     </li>
 
     <li class="sub-menu">
-        <a class="leftnav" href="javascript:;">
+        <a class="leftnav" href="/appointment">
             <i class="fa fa-calendar-plus-o"></i><span>สร้างการนัดหมาย</span>
         </a>
     </li>

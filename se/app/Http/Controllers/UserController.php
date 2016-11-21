@@ -9,6 +9,7 @@ use App\Model\Doctor;
 use App\Model\Patient;
 use App\Model\Prescription;
 use App\Model\User;
+use App\Http\Requests\PatientProfileRequest;
 use Illuminate\Http\Request;
 
 
@@ -44,7 +45,7 @@ public function searchPatientFromHnIdNameForEditProfile(Request $request)
 		$patients_hn = $request->input('userId');
 
 		$patients = User::where('userId', $patients_hn)->first();
-
+		$patients2 = Patient::where('patientId', $patients_hn)->first(); // patients2 Patient query
 
 		// $appointments = Appointment::where('patientId', $patients_hn)->get();
 		// $diagnoses = Diagnosis::where('patientId', $patients_hn)->get();
@@ -63,9 +64,9 @@ public function searchPatientFromHnIdNameForEditProfile(Request $request)
 
 //        dd($name);
 
- 
 
-		return view('editPatientInformation', compact('patients'));
+
+		return view('editPatientInformation', compact('patients','patients2'));
 }
 
     public function findPatientFromHnIdName(Request $request)
@@ -76,7 +77,9 @@ public function searchPatientFromHnIdNameForEditProfile(Request $request)
 
         $patients_hn = Patient::where('hn', $request->input('hnNumber'))->value('patientId');
 
-        $patients = User::where('userId', $patients_hn)->first();
+        $patients = User::where('userId', $patients_hn)->first(); // patients User query
+				$patients2 = Patient::where('patientId', $patients_hn)->first(); // patients2 Patient query
+
         if ($patients == '') {
 
             $patients = User::where('idNumber', $request->input('idNumber'))->first();
@@ -111,32 +114,34 @@ public function searchPatientFromHnIdNameForEditProfile(Request $request)
 
 //        dd($name);
 
-        return view('seePatientInformation', compact('patients'));
+        return view('seePatientInformation', compact('patients','patients2'));
     }
-		public function editPatientInformation(Request $request)
+
+
+		//PatientProfileRequest $request cannot use
+		public function editPatientInformation(PatientProfileRequest $request)
 		{
 //        dd($diagnosis);
 //        return $diagnosis;
-
-			$users = User::where('userId', $request->userId)->first();
-			$patients = Patient::where('patientId', $request->userId)->first();
-			$users->firstname = $request->newFirstname;
-			$users->lastname = $request->newLastname;
-			$users->gender = $request->newGender;
-			$users->idNumber = $request->newIdNumber;
-			$users->birthDate = $request->newBirthDate;
-			$users->address = $request->newAddress;
-			$users->phoneNumber = $request->newPhoneNumber;
-			$users->email = $request->newEmail;
-			$patients->bloodType = $request->newBloodType;
-			$patients->allergen = $request->newAllergen;
-
-			$users->save();
-			$patients->save();
-			$patients_hn = $request->input('userId');
-
+		  $patients_hn = $request->input('userId');
 			$patients = User::where('userId', $patients_hn)->first();
+			$patients2 = Patient::where('patientId', $patients_hn)->first();
+			$patients->firstname = $request->firstname;
+			$patients->lastname = $request->lastname;
+			$patients->gender = $request->gender;
+			$patients->idNumber = $request->idNumber;
+			$patients->birthDate = $request->birthDate;
+			$patients->address = $request->address;
+			$patients->phoneNumber = $request->phoneNumber;
+			$patients->email = $request->email;
+			$patients2->bloodType = $request->bloodType;
+			$patients2->allergen = $request->allergen;
 
-				return view('seePatientInformation', compact('patients','users'));
+			$patients->save();
+			$patients2->save();
+
+
+
+				return view('seePatientInformation', compact('patients','patients2'));
 		}
 }

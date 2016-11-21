@@ -7,6 +7,7 @@ use App\Model\Doctor;
 use App\Model\Patient;
 use App\Model\Prescription;
 use App\Model\User;
+
 use Illuminate\Foundation\Http\FormRequest;
 
 class PatientProfileRequest extends FormRequest
@@ -18,7 +19,7 @@ class PatientProfileRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -30,6 +31,7 @@ class PatientProfileRequest extends FormRequest
     {
         return [
             //
+            'hn' => 'required',
             'firstname' => 'required',
             'lastname' => 'required',
             'gender' => 'required',
@@ -48,7 +50,7 @@ class PatientProfileRequest extends FormRequest
     public function messages()
     {
       return [
-
+        'hn.required' => 'โปรดระบุรหัสประจำตัวของผู้ป่วย',
         'firstname.required' => 'โปรดระบุชื่อของผู้ป่วย',
         'lastname.required' => 'โปรดระบุนามสกุลของผู้ป่วย',
         'gender.required' => 'โปรดระบุเพศของผู้ป่วย',

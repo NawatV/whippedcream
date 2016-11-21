@@ -50,12 +50,12 @@
             <div class="form-panel">
                 <div class="container-fluid">
 
-                  
+
                     <h1>ค้นหาประวัติทั่วไป</h1>
 
                     <h4 class="mb">
                         <i class="fa fa-angle-right"></i> ค้นหาผู้ป่วยที่ต้องการ
-                   
+
                     </h4>
                     {{--<div class="container">--}}
                     {{--<h5>สามารถกรอกอย่างใดอย่างหนึ่ง หรือ ทั้งหมด</h5>--}}

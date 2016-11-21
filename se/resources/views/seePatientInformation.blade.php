@@ -49,7 +49,7 @@
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">รหัสประจำตัวผู้ป่วย</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->userId}}" readonly>
+                      <input type="text" class="form-control" value="{{$patients2->hn}}" readonly>
                   </div>
           </div>
           <div class="form-group">

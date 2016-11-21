@@ -42,67 +42,67 @@
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">รหัสประจำตัวผู้ป่วย</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->userId}}" readonly>
+                      <input type="text" class="form-control" value="{{$patients2->hn}}" name="hn" readonly>
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">ชื่อ</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->firstname}}" name="newFirstname"  >
+                      <input type="text" class="form-control" value="{{$patients->firstname}}" name="firstname"  >
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">นามสกุล</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->lastname}}" name="newLastname">
+                      <input type="text" class="form-control" value="{{$patients->lastname}}" name="lastname">
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">เพศ</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->gender}}" name="newGender">
+                      <input type="text" class="form-control" value="{{$patients->gender}}" name="gender">
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">รหัสประจำตัวประชาชน</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->idNumber}}" name="newIdNumber">
+                      <input type="text" class="form-control" value="{{$patients->idNumber}}" name="idNumber">
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">วันเกิด</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->birthDate}}" name="newBirthDate">
+                      <input type="text" class="form-control" value="{{$patients->birthDate}}" name="birthDate">
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">ที่อยู่</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->address}}" name="newAddress">
+                      <input type="text" class="form-control" value="{{$patients->address}}" name="address">
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">เบอร์โทรศัพท์</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->phoneNumber}}" name="newPhoneNumber">
+                      <input type="text" class="form-control" value="{{$patients->phoneNumber}}" name="phoneNumber">
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">อีเมล</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->email}}" name="newEmail">
+                      <input type="text" class="form-control" value="{{$patients->email}}" name="email">
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">กรุ๊ปเลือด</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->bloodType}}" name="newBloodType">
+                      <input type="text" class="form-control" value="{{$patients->bloodType}}" name="bloodType">
                   </div>
           </div>
           <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">ประวัติการแพ้ยา</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" value="{{$patients->allergen}}" name="newAllergen">
+                      <input type="text" class="form-control" value="{{$patients->allergen}}" name="allergen">
                   </div>
           </div>
         <button type="submit" class="btn btn-primary pull-right"> ยืนยัน</button>

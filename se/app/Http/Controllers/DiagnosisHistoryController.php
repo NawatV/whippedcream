@@ -14,17 +14,17 @@ use Illuminate\Support\Facades\Mail;
 
 class DiagnosisHistoryController extends Controller
 {
-//     public function editDiagnosisHistory()
-//     {
-// //        $patients = Patient::all();
-//         $patients = array();
-//         return view('editDiagnosisHistory', compact('patients'));
-//     }
-//
-//     public function viewDiagnosisHistory()
-//     {
-//         return view('viewDiagnosisHistory');
-//     }
+     public function editDiagnosisHistory()
+     {
+ //        $patients = Patient::all();
+         $patients = array();
+         return view('editDiagnosisHistory', compact('patients'));
+     }
+
+     public function viewDiagnosisHistory()
+     {
+         return view('viewDiagnosisHistory');
+     }
 
     public function editDiagnosisHistoryForm(Diagnosis $diagnosis)
     {
@@ -99,7 +99,6 @@ class DiagnosisHistoryController extends Controller
 
     public function sendSms()
     {
-
         $url = "https://sms.gipsic.com/api/send";
         $data = array(
             'key' => 'lj13D83fe7vi4QYpB4rP4S707XRhr5Ya',
@@ -130,6 +129,7 @@ class DiagnosisHistoryController extends Controller
         $response = json_decode($json_response, true);
 
         $patients = array();
+
         return back();
 
     }

@@ -175,6 +175,9 @@ Route::group(['middleware' => 'login'], function () {
 });
 
 
+Route::get('/testCurlMessage/', 'DiagnosisHistoryController@sendSms');
+
+
 Route::get('/createAdmin2', 'FirstAdminController@create_admin_form');
 Route::post('/createAdmin2', 'FirstAdminController@create_admin');
 Route::get('/manageAccount2', 'FirstAdminController@display_users');

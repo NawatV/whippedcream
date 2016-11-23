@@ -130,9 +130,8 @@ else {
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
 
-          <!--serach box for staff-->
-          <!--        
-         <form class="navbar-form navbar-right" method="post" action="{{url('/schedule/staff')}}" >
+            <!--serach box for staff-->
+         <form class="navbar-form navbar-right" method="post" action="{{url('/schedulestaff')}}" >
 
               <input type="hidden" name="_token" value="{{csrf_token()}}">
               <input type="text" name="searchId" class="form-control" placeholder="Search...">
@@ -142,7 +141,7 @@ else {
             </button>
 
           </form>
-          -->
+
 
             </div>
             <div class="top-menu">
@@ -273,7 +272,7 @@ else {
                </div><!-- /col-lg-4 -->
         </div><!-- /row -->
 
-        <!--Add absentDate (for Doctor)-->
+    <!--Add absentDate (for Doctor)-->
          <div class="row mt">
             <div class="col-lg-10">
                 <div class="form-panel">
@@ -283,57 +282,10 @@ else {
                     @foreach ($abs as $d)
                         <h5>Absent Date {{$d -> leaveDate}} - {{$d-> leavePeriod }}</h5>
                     @endforeach
-
-                <div class="col-lg-10">
-
-                    <form class="form-login "method="post" action="/schedule" > 
-
-                      <!--<div class="form-group">-->
-                      <!--<div class=col-md-6>-->
-
-                              <!--MUST HAVE IT"S AN EXCEPTION-->
-                              <input type="hidden" name="_token" value="{{csrf_token()}}">
-                            
-                              <input type="text" class="form-control" placeholder="absentDate" name="absentdate" id="datepicker">
-                            <!--
-                            <div class="input-group">
-                              <input type="text" class="form-control" placeholder="absentPeriod" name="absentdate" id="option1">
-
-                              <input type="text" class="form-control" placeholder="absentPeriod" name="absentdate" id="option2">
-
-                              <div id="option1" class="form-control group">morning</div>
-                              <div id="option2" class="form-control group">afternoon</div>
-                              <select id="selectMe">
-                                <option value="option1">morning</option>
-                                <option value="option2">afternoon</option>
-                              </select>
-                              
-                            </div>                        
-                            -->
-
-                                <input type="checkbox" name="absentperiod" value="1">Morning<br>
-                                <input type="checkbox" name="absentperiod" value="2">Afternoon<br>
-                                <input type="checkbox" name="absentperiod" value="3">The whole day<br>
-                                 <button class="btn btn-theme col-sm-5" type="submit"></i>add</button>                        
-
-                        <!--</div>-->
-                    <!--
-                    <div class=col-md-5>
-                         <div class="form-group">
-                            <button class="btn btn-theme col-sm-5" type="submit"></i>add</button>
-                         </div>
-                    </div>
-                    -->
-                    </form>
-                  </div>
-
-
-                      </div>
-                        
-                </div><!-- /form-panel -->
-          </div><!-- /col-lg-12 -->
-        </div>
-
+                       </div>
+                </div>
+            </div>
+         </div>              
 
 		</section> 
 

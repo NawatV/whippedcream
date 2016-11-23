@@ -47,16 +47,10 @@ class ScheduleController extends Controller
         else { 
             return redirect('login');
         }        
-        
-        //----for staff----
-            //show in desktop?
-
-        //return view('schedule');
     }
 
     public function addAbsent(Request $request)
     {
-        //return dd($request);
 
         //------ get inputs-----------------
         $leavingId = rand(0,9999999);   //FIX LATER
@@ -69,15 +63,13 @@ class ScheduleController extends Controller
 
         $absentperiod = $request->input('absentperiod');
 
-        //return dd($absentperiod);
-
         //------- query in DBs : https://laravel.com/docs/5.3/queries#deletes --------
         //$newabs = Leaving::insert('insert into leaving (leavingId, doctorId, leaveDate, leavePeriod) values(4, $userId, $absentdate, $absentperiod)');    
         //leavingId ?
 
          $theabsent = new Leaving([
 
-            'leavingId' => $leavingId, // $absentdate
+            'leavingId' => $leavingId,
             'doctorId' => $userId,
             'leaveDate' => $leaveDate, 
             'leavePeriod' => $absentperiod
@@ -87,49 +79,7 @@ class ScheduleController extends Controller
         //$vitalSignData->nurse()->associate($nurse);
         $theabsent->save();
 
-        //return dd($theabsent);  PROBLEAM AT LEAVING ID
-
         return redirect('schedule');
     }
-
-
-     //----viewScheduleStaff-----
-    public function viewScheduleStaff(Request $request)
-    {
-        //return dd($request->session()->get('userId'));  //#### FOR CHECKING VALUE:
-
-        //--------for doctor----------
-        $userId = $request->session()->get('userId'); 
-        //query (haven't check unique yet)
-        $staff = Staff::where('staffId',$userId)->first();
-         
-        if(count($staff)==1) {
-
-                $searchId = $request->input('searchId');
-
-                $sche = Schedule::where('doctorId',$searchId)->first();
-                $abs = Leaving::where('doctorId', $searchId)->get(); //get all rows in this condition in $ads (array) 
-
-            $pack = array();
-
-            if(count($sche)>0 || count($abs)>0 ){
-                $pack = array(
-                    'sche' => $sche,
-                    'abs' => $abs
-                );
-            }
-                return view('schedule', compact('pack'));   //MUST USE THIS
-                //return view('schedule')->with($pack);
-                //return View::make('schedule')->with($pack);
-        }
-        else { 
-            return redirect('login');
-        }        
-        
-        //----for staff----
-            //show in desktop?
-
-        //return view('schedule');
-    }
-
 }
+

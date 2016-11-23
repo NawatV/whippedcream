@@ -31,9 +31,13 @@ Route::get('/appoint', function () {
 });
 
 //-------------- Schedule -----------------------------------------
+//MUST SEPERATE CONTROLLER & BLADE 
+//--for doctor---
 Route::get('/schedule', 'ScheduleController@viewSchedule');
 Route::post('/schedule', 'ScheduleController@addAbsent');
-Route::post('/schedule/staff', 'ScheduleController@viewScheduleStaff');     
+//---for staff---
+Route::get('/schedulestaff', 'ScheduleControllerStaff@viewScheduleStaffDefault');
+Route::post('/schedulestaff', 'ScheduleControllerStaff@viewScheduleStaff');     
 
 /*It causes (Route(in the group)--must pass-->Middleware-->Function )
 	   https://laravel.com/docs/5.3/routing  */
@@ -44,15 +48,6 @@ Route::group(['middleware' => 'schedule'], function (){
     });
     */
 });
-
-// **************
-/*
-//ajax
-Route::get('/queryDoctorDateTime', 'AppointmentController@queryDoctorDateTime');
-Route::get('/queryDoctor', 'AppointmentController@queryDoctor');
-Route::get('/queryPeriod', 'AppointmentController@queryPeriod');
-*/
-//**************
 
 Route::get('/dispention', function () {
     return view('dispention');

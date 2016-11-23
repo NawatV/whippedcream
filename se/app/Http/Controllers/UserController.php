@@ -43,7 +43,15 @@ class UserController extends Controller
             'name' => $user->firstname
         ]);
 
-        return redirect('schedule');
+        if($request->session()->get('userType')=="doctor"){
+            return redirect('schedule');
+        }
+        else if($request->session()->get('userType')=="staff"){
+            return redirect('schedulestaff');
+        }
+        else {
+            return redirect('login');
+        }
     }
 
     /*BUG

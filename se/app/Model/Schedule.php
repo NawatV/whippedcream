@@ -20,7 +20,7 @@ class Schedule extends Model
 
  public function staff()
   {
-    //return $this->belongsTo('App\Model\Staff', 'doctorId', 'doctorId'); ?
+    return $this->belongsTo('App\Model\Staff', 'staffId', 'staffId'); 
   }
 
 

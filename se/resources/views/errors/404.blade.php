@@ -28,5 +28,12 @@
 </div>
 
 <script src="assets/js/fallingsnow_v6.js"></script>
+
+<script>
+    setTimeout(function () {
+        history.go(-1); //will redirect to your blog page (an ex: blog.html)
+    }, 2000); //will call the function after 2 secs.
+</script>
+
 </body>
 </html>

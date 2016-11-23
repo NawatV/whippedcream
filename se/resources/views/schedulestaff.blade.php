@@ -1,6 +1,12 @@
-<?php
-  //---- for transfering the data into symbols  
-  //Schedule
+@extends('layouts.theme')
+
+@section('name')
+    {{session('name')}}
+@endsection
+
+@section('content')
+
+  <?php
 if($pack != NULL){
   $mon = $pack['sche'] -> monPeriod;
   $tue = $pack['sche'] -> tuePeriod;
@@ -122,95 +128,20 @@ else {
       <!-- **********************************************************************************************************************************************************
       TOP BAR CONTENT & NOTIFICATIONS
       *********************************************************************************************************************************************************** -->
-      <!--header start-->
-      <header class="header black-bg">
-
-            <!--logo start-->
-            <a href="index.html" class="logo"><b>Whipped Cream</b></a>
-            <!--logo end-->
-            <div class="nav notify-row" id="top_menu">
-
-            <!--serach box for staff-->
-         <form class="navbar-form navbar-right" method="post" action="{{url('/schedulestaff')}}" >
+      <form class="navbar-form navbar-right" method="post" action="{{url('/schedulestaff')}}" >
 
               <input type="hidden" name="_token" value="{{csrf_token()}}">
               <input type="text" name="searchId" class="form-control" placeholder="Search...">
 
             <button class="btn btn-default" type="submit" id="searchButton" >
-                <img src="img/searchButton.png">
+                <img src="{{asset('assets/img/search.png')}}">
             </button>
 
           </form>
 
-
-            </div>
-            <div class="top-menu">
-            	<ul class="nav pull-right top-menu">
-              <a href="index.html" class="logo" postion ="right" ><i class="fa fa-user"></i>  Mr. Someone&emsp;</a>
-                    <li><a class="logout" href="login.html">Logout</a></li>
-            	</ul>
-            </div>
-        </header>
-      <!--header end-->
-
      <!-- **********************************************************************************************************************************************************
       MAIN SIDEBAR MENU
       *********************************************************************************************************************************************************** -->
-      <!--sidebar start-->
-      <aside>
-          <div id="sidebar"  class="nav-collapse ">
-              <!-- sidebar menu start-->
-              <ul class="sidebar-menu" id="nav-accordion">
-
-
-
-                  <li class="sub-menu">
-                      <a class="active" href="javascript:;" >
-                          <i class="fa fa-calendar"></i>
-                          <span>Schedule</span>
-                      </a>
-
-                  </li>
-                  <li class="sub-menu">
-                      <a  href="javascript:;" >
-                          <i class="fa fa-pencil-square"></i>
-                          <span>Appointment</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="form_component.html">Make Appointment</a></li>
-                          <li><a  href="blank.html">Cancle Appointment</a></li>
-                          <li><a  href="login.html">Edit Appointment</a></li>
-                      </ul>
-                  </li>
-                   <li class="sub-menu">
-                      <a  href="javascript:;" >
-                          <i class="fa fa-heart"></i>
-                          <span>Diagnosis and Prescription</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="form_component.html">Make Appointment</a></li>
-                          <li><a  href="blank.html">Cancle Appointment</a></li>
-                          <li><a  href="login.html">Edit Appointment</a></li>
-                      </ul>
-                  </li>
-                   <li class="sub-menu">
-                      <a  href="javascript:;" >
-                          <i class="fa fa-group"></i>
-                          <span>Patient Information</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="form_component.html">Make Appointment</a></li>
-                          <li><a  href="blank.html">Cancle Appointment</a></li>
-                          <li><a  href="login.html">Edit Appointment</a></li>
-                      </ul>
-                  </li>
-
-              </ul>
-              <!-- sidebar menu end-->
-          </div>
-      </aside>
-      <!--sidebar end-->
-
 
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
@@ -359,3 +290,5 @@ $('input[type="checkbox"]').on('change', function() {
 
   </body>
 </html>
+
+@endsection

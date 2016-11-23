@@ -16,8 +16,18 @@ body {
     margin: 0px !important;
     font-size: 13px;
     height: 100%;
-    background-color: #f2f2f2;
-    
+    /*background-color: #f2f2f2;*/
+
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f2f2f2+0,bee4f7+100 */
+    background: rgb(242,242,242); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(242,242,242,1) 0%, rgba(190,228,247,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  rgba(242,242,242,1) 0%,rgba(190,228,247,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  rgba(242,242,242,1) 0%,rgba(190,228,247,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#bee4f7',GradientType=0 ); /* IE6-9 */
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
     /*background-image: url("/assets/img/bgHospitalVector.png");*/
 }
 
@@ -143,8 +153,8 @@ a, a:hover, a:focus {
 
 .btn-theme04 {
     color: #fff;
-    background-color: #ed5565;
-    border-color: #da4453;
+    background-color: #5cb85c;
+    border-color: #428442;
 }
 
 .btn-theme04:hover,
@@ -153,8 +163,8 @@ a, a:hover, a:focus {
 .btn-theme04.active,
 .open .dropdown-toggle.btn-theme04 {
     color: #fff;
-    background-color: #da4453;
-    border-color: #da4453;
+    background-color: #428442;
+    border-color: #2f5e2f;
 }
 
 .btn-clear-g {
@@ -226,7 +236,20 @@ ul.top-menu > li > .logout {
     border: 1px solid #ee6451 !important;
     padding: 5px 15px;
     margin-right: 15px;
-    background: #f07968;
+    background: #d83a36;
+
+    margin-top: 15px;
+}
+ul.top-menu > li > .logout:hover {
+    color: #f2f2f2;
+    font-size: 14px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 1px solid #ee6451 !important;
+    padding: 5px 15px;
+    margin-right: 15px;
+    background: #a52622 !important;
+
     margin-top: 15px;
 }
 
@@ -261,7 +284,7 @@ ul.top-menu > li > .logout {
     height: 17px;
     width: 17px;
     display: inline-block;
-    background: url("../img/nav-expand.png") no-repeat top;
+    /*background: url("../img/nav-expand.png") no-repeat top;*/
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -271,7 +294,7 @@ ul.top-menu > li > .logout {
 }
 
 .active .dcjq-icon {
-    background: url("../img/nav-expand.png") no-repeat bottom;
+    /*background: url("../img/nav-expand.png") no-repeat bottom;*/
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -516,8 +539,6 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     .dropdown-menu.extended {
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.176) !important;
     }
-
-;
 }
 
 .dropdown-menu.extended li p {
@@ -704,7 +725,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .log-arrow-up {
-    background: url("../img/arrow-up.png") no-repeat;
+    /*background: url("../img/arrow-up.png") no-repeat;*/
     width: 20px;
     height: 11px;
     position: absolute;
@@ -823,12 +844,12 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     font-size: 11px;
 }
 
-.ds p > muted {
-    font-size: 9px;
-    text-transform: uppercase;
-    font-style: italic;
-    color: #666666
-}
+/*.ds p > muted {*/
+    /*font-size: 9px;*/
+    /*text-transform: uppercase;*/
+    /*font-style: italic;*/
+    /*color: #666666*/
+/*}*/
 
 .ds a {
     color: #68dff0;
@@ -1367,7 +1388,7 @@ PANELS CONFIGURATIONS
 #spotify {
     background: url(../img/lorde.jpg) no-repeat center top;
     margin-top: -15px;
-    background-attachment: relative;
+    /*background-attachment: relative;*/
     background-position: center center;
     min-height: 220px;
     width: 100%;
@@ -1416,7 +1437,7 @@ PANELS CONFIGURATIONS
 #blog-bg {
     background: url(../img/blog-bg.jpg) no-repeat center top;
     margin-top: -15px;
-    background-attachment: relative;
+    /*background-attachment: relative;*/
     background-position: center center;
     min-height: 150px;
     width: 100%;
@@ -1554,7 +1575,7 @@ PANELS CONFIGURATIONS
 #profile-01 {
     background: url(../img/profile-01.jpg) no-repeat center top;
     margin-top: -15px;
-    background-attachment: relative;
+    /*background-attachment: relative;*/
     background-position: center center;
     min-height: 150px;
     width: 100%;
@@ -1607,7 +1628,7 @@ PANELS CONFIGURATIONS
 #profile-02 {
     background: url(../img/profile-02.jpg) no-repeat center top;
     margin-top: -15px;
-    background-attachment: relative;
+    /*background-attachment: relative;*/
     background-position: center center;
     min-height: 200px;
     width: 100%;
@@ -1820,11 +1841,23 @@ PANELS CONFIGURATIONS
 
 /* FORMS CONFIGURATION */
 .form-panel {
-    background: #ffffff;
-    margin: 10px;
-    padding: 10px;
-    box-shadow: 0px 3px 2px #aab2bd;
+    /*background: #ffffff;*/
+    /*margin: 10px;*/
+    /*padding: 10px;*/
+    /*box-shadow: 0px 3px 2px #aab2bd;*/
     text-align: left;
+
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f7f7f7+50,ffffff+98 */
+    background: rgb(255,255,255); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(247,247,247,1) 50%, rgba(255,255,255,1) 98%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(247,247,247,1) 50%,rgba(255,255,255,1) 98%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(247,247,247,1) 50%,rgba(255,255,255,1) 98%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+    box-shadow: 0px 0px 10px grey;
+    padding: 3% 3% 0px;
+    border-radius: 10px;
+
 }
 
 label {
@@ -2207,8 +2240,6 @@ label {
     .panel-footer.revenue-foot {
         margin-bottom: -4px;
     }
-
-;
 }
 
 .panel-footer.revenue-foot ul {
@@ -2344,7 +2375,143 @@ label {
 }
 
 .site-min-height {
-    min-height: 900px;
+    /*min-height: 900px;*/
 }
 
+/*admin*/
+.mt2 {
+    margin-top: 10px;
+}
+
+.mr {
+    margin-right: 5px;
+}
+
+.search-form-panel {
+    background: #ffffff;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 10px;
+    box-shadow: 0px 3px 2px #aab2bd;
+    text-align: left;
+}
+
+.hide {
+    display: none;
+}
+
+.search-form-group {
+    border-bottom: 1px solid #eff2f7;
+    height: 45px;
+    margin-top: 10px;
+}
+
+.account-list-area {
+    padding-right: 25px;
+    padding-left: 25px;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    /*background-color: darkred;*/
+    /*height: auto;*/
+    /*min-height: 100%;*/
+}
+.account-list-panel {
+    position: relative;
+    top: -20px;
+    border: 1px solid white;
+    padding-top: 10px;
+    background-color: #ffffff;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    box-shadow: 0px 3px 2px #aab2bd;
+}
+.account-list-header {
+    position: relative;
+    top: -10px;
+    border-left: 1px solid;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #aab2bd;
+    color: #ffffff;
+    font-size: 16px;
+}
+.account-excerpt {
+    padding-left: 4px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+}
+.account-detail {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    margin-left: 4px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e3e6ea;
+}
+.last-column {
+    border-right: 1px solid;  
+}
+.selected_account {
+    padding-top: 5px;
+    padding-bottom: 3px;
+    background-color: #e3e6ea;
+}
+.account-list-panel::-webkit-scrollbar {
+    width: 4px;
+}
+.scroll::-webkit-scrollbar-track {
+}
+.account-list-panel::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+.admin-popup-position{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.7);
+    width: 100%;
+    height: 100%;
+}
+.admin-popup-position-dont-hide{
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.7);
+    width: 100%;
+    height: 100%;
+}
+#admin-popup-wrapper{
+    width: 500px;
+    margin: 280px auto;
+    text-align: left;
+}
+#admin-error-popup-wrapper{
+    width: 380px;
+    margin: 280px auto;
+    text-align: left;
+}
+#admin-popup-container{
+    background-color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+}
+#admin-error-popup-container{
+    background-color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 10px;
+}
 

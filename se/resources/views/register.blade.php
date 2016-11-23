@@ -13,7 +13,7 @@
     <link href="assets/css/bootstrap.css" rel="stylesheet">
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Kanit:400,700" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="assets/js/bootstrap-daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="assets/js/bootstrap-daterangepicker/daterangepicker.css"/>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
 
@@ -26,15 +26,16 @@
     <script src="/assets/js/jquery-1.8.3.min.js"></script>
 
 
-
-
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
+
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(function () {
-            $("#datepicker").datepicker();
+            $( "#datepicker" ).datepicker({
+                dateFormat: "dd/mm/yy"
+            });
         });
     </script>
 
@@ -42,6 +43,19 @@
 
 
 <body>
+@if(count($errors)>0)
+    <script>
+        swal({
+            title: "รหัสประจำตัวประชาชน/เลขรหัสโรงพยาบาล ไม่ถูกต้อง",
+            text: "กรุราใส่ใหม่อีกครั้ง",
+            type: "error",
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "แก้ไข",
+            closeOnConfirm: true
+        });
+    </script>
+@endif
+
 <div class="login-page">
     <div class="form-register">
 
@@ -58,12 +72,12 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">ชี่อ</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" name="firstname">
+                        <input type="text" class="form-control" name="firstname" value="{{old('firstname')}}">
                     </div>
 
                     <label class="col-sm-2 col-sm-2 control-label">นามสกุล</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" name="lastname">
+                        <input type="text" class="form-control" name="lastname" value="{{old('lastname')}}">
                     </div>
 
                 </div>
@@ -72,14 +86,15 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">เลขบัตรประจำตัวประชาชน</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" name="idNumber">
+                        <input type="text" class="form-control" name="idNumber" value="{{old('idNumber')}}">
                     </div>
 
 
                     <label class="col-sm-2 col-sm-2 control-label">วัน/เดือน/ปี เกิด</label>
                     <div class="col-sm-4">
                         <div class="input-group date" data-provide="datepicker">
-                            <input type="text" class="form-control" id="datepicker" name="birthDate">
+                            <input type="text" class="form-control" id="datepicker" name="birthDate"
+                                   value="{{old('birthDate')}}">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </div>
@@ -90,20 +105,19 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">เบอร์โทรศัพท์</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" name="phoneNumber">
+                        <input type="text" class="form-control" name="phoneNumber" value="{{old('phoneNumber')}}">
                     </div>
 
                     <label class="col-sm-2 col-sm-2 control-label">อีเมล</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" name="email">
+                        <input type="text" class="form-control" name="email" value="{{old('email')}}">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">ที่อยู่</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control textareaControl" rows="4" name="address">
-                        </textarea>
+                        <textarea class="form-control textareaControl" rows="4" name="address">{{old('address')}}</textarea>
                     </div>
                 </div>
 
@@ -113,12 +127,12 @@
                         <div class="radio">
                             <label class="col-sm-6">
                                 <input type="radio" name="gender" id="optionsRadios1" value="male"
-                                       checked> ชาย
+                                        {{ old('gender') == 'male'?'checked':''}} > ชาย
                             </label>
 
                             <label class="col-sm-6">
                                 <input type="radio" name="gender" id="optionsRadios2"
-                                       value="female">
+                                       value="female" {{ old('gender') == 'female'?'checked':''}}>
                                 หญิง
                             </label>
                         </div>
@@ -129,50 +143,56 @@
                         <div class="radio">
                             <label class="col-sm-3">
                                 <input type="radio" name="bloodType" id="optionsRadios1" value="A"
-                                       checked> A
+                                        {{ old('bloodType') == 'A'?'checked':''}}> A
                             </label>
 
                             <label class="col-sm-3">
                                 <input type="radio" name="bloodType" id="optionsRadios2"
-                                       value="B"> B
+                                       value="B" {{ old('bloodType') == 'B'?'checked':''}}> B
                             </label>
 
                             <label class="col-sm-3">
                                 <input type="radio" name="bloodType" id="optionsRadios3"
-                                       value="C"> AB
+                                       value="AB" {{ old('bloodType') == 'AB'?'checked':''}}> AB
                             </label>
 
                             <label class="col-sm-3">
                                 <input type="radio" name="bloodType" id="optionsRadios4"
-                                       value="D"> O
+                                       value="O" {{ old('bloodType') == 'O'?'checked':''}}> O
                             </label>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-
+                    <label class="col-sm-2 col-sm-2 control-label">ประวัติการแพ้ยา</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="ถ้าไม่มีประวัติการแพ้ยา ให้ใส่ -"
+                               name="allergen" value="{{old('allergen')}}">
+                    </div>
                 </div>
+
 
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">ชื่อผู้ใช้</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" placeholder="username" name="username">
+                        <input type="text" class="form-control" placeholder="username" name="username"
+                               value="{{old('username')}}">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">รหัสผ่าน</label>
                     <div class="col-sm-4">
-                        <input type="password" class="form-control" placeholder="password" name="password">
+                        <input type="password" class="form-control" placeholder="password" name="password"
+                               value="{{old('password')}}">
                     </div>
-                </div>
 
-                <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">ยืนยันรหัสผ่าน</label>
                     <div class="col-sm-4">
                         <input type="password" class="form-control" placeholder="confirm password"
-                               name="confirmPassword">
+                               name="password_confirmation">
+
                     </div>
                 </div>
 

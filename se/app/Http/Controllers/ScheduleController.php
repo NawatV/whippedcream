@@ -10,7 +10,7 @@ use App\Model\User;
 use App\Model\Doctor;
 use App\Model\Staff;
 use App\Model\Schedule;
-use App\Model\Leaving;			
+use App\Model\Leaving;          
 //Link to Model->"Schedule.php": You can see the relationships here.
 
 class ScheduleController extends Controller

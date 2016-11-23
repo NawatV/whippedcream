@@ -49,6 +49,29 @@
         <div class="col-lg-12">
             <div class="form-panel">
                 <div class="container-fluid">
+
+
+                    <h1 style="text-align: center;">
+                        =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                        <br>
+                        Blank Page
+                        <br>
+                        =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                        <br>
+
+
+
+                        {{--@if({{$request->session()}} != nullOrEmptyString())--}}
+                            {{$request->session()->get('userId')}}
+                            <br>
+                            {{$request->session()->get('userType')}}
+                            <br>
+                            {{$request->session()->get('name')}}
+                        {{--@endif--}}
+                    </h1>
+                    {{dd($request)}}
+
+
                     <h4 class="mb"><i class="fa fa-angle-right"></i> ลงทะเบียน</h4>
                     <form class="form-horizontal style-form" method="get">
                         <div class="form-group">

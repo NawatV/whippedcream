@@ -1,11 +1,7 @@
 <?php
-
-//Flow: No.4-DB
-
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
 class CreateDatabaseTable extends Migration
 {
     /**
@@ -30,6 +26,13 @@ class CreateDatabaseTable extends Migration
             $table->string('userType');
         });
 
+        Schema::create('department', function (Blueprint $table) {
+            $table->increments('departmentId');
+            $table->string('departmentName');
+            $table->string('location');
+            $table->string('location');
+        });
+
         Schema::create('patient', function (Blueprint $table) {
             $table->integer('patientId')->unsigned();
             $table->char('bloodType',2)->nullable();
@@ -38,7 +41,6 @@ class CreateDatabaseTable extends Migration
             $table->primary('patientId');
             $table->foreign('patientId')->references('userId')->on('user');
         });
-
         Schema::create('doctor', function (Blueprint $table) {
             $table->integer('doctorId')->unsigned();
             $table->integer('departmentId')->unsigned();
@@ -47,7 +49,6 @@ class CreateDatabaseTable extends Migration
             $table->foreign('doctorId')->references('userId')->on('user');
             $table->foreign('departmentId')->references('departmentId')->on('department');
         });
-
         Schema::create('nurse', function (Blueprint $table) {
             $table->integer('nurseId')->unsigned();
             $table->integer('departmentId')->unsigned();
@@ -56,37 +57,28 @@ class CreateDatabaseTable extends Migration
             $table->foreign('nurseId')->references('userId')->on('user');
             $table->foreign('departmentId')->references('departmentId')->on('department');
         });
-
         Schema::create('pharmacist', function (Blueprint $table) {
             $table->integer('pharmacistId')->unsigned();
             $table->string('pharmacistNumber')->unique();
             $table->primary('pharmacistId');
             $table->foreign('pharmacistId')->references('userId')->on('user');
         });
-
         Schema::create('staff', function (Blueprint $table) {
             $table->integer('staffId')->unsigned();
             $table->string('staffNumber')->unique();
             $table->primary('staffId');
             $table->foreign('staffId')->references('userId')->on('user');
         });
-
         Schema::create('admin', function (Blueprint $table) {
             $table->integer('adminId')->unsigned();
             $table->string('adminNumber')->unique();
             $table->primary('adminId');
             $table->foreign('adminId')->references('userId')->on('user');
         });
-
-        Schema::create('department', function (Blueprint $table) {
-            $table->increments('departmentId');
-            $table->string('departmentName');
-        });
-
         Schema::create('schedule', function (Blueprint $table) {
             $table->increments('scheduleId');
             $table->integer('doctorId')->unsigned();
-            $table->char('sunPeriod',1);
+            $table->char('sunPeriod',1);//0ไม่ว่าง 1ว่างเช้า 2ว่างบ่าย 3ว่างทั้งเช้าเเละบ่าย
             $table->char('monPeriod',1);
             $table->char('tuePeriod',1);
             $table->char('wedPeriod',1);
@@ -95,7 +87,6 @@ class CreateDatabaseTable extends Migration
             $table->char('satPeriod',1);
             $table->foreign('doctorId')->references('doctorId')->on('doctor');
         });
-
         Schema::create('appointment', function (Blueprint $table) {
             $table->increments('appointmentId');
             $table->integer('patientId')->unsigned();
@@ -106,7 +97,6 @@ class CreateDatabaseTable extends Migration
             $table->foreign('patientId')->references('patientId')->on('patient');
             $table->foreign('doctorId')->references('doctorId')->on('doctor');
         });
-
         Schema::create('leaving', function (Blueprint $table) {
             $table->increments('leavingId');
             $table->integer('doctorId')->unsigned();
@@ -114,7 +104,6 @@ class CreateDatabaseTable extends Migration
             $table->char('leavePeriod',1);
             $table->foreign('doctorId')->references('doctorId')->on('doctor');
         });
-
         Schema::create('petition', function (Blueprint $table) {
             $table->increments('petitionId');
             $table->integer('pharmacistId')->unsigned();
@@ -125,7 +114,6 @@ class CreateDatabaseTable extends Migration
             $table->foreign('pharmacistId')->references('pharmacistId')->on('pharmacist');
             $table->foreign('doctorId')->references('doctorId')->on('doctor');
         });
-
         Schema::create('vitalSignData', function (Blueprint $table) {
             $table->increments('vitalSignDataId');
             $table->integer('patientId')->unsigned();
@@ -140,7 +128,6 @@ class CreateDatabaseTable extends Migration
             $table->foreign('patientId')->references('patientId')->on('patient');
             $table->foreign('nurseId')->references('nurseId')->on('nurse');
         });
-
         Schema::create('diagnosis', function (Blueprint $table) {
             $table->increments('diagnosisId');
             $table->integer('patientId')->unsigned();
@@ -151,7 +138,6 @@ class CreateDatabaseTable extends Migration
             $table->foreign('patientId')->references('patientId')->on('patient');
             $table->foreign('doctorId')->references('doctorId')->on('doctor');
         });
-
         Schema::create('prescription', function (Blueprint $table) {
             $table->increments('prescriptionId');
             $table->integer('pharmacistId')->unsigned()->nullable();
@@ -161,7 +147,6 @@ class CreateDatabaseTable extends Migration
             $table->foreign('pharmacistId')->references('pharmacistId')->on('pharmacist');
             $table->foreign('diagnosisId')->references('diagnosisId')->on('diagnosis');
         });
-
         Schema::create('drug', function (Blueprint $table) {
             $table->increments('drugId');
             $table->integer('prescriptionId')->unsigned();
@@ -171,7 +156,6 @@ class CreateDatabaseTable extends Migration
             $table->foreign('prescriptionId')->references('prescriptionId')->on('prescription');
         });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -187,13 +171,13 @@ class CreateDatabaseTable extends Migration
         Schema::dropIfExists('leaving');
         Schema::dropIfExists('appointment');
         Schema::dropIfExists('schedule');
-        Schema::dropIfExists('department');
         Schema::dropIfExists('admin');
         Schema::dropIfExists('staff');
         Schema::dropIfExists('pharmacist');
         Schema::dropIfExists('nurse');
         Schema::dropIfExists('doctor');
         Schema::dropIfExists('patient');
+        Schema::dropIfExists('department');
         Schema::dropIfExists('user');
     }
 }

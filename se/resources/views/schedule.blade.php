@@ -6,6 +6,88 @@
 
 @section('content')
 
+
+    @if (session('alertConfirmAbsent'))
+        <script>
+            swal("ทำการลาสำเร็จ", "", "success");
+            {{session()->forget('alertConfirmAbsent')}}
+        </script>
+    @endif
+    @if (session('errorSameLeave'))
+        <script>
+            swal("ไม่สามารถทำการลาได้", "วันที่ต้องการลา มีการถูกลาเรียบร้อยแล้ว กรุณาแก้ไขบันทึกนั้น แทนการทำลาครั้งใหม่", "error");
+            {{session()->forget('errorSameLeave')}}
+        </script>
+    @endif
+
+
+
+    <script>
+        var sss = <?php echo $sche ?>;
+        //        console.log(sss);
+
+        $(function (workday) {
+            $("#datepicker").datepicker({
+                dateFormat: "yy/mm/dd",
+                minDate: "+1d",
+                beforeShowDay: function (date) {
+                    var day = date.getDay();
+                    var dd = date.getDate();
+                    var mm = date.getMonth() + 1;
+                    var yy = date.getFullYear();
+                    //ทำให้ format ตรง จาก วันที่ 3 ให้เป็น  03
+                    if (dd < 10) dd = '0' + dd;
+                    if (mm < 10) mm = '0' + mm;
+
+                    var thisDate = yy + '-' + mm + '-' + dd;
+//                    console.log(day);
+
+                    if (day == 0 && sss.sunPeriod != 0) return [true, ''];
+                    else if (day == 1 && sss.monPeriod != 0) return [true, ''];
+                    else if (day == 2 && sss.tuePeriod != 0) return [true, ''];
+                    else if (day == 3 && sss.wedPeriod != 0) return [true, ''];
+                    else if (day == 4 && sss.thuPeriod != 0) return [true, ''];
+                    else if (day == 5 && sss.friPeriod != 0) return [true, ''];
+                    else if (day == 6 && sss.satPeriod != 0) return [true, ''];
+                    return [false, ''];
+
+                },
+                onSelect: function (date) {
+                    $.ajax({
+                        url: "/queryAbsentPeriod",
+                        data: {
+                            day: $("#datepicker").datepicker("getDate").getDay(),
+                            date: $("#datepicker").datepicker("getDate").getDate(),
+                            month: $("#datepicker").datepicker("getDate").getMonth() + 1,
+                            year: $("#datepicker").datepicker("getDate").getFullYear()
+                        },
+                        success: function (result) {
+                            console.log(result)
+                            $("#time").empty();
+                            if (result == "1") {
+                                $("#time").append('<input type="radio" name="absentperiod" value="1" checked="checked"> Morning<br>');
+                                $("#time").append('<input type="radio" name="absentperiod" value="2" disabled> Afternoon<br>');
+                                $("#time").append('<input type="radio" name="absentperiod" value="3" disabled> The whole day<br>');
+                            } else if (result == "2") {
+                                $("#time").append('<input type="radio" name="absentperiod" value="1" disabled> Morning<br>');
+                                $("#time").append('<input type="radio" name="absentperiod" value="2" checked="checked"> Afternoon<br>');
+                                $("#time").append('<input type="radio" name="absentperiod" value="3" disabled> The whole day<br>');
+                            } else if (result == "3") {
+                                $("#time").append('<input type="radio" name="absentperiod" value="1"> Morning<br>');
+                                $("#time").append('<input type="radio" name="absentperiod" value="2"> Afternoon<br>');
+                                $("#time").append('<input type="radio" name="absentperiod" value="3"> The whole day<br>');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        $
+
+    </script>
+
+
     <?php
     //---- for transfering the data into symbols
     //Schedule
@@ -147,43 +229,19 @@
 
                             <form class="form-login " method="post" action="/schedule">
 
-                                <!--<div class="form-group">-->
-                                <!--<div class=col-md-6>-->
-
                                 <!--MUST HAVE IT"S AN EXCEPTION-->
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
 
-                                <input type="text" class="form-control" placeholder="absentDate" name="absentdate"
+                                <input type="text" class="form-control" placeholder="เลือกวันที่ต้องการลา" name="absentdate"
                                        id="datepicker">
-                                <!--
-                                <div class="input-group">
-                                  <input type="text" class="form-control" placeholder="absentPeriod" name="absentdate" id="option1">
 
-                                  <input type="text" class="form-control" placeholder="absentPeriod" name="absentdate" id="option2">
-
-                                  <div id="option1" class="form-control group">morning</div>
-                                  <div id="option2" class="form-control group">afternoon</div>
-                                  <select id="selectMe">
-                                    <option value="option1">morning</option>
-                                    <option value="option2">afternoon</option>
-                                  </select>
-
-                                </div>
-                                -->
-
-                                <input type="checkbox" name="absentperiod" value="1">Morning<br>
-                                <input type="checkbox" name="absentperiod" value="2">Afternoon<br>
-                                <input type="checkbox" name="absentperiod" value="3">The whole day<br>
+                                <div class="col-sm-9 radio"   id="time"></div>
+                                {{--<input id="time" type="radio" name="absentperiod" value="1"> Morning<br>--}}
+                                {{--<input type="radio" name="absentperiod" value="2"> Afternoon<br>--}}
+                                {{--<input type="radio" name="absentperiod" value="3"> The whole day<br>--}}
                                 <button class="btn btn-theme col-sm-5" type="submit"></i>add</button>
 
-                                <!--</div>-->
-                                <!--
-                                <div class=col-md-5>
-                                     <div class="form-group">
-                                        <button class="btn btn-theme col-sm-5" type="submit"></i>add</button>
-                                     </div>
-                                </div>
-                                -->
+
                             </form>
                         </div>
 

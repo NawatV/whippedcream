@@ -14,6 +14,120 @@ use Request;
 
 class CreateAccountController extends Controller
 {
+    public function create_staff_form()
+    {
+        return view('admin.createStaff');
+    }
+
+    public function create_staff()
+    {
+        $input = Request::all();
+        if (!isset($input['gender'])) {
+            $input['gender'] = '';
+            session()->flash('old_value', $input);
+            session()->flash('create_staff_error', 1);
+            return redirect('createStaff');
+        }
+        if ($input['firstname'] == '' or $input['lastname'] == '' or $input['ssn'] == '' or $input['staffNumber'] == '' or $input['birthDate'] == '' or $input['email'] == '' or $input['phoneNumber'] == '' or $input['address'] == '') {
+            session()->flash('old_value', $input);
+            session()->flash('create_staff_error', 1);
+            return redirect('createStaff');
+        }
+        $new_user = new User;
+        $new_staff = new Staff;
+        $new_user->firstname = $input['firstname'];
+        $new_user->lastname = $input['lastname'];
+        $new_user->idNumber = $input['ssn'];
+        /*check ssn*/
+        $is_ssn_correct = self::checkSSNFormat($input['ssn']);
+        if (!$is_ssn_correct) {
+            session()->flash('old_value', $input);
+            session()->flash('create_staff_error', 5);
+            return redirect('createStaff');
+        }
+        /*end*/
+        if ($input['gender'] == 'ชาย') {
+            $new_user->gender = 'male';
+        } else {
+            $new_user->gender = 'female';
+        }
+        /*check date*/
+        $is_date_correct = self::checkDateFormat($input['birthDate']);
+        if (!$is_date_correct) {
+            session()->flash('old_value', $input);
+            session()->flash('create_staff_error', 3);
+            return redirect('createStaff');
+        }
+        /*end*/
+        $birthDate = substr($input['birthDate'], 6) . "-" . substr($input['birthDate'], 0, 2) . '-' . substr($input['birthDate'], 3, 2);
+        $new_user->birthDate = $birthDate;
+        $new_user->phoneNumber = $input['phoneNumber'];
+        /*check phone number*/
+        $is_pn_correct = self::checkPhoneNumberFormat($input['phoneNumber']);
+        if (!$is_pn_correct) {
+            session()->flash('old_value', $input);
+            session()->flash('create_staff_error', 4);
+            return redirect('createStaff');
+        }
+        /*end*/
+        $new_user->email = $input['email'];
+        /*check email*/
+        $is_email_coorect = self::checkEmailFormat($input['email']);
+        if (!$is_email_coorect) {
+            session()->flash('old_value', $input);
+            session()->flash('create_staff_error', 6);
+            return redirect('createStaff');
+        }
+        /*end*/
+        $at_pos = strpos($input['email'], '@');
+        $new_user->username = substr($input['email'], 0, $at_pos) . "_wc";
+        /*check username & staffNumber*/
+        if (count(User::where('username', $new_user->username)->get()) > 0) {
+            session()->flash('old_value', $input);
+            session()->flash('create_staff_error', 2);
+            return redirect('createStaff');
+        }
+        if (count(Staff::where('staffNumber', $input['staffNumber'])->get()) > 0) {
+            session()->flash('old_value', $input);
+            session()->flash('create_staff_error', 2);
+            return redirect('createStaff');
+        }
+        /*end*/
+        $new_pass = self::generatePassword();
+        $new_user->password = bcrypt($new_pass);
+        $new_user->address = $input['address'];
+        /*thai or eng*/
+        $new_user->userType = 'staff';
+        try {
+            $new_user->save();
+        } catch (Exception $e) {
+            session()->flash('old_value', $input);
+            session()->flash('create_staff_error', 2);
+            return redirect('createStaff');
+        }
+        $new_staff->staffId = $new_user->userId;
+        $new_staff->staffNumber = $input['staffNumber'];
+        try {
+            $new_staff->save();
+        } catch (Exception $e) {
+            session()->flash('old_value', $input);
+            session()->flash('create_staff_error', 2);
+            return redirect('createStaff');
+        }
+        session()->flash('account_owner', $new_user->firstname . ' ' . $new_user->lastname);
+        session()->flash('generated_username', $new_user->username);
+        session()->flash('generated_password', $new_pass);
+        return redirect('manageAccount');
+    }
+
+    private function checkSSNFormat($ssn)
+    {
+        if ((strlen($ssn) != 13) or (!is_numeric($ssn))) {
+            return False;
+        }
+        return True;
+    }
+
     private function checkDateFormat($date)
     {
         if (strlen($date) != 10) {
@@ -42,14 +156,6 @@ class CreateAccountController extends Controller
         return false;
     }
 
-    private function checkSSNFormat($ssn)
-    {
-        if ((strlen($ssn) != 13) or (!is_numeric($ssn))) {
-            return False;
-        }
-        return True;
-    }
-
     private function checkEmailFormat($email)
     {
         if (strpos($email, '@') === False or strpos($email, ' ') !== False) {
@@ -67,112 +173,6 @@ class CreateAccountController extends Controller
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
-    }
-
-    public function create_staff_form()
-    {
-        return view('admin.createStaff');
-    }
-
-    public function create_staff()
-    {
-        $input = Request::all();
-        if(!isset($input['gender'])){
-            $input['gender'] = '';
-            session()->flash('old_value', $input);
-            session()->flash('create_staff_error', 1);
-            return redirect('createStaff');
-        }
-        if($input['firstname'] == '' or $input['lastname'] == '' or $input['ssn'] == '' or $input['staffNumber'] == '' or $input['birthDate'] == '' or $input['email'] == '' or $input['phoneNumber'] == '' or $input['address'] == ''){
-            session()->flash('old_value', $input);
-            session()->flash('create_staff_error', 1);
-            return redirect('createStaff');
-        }
-        $new_user = new User;
-        $new_staff = new Staff;
-        $new_user->firstname = $input['firstname'];
-        $new_user->lastname = $input['lastname'];
-        $new_user->idNumber = $input['ssn'];
-        /*check ssn*/
-        $is_ssn_correct = self::checkSSNFormat($input['ssn']);
-        if(!$is_ssn_correct){
-            session()->flash('old_value', $input);
-            session()->flash('create_staff_error', 5);
-            return redirect('createStaff');
-        }
-        /*end*/
-        if ($input['gender'] == 'ชาย') {
-            $new_user->gender = 'male';
-        } else {
-            $new_user->gender = 'female';
-        }
-        /*check date*/
-        $is_date_correct = self::checkDateFormat($input['birthDate']);
-        if(!$is_date_correct){
-            session()->flash('old_value', $input);
-            session()->flash('create_staff_error', 3);
-            return redirect('createStaff');
-        }
-        /*end*/
-        $birthDate = substr($input['birthDate'], 6) . "-" . substr($input['birthDate'], 0, 2) . '-' . substr($input['birthDate'], 3, 2);
-        $new_user->birthDate = $birthDate;
-        $new_user->phoneNumber = $input['phoneNumber'];
-        /*check phone number*/
-        $is_pn_correct = self::checkPhoneNumberFormat($input['phoneNumber']);
-        if(!$is_pn_correct){
-            session()->flash('old_value', $input);
-            session()->flash('create_staff_error', 4);
-            return redirect('createStaff');
-        }
-        /*end*/
-        $new_user->email = $input['email'];
-        /*check email*/
-        $is_email_coorect = self::checkEmailFormat($input['email']);
-        if(!$is_email_coorect){
-            session()->flash('old_value', $input);
-            session()->flash('create_staff_error', 6);
-            return redirect('createStaff');
-        }
-        /*end*/
-        $at_pos = strpos($input['email'], '@');
-        $new_user->username = substr($input['email'], 0, $at_pos) . "_wc";
-        /*check username & staffNumber*/
-        if(count(User::where('username', $new_user->username)->get()) > 0){
-            session()->flash('old_value', $input);
-            session()->flash('create_staff_error', 2);
-            return redirect('createStaff');
-        }
-        if(count(Staff::where('staffNumber', $input['staffNumber'])->get()) > 0){
-            session()->flash('old_value', $input);
-            session()->flash('create_staff_error', 2);
-            return redirect('createStaff');
-        }
-        /*end*/
-        $new_pass = self::generatePassword();
-        $new_user->password = bcrypt($new_pass);
-        $new_user->address = $input['address'];
-        /*thai or eng*/
-        $new_user->userType = 'staff';
-        try {
-            $new_user->save();
-        } catch(Exception $e) {
-            session()->flash('old_value', $input);
-            session()->flash('create_staff_error', 2);
-            return redirect('createStaff');
-        }
-        $new_staff->staffId = $new_user->userId;
-        $new_staff->staffNumber = $input['staffNumber'];
-        try {
-            $new_staff->save();
-        } catch(Exception $e) {
-            session()->flash('old_value', $input);
-            session()->flash('create_staff_error', 2);
-            return redirect('createStaff');
-        }
-        session()->flash('account_owner', $new_user->firstname . ' ' . $new_user->lastname);
-        session()->flash('generated_username', $new_user->username);
-        session()->flash('generated_password', $new_pass);
-        return redirect('manageAccount');
     }
 
     public function create_doctor_form()
@@ -227,13 +227,13 @@ class CreateAccountController extends Controller
         if (!isset($input['sun_af'])) {
             $input['sun_af'] = 0;
         }
-        if(!isset($input['gender'])){
+        if (!isset($input['gender'])) {
             $input['gender'] = '';
             session()->flash('old_value', $input);
             session()->flash('create_doc_error', 1);
             return redirect('createDoctor');
         }
-        if($input['firstname'] == '' or $input['lastname'] == '' or $input['ssn'] == '' or $input['doctorNumber'] == '' or $input['birthDate'] == '' or $input['email'] == '' or $input['phoneNumber'] == '' or $input['address'] == ''){
+        if ($input['firstname'] == '' or $input['lastname'] == '' or $input['ssn'] == '' or $input['doctorNumber'] == '' or $input['birthDate'] == '' or $input['email'] == '' or $input['phoneNumber'] == '' or $input['address'] == '') {
             session()->flash('old_value', $input);
             session()->flash('create_doc_error', 1);
             return redirect('createDoctor');
@@ -245,7 +245,7 @@ class CreateAccountController extends Controller
         $new_user->idNumber = $input['ssn'];
         /*check ssn*/
         $is_ssn_correct = self::checkSSNFormat($input['ssn']);
-        if(!$is_ssn_correct){
+        if (!$is_ssn_correct) {
             session()->flash('old_value', $input);
             session()->flash('create_doc_error', 5);
             return redirect('createDoctor');
@@ -258,7 +258,7 @@ class CreateAccountController extends Controller
         }
         /*check date*/
         $is_date_correct = self::checkDateFormat($input['birthDate']);
-        if(!$is_date_correct){
+        if (!$is_date_correct) {
             session()->flash('old_value', $input);
             session()->flash('create_doc_error', 3);
             return redirect('createDoctor');
@@ -269,7 +269,7 @@ class CreateAccountController extends Controller
         $new_user->phoneNumber = $input['phoneNumber'];
         /*check phone number*/
         $is_pn_correct = self::checkPhoneNumberFormat($input['phoneNumber']);
-        if(!$is_pn_correct){
+        if (!$is_pn_correct) {
             session()->flash('old_value', $input);
             session()->flash('create_doc_error', 4);
             return redirect('createDoctor');
@@ -278,7 +278,7 @@ class CreateAccountController extends Controller
         $new_user->email = $input['email'];
         /*check email*/
         $is_email_coorect = self::checkEmailFormat($input['email']);
-        if(!$is_email_coorect){
+        if (!$is_email_coorect) {
             session()->flash('old_value', $input);
             session()->flash('create_doc_error', 6);
             return redirect('createDoctor');
@@ -287,12 +287,12 @@ class CreateAccountController extends Controller
         $at_pos = strpos($input['email'], '@');
         $new_user->username = substr($input['email'], 0, $at_pos) . "_wc";
         /*check username & doctorNumber*/
-        if(count(User::where('username', $new_user->username)->get()) > 0){
+        if (count(User::where('username', $new_user->username)->get()) > 0) {
             session()->flash('old_value', $input);
             session()->flash('create_doc_error', 2);
             return redirect('createDoctor');
         }
-        if(count(Doctor::where('doctorNumber', $input['doctorNumber'])->get()) > 0){
+        if (count(Doctor::where('doctorNumber', $input['doctorNumber'])->get()) > 0) {
             session()->flash('old_value', $input);
             session()->flash('create_doc_error', 2);
             return redirect('createDoctor');
@@ -305,7 +305,7 @@ class CreateAccountController extends Controller
         $new_user->userType = 'doctor';
         try {
             $new_user->save();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             session()->flash('old_value', $input);
             session()->flash('create_doc_error', 2);
             return redirect('createDoctor');
@@ -317,7 +317,7 @@ class CreateAccountController extends Controller
 
         try {
             $new_doctor->save();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             session()->flash('old_value', $input);
             session()->flash('create_doc_error', 2);
             return redirect('createDoctor');
@@ -333,7 +333,7 @@ class CreateAccountController extends Controller
         $new_schedule->doctorId = $new_doctor->doctorId;
         try {
             $new_schedule->save();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             session()->flash('old_value', $input);
             session()->flash('create_doc_error', 2);
             return redirect('createDoctor');
@@ -353,13 +353,13 @@ class CreateAccountController extends Controller
     public function create_nurse()
     {
         $input = Request::all();
-        if(!isset($input['gender'])){
+        if (!isset($input['gender'])) {
             $input['gender'] = '';
             session()->flash('old_value', $input);
             session()->flash('create_nurse_error', 1);
             return redirect('createNurse');
         }
-        if($input['firstname'] == '' or $input['lastname'] == '' or $input['ssn'] == '' or $input['nurseNumber'] == '' or $input['birthDate'] == '' or $input['email'] == '' or $input['phoneNumber'] == '' or $input['address'] == ''){
+        if ($input['firstname'] == '' or $input['lastname'] == '' or $input['ssn'] == '' or $input['nurseNumber'] == '' or $input['birthDate'] == '' or $input['email'] == '' or $input['phoneNumber'] == '' or $input['address'] == '') {
             session()->flash('old_value', $input);
             session()->flash('create_nurse_error', 1);
             return redirect('createNurse');
@@ -371,7 +371,7 @@ class CreateAccountController extends Controller
         $new_user->idNumber = $input['ssn'];
         /*check ssn*/
         $is_ssn_correct = self::checkSSNFormat($input['ssn']);
-        if(!$is_ssn_correct){
+        if (!$is_ssn_correct) {
             session()->flash('old_value', $input);
             session()->flash('create_nurse_error', 5);
             return redirect('createNurse');
@@ -384,7 +384,7 @@ class CreateAccountController extends Controller
         }
         /*check date*/
         $is_date_correct = self::checkDateFormat($input['birthDate']);
-        if(!$is_date_correct){
+        if (!$is_date_correct) {
             session()->flash('old_value', $input);
             session()->flash('create_nurse_error', 3);
             return redirect('createNurse');
@@ -395,7 +395,7 @@ class CreateAccountController extends Controller
         $new_user->phoneNumber = $input['phoneNumber'];
         /*check phone number*/
         $is_pn_correct = self::checkPhoneNumberFormat($input['phoneNumber']);
-        if(!$is_pn_correct){
+        if (!$is_pn_correct) {
             session()->flash('old_value', $input);
             session()->flash('create_nurse_error', 4);
             return redirect('createNurse');
@@ -404,7 +404,7 @@ class CreateAccountController extends Controller
         $new_user->email = $input['email'];
         /*check email*/
         $is_email_coorect = self::checkEmailFormat($input['email']);
-        if(!$is_email_coorect){
+        if (!$is_email_coorect) {
             session()->flash('old_value', $input);
             session()->flash('create_nurse_error', 6);
             return redirect('createNurse');
@@ -413,12 +413,12 @@ class CreateAccountController extends Controller
         $at_pos = strpos($input['email'], '@');
         $new_user->username = substr($input['email'], 0, $at_pos) . "_wc";
         /*check username & nurseNumber*/
-        if(count(User::where('username', $new_user->username)->get()) > 0){
+        if (count(User::where('username', $new_user->username)->get()) > 0) {
             session()->flash('old_value', $input);
             session()->flash('create_nurse_error', 2);
             return redirect('createNurse');
         }
-        if(count(Nurse::where('nurseNumber', $input['nurseNumber'])->get()) > 0){
+        if (count(Nurse::where('nurseNumber', $input['nurseNumber'])->get()) > 0) {
             session()->flash('old_value', $input);
             session()->flash('create_nurse_error', 2);
             return redirect('createNurse');
@@ -431,7 +431,7 @@ class CreateAccountController extends Controller
         $new_user->userType = 'nurse';
         try {
             $new_user->save();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             session()->flash('old_value', $input);
             session()->flash('create_nurse_error', 2);
             return redirect('createNurse');
@@ -442,7 +442,7 @@ class CreateAccountController extends Controller
         $new_nurse->nurseNumber = $input['nurseNumber'];
         try {
             $new_nurse->save();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             session()->flash('old_value', $input);
             session()->flash('create_nurse_error', 2);
             return redirect('createNurse');
@@ -461,13 +461,13 @@ class CreateAccountController extends Controller
     public function create_pharmacist()
     {
         $input = Request::all();
-        if(!isset($input['gender'])){
+        if (!isset($input['gender'])) {
             $input['gender'] = '';
             session()->flash('old_value', $input);
             session()->flash('create_phar_error', 1);
             return redirect('createPharmacist');
         }
-        if($input['firstname'] == '' or $input['lastname'] == '' or $input['ssn'] == '' or $input['pharmacistNumber'] == '' or $input['birthDate'] == '' or $input['email'] == '' or $input['phoneNumber'] == '' or $input['address'] == ''){
+        if ($input['firstname'] == '' or $input['lastname'] == '' or $input['ssn'] == '' or $input['pharmacistNumber'] == '' or $input['birthDate'] == '' or $input['email'] == '' or $input['phoneNumber'] == '' or $input['address'] == '') {
             session()->flash('old_value', $input);
             session()->flash('create_phar_error', 1);
             return redirect('createPharmacist');
@@ -479,7 +479,7 @@ class CreateAccountController extends Controller
         $new_user->idNumber = $input['ssn'];
         /*check ssn*/
         $is_ssn_correct = self::checkSSNFormat($input['ssn']);
-        if(!$is_ssn_correct){
+        if (!$is_ssn_correct) {
             session()->flash('old_value', $input);
             session()->flash('create_phar_error', 5);
             return redirect('createPharmacist');
@@ -492,7 +492,7 @@ class CreateAccountController extends Controller
         }
         /*check date*/
         $is_date_correct = self::checkDateFormat($input['birthDate']);
-        if(!$is_date_correct){
+        if (!$is_date_correct) {
             session()->flash('old_value', $input);
             session()->flash('create_phar_error', 3);
             return redirect('createPharmacist');
@@ -503,7 +503,7 @@ class CreateAccountController extends Controller
         $new_user->phoneNumber = $input['phoneNumber'];
         /*check phone number*/
         $is_pn_correct = self::checkPhoneNumberFormat($input['phoneNumber']);
-        if(!$is_pn_correct){
+        if (!$is_pn_correct) {
             session()->flash('old_value', $input);
             session()->flash('create_phar_error', 4);
             return redirect('createPharmacist');
@@ -512,7 +512,7 @@ class CreateAccountController extends Controller
         $new_user->email = $input['email'];
         /*check email*/
         $is_email_coorect = self::checkEmailFormat($input['email']);
-        if(!$is_email_coorect){
+        if (!$is_email_coorect) {
             session()->flash('old_value', $input);
             session()->flash('create_phar_error', 6);
             return redirect('createPharmacist');
@@ -521,12 +521,12 @@ class CreateAccountController extends Controller
         $at_pos = strpos($input['email'], '@');
         $new_user->username = substr($input['email'], 0, $at_pos) . "_wc";
         /*check username & pharmacistNumber*/
-        if(count(User::where('username', $new_user->username)->get()) > 0){
+        if (count(User::where('username', $new_user->username)->get()) > 0) {
             session()->flash('old_value', $input);
             session()->flash('create_phar_error', 2);
             return redirect('createPharmacist');
         }
-        if(count(Pharmacist::where('pharmacistNumber', $input['pharmacistNumber'])->get()) > 0){
+        if (count(Pharmacist::where('pharmacistNumber', $input['pharmacistNumber'])->get()) > 0) {
             session()->flash('old_value', $input);
             session()->flash('create_phar_error', 2);
             return redirect('createPharmacist');
@@ -539,7 +539,7 @@ class CreateAccountController extends Controller
         $new_user->userType = 'pharmacist';
         try {
             $new_user->save();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             session()->flash('old_value', $input);
             session()->flash('create_phar_error', 2);
             return redirect('createPharmacist');
@@ -548,7 +548,7 @@ class CreateAccountController extends Controller
         $new_pharmacist->pharmacistNumber = $input['pharmacistNumber'];
         try {
             $new_pharmacist->save();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             session()->flash('old_value', $input);
             session()->flash('create_phar_error', 2);
             return redirect('createPharmacist');
@@ -567,13 +567,13 @@ class CreateAccountController extends Controller
     public function create_admin()
     {
         $input = Request::all();
-        if(!isset($input['gender'])){
+        if (!isset($input['gender'])) {
             $input['gender'] = '';
             session()->flash('old_value', $input);
             session()->flash('create_admin_error', 1);
             return redirect('createAdmin');
         }
-        if($input['firstname'] == '' or $input['lastname'] == '' or $input['ssn'] == '' or $input['adminNumber'] == '' or $input['birthDate'] == '' or $input['email'] == '' or $input['phoneNumber'] == '' or $input['address'] == ''){
+        if ($input['firstname'] == '' or $input['lastname'] == '' or $input['ssn'] == '' or $input['adminNumber'] == '' or $input['birthDate'] == '' or $input['email'] == '' or $input['phoneNumber'] == '' or $input['address'] == '') {
             session()->flash('old_value', $input);
             session()->flash('create_admin_error', 1);
             return redirect('createAdmin');
@@ -585,7 +585,7 @@ class CreateAccountController extends Controller
         $new_user->idNumber = $input['ssn'];
         /*check ssn*/
         $is_ssn_correct = self::checkSSNFormat($input['ssn']);
-        if(!$is_ssn_correct){
+        if (!$is_ssn_correct) {
             session()->flash('old_value', $input);
             session()->flash('create_admin_error', 5);
             return redirect('createAdmin');
@@ -598,7 +598,7 @@ class CreateAccountController extends Controller
         }
         /*check date*/
         $is_date_correct = self::checkDateFormat($input['birthDate']);
-        if(!$is_date_correct){
+        if (!$is_date_correct) {
             session()->flash('old_value', $input);
             session()->flash('create_admin_error', 3);
             return redirect('createAdmin');
@@ -609,7 +609,7 @@ class CreateAccountController extends Controller
         $new_user->phoneNumber = $input['phoneNumber'];
         /*check phone number*/
         $is_pn_correct = self::checkPhoneNumberFormat($input['phoneNumber']);
-        if(!$is_pn_correct){
+        if (!$is_pn_correct) {
             session()->flash('old_value', $input);
             session()->flash('create_admin_error', 4);
             return redirect('createAdmin');
@@ -618,7 +618,7 @@ class CreateAccountController extends Controller
         $new_user->email = $input['email'];
         /*check email*/
         $is_email_coorect = self::checkEmailFormat($input['email']);
-        if(!$is_email_coorect){
+        if (!$is_email_coorect) {
             session()->flash('old_value', $input);
             session()->flash('create_admin_error', 6);
             return redirect('createAdmin');
@@ -627,12 +627,12 @@ class CreateAccountController extends Controller
         $at_pos = strpos($input['email'], '@');
         $new_user->username = substr($input['email'], 0, $at_pos) . "_wc";
         /*check username & adminNumber*/
-        if(count(User::where('username', $new_user->username)->get()) > 0){
+        if (count(User::where('username', $new_user->username)->get()) > 0) {
             session()->flash('old_value', $input);
             session()->flash('create_admin_error', 2);
             return redirect('createAdmin');
         }
-        if(count(Admin::where('adminNumber', $input['adminNumber'])->get()) > 0){
+        if (count(Admin::where('adminNumber', $input['adminNumber'])->get()) > 0) {
             session()->flash('old_value', $input);
             session()->flash('create_admin_error', 2);
             return redirect('createAdmin');
@@ -644,7 +644,7 @@ class CreateAccountController extends Controller
         $new_user->userType = 'admin';
         try {
             $new_user->save();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             session()->flash('old_value', $input);
             session()->flash('create_admin_error', 2);
             return redirect('createAdmin');
@@ -653,7 +653,7 @@ class CreateAccountController extends Controller
         $new_admin->adminNumber = $input['adminNumber'];
         try {
             $new_admin->save();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             session()->flash('old_value', $input);
             session()->flash('create_admin_error', 2);
             return redirect('createAdmin');

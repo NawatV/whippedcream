@@ -147,6 +147,7 @@ Route::group(['middleware' => 'login'], function () {
     Route::get('/queryDoctorWalkIn', 'AppointmentController@queryDoctorWalkIn');
     Route::get('/queryPeriod', 'AppointmentController@queryPeriod');
     Route::get('/queryPeriodWalkIn', 'AppointmentController@queryPeriodWalkIn');
+
 //pdf
     Route::get('/appointment/{appointment}/appointmentpdf', 'AppointmentController@appointmentPdf');
 
@@ -178,6 +179,17 @@ Route::group(['middleware' => 'login'], function () {
 Route::get('/schedule', 'ScheduleController@viewSchedule');
 Route::post('/schedule', 'ScheduleController@addAbsent');
 Route::post('/schedule/staff', 'ScheduleController@viewScheduleStaff');
+
+//Ajax
+Route::get('/queryAbsentPeriod', 'ScheduleController@queryAbsentPeriod');
+
+
+
+
+
+
+Route::get('/dispensation', 'TreatmentController@getDispensationPage');
+Route::post('/dispensation', 'TreatmentController@editPrescription');
 
 
 

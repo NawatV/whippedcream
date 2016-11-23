@@ -52,7 +52,8 @@ class UserController extends Controller
                 'userType' => $user->userType,
                 'name' => $user->firstname
             ]);
-//-----------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
             if ($user->userType === 'nurse' or $user->userType === 'pharmacist' or $user->userType === 'staff' or $user->userType === 'doctor' or $user->userType === 'patient') {
                 return redirect('homepage')->with('status', 'เข้าสู่ระบบ สำเร็จ');
 
@@ -143,13 +144,13 @@ class UserController extends Controller
         return redirect('homepage')->with('status', 'ลงทะเบียน สำเร็จ');
     }
 
-
     public function myPatientInformation(Request $request)
     {
         $patients_hn = $request->session()->get('userId');
         $patients = User::where('userId', $patients_hn)->first();
         $patients2 = Patient::where('patientId', $patients_hn)->first(); // patients2 Patient query
         return view('myPatientInformation', compact('patients', 'patients2'));
+
     }
 
     public function editMyPatientInformation(Request $request)
@@ -250,6 +251,5 @@ class UserController extends Controller
 
         return view('seePatientInformation', compact('patients', 'patients2'));
     }
-
 
 }

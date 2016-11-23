@@ -34,7 +34,8 @@
     <script>
         $(function () {
             $( "#datepicker" ).datepicker({
-                dateFormat: "dd/mm/yy"
+                dateFormat: "dd/mm/yy",
+                maxDate: "+0d"
             });
         });
     </script>
@@ -46,8 +47,8 @@
 @if(count($errors)>0)
     <script>
         swal({
-            title: "รหัสประจำตัวประชาชน/เลขรหัสโรงพยาบาล ไม่ถูกต้อง",
-            text: "กรุราใส่ใหม่อีกครั้ง",
+            title: "ข้อมูลไม่ครบ",
+            text: "กรุณาใส่ข้อมูลให้ครบทุกช่อง",
             type: "error",
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "แก้ไข",

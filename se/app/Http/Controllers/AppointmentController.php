@@ -68,6 +68,15 @@ class AppointmentController extends Controller
 
     public function store(CreateAppointmentRequest $request)
     {
+        $countAppointment = Appointment::where('appDate', $request->appDate)->where('doctorId', $request->doctorId)->where('patientId', session('userId'))->get();
+
+        if ( sizeof($countAppointment) > 0) {
+            session(['errorSameAppointment'=>'value']);
+
+            return redirect()->action('AppointmentController@create');
+        }
+
+
         $user = User::where('userId', session('userId'))->first();
         if ($user->idNumber === $request->patientId or $user->patient->hn === $request->patientId) {
             $appointment = new Appointment();
@@ -139,7 +148,8 @@ class AppointmentController extends Controller
             $title = 'การนัดหมายเสร็จสมบูรณ์ -- Whippedcream system';
             $content = $message2;
 
-            Mail::send('email.send', ['title' => $title, 'content' => $content], function ($message) use($title, $user) {
+            Mail::send('email.send', ['title' => $title, 'content' => $content], function ($message) use ($title, $user) {
+
                 $message->from('whippedcream@hotmail.com', 'Tkk24');
                 $message->to($user->email);
                 $message->subject($title);
@@ -187,9 +197,6 @@ class AppointmentController extends Controller
 
         $appointment->save();
 
-
-
-
         $user = User::where('idNumber', $request->patientId)->first();
         $appDoctor = User::where('userId', $appointment->doctorId)->first();
 
@@ -228,18 +235,13 @@ class AppointmentController extends Controller
         $title = 'การนัดหมายเสร็จสมบูรณ์ -- Whippedcream system';
         $content = $message2;
 
-        Mail::send('email.send', ['title' => $title, 'content' => $content], function ($message) use($title, $user) {
+        Mail::send('email.send', ['title' => $title, 'content' => $content], function ($message) use ($title, $user) {
             $message->from('whippedcream@hotmail.com', 'Tkk24');
             $message->to($user->email);
             $message->subject($title);
         });
 
         session(['createAppSuccess' => 'true']);
-
-
-
-
-
 
         return redirect()->action('AppointmentController@staffIndex');
 
@@ -278,9 +280,6 @@ class AppointmentController extends Controller
 
         $appointment->save();
 
-
-
-
         $user = User::where('idNumber', $request->patientId)->first();
         $appDoctor = User::where('userId', $appointment->doctorId)->first();
 
@@ -319,17 +318,13 @@ class AppointmentController extends Controller
         $title = 'การนัดหมายเสร็จสมบูรณ์ -- Whippedcream system';
         $content = $message2;
 
-        Mail::send('email.send', ['title' => $title, 'content' => $content], function ($message) use($title, $user) {
+        Mail::send('email.send', ['title' => $title, 'content' => $content], function ($message) use ($title, $user) {
             $message->from('whippedcream@hotmail.com', 'Tkk24');
             $message->to($user->email);
             $message->subject($title);
         });
 
         session(['createAppSuccess' => 'true']);
-
-
-
-
 
 
         return redirect()->action('AppointmentController@staffIndex');

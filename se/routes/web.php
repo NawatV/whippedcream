@@ -65,11 +65,9 @@ Route::group(['middleware' => 'login'], function () {
     Route::get('/searchPatientInformation', 'UserController@getSearchPatientInformation');
     Route::post('/searchPatientInformation', 'UserController@findPatientFromHnIdName');
 
-
 //แก้ไขประวัติผู้ป่วย
     Route::post('/editPatientInformation', 'UserController@searchPatientFromHnIdNameForEditProfile');
     Route::post('/showNewProfile', 'UserController@editPatientInformation');
-
 
 //ดูประวัติผู้ป่วยตัวเอง
     Route::get('/myPatientInformation', 'UserController@myPatientInformation');
@@ -147,6 +145,7 @@ Route::group(['middleware' => 'login'], function () {
     Route::get('/queryDoctorWalkIn', 'AppointmentController@queryDoctorWalkIn');
     Route::get('/queryPeriod', 'AppointmentController@queryPeriod');
     Route::get('/queryPeriodWalkIn', 'AppointmentController@queryPeriodWalkIn');
+
 //pdf
     Route::get('/appointment/{appointment}/appointmentpdf', 'AppointmentController@appointmentPdf');
 
@@ -183,6 +182,9 @@ Route::post('/schedule', 'ScheduleController@addAbsent');
 Route::get('/schedulestaff', 'ScheduleControllerStaff@viewScheduleStaffDefault');
 Route::post('/schedulestaff', 'ScheduleControllerStaff@viewScheduleStaff');     
 
+//Ajax
+Route::get('/queryAbsentPeriod', 'ScheduleController@queryAbsentPeriod');
+
 /*It causes (Route(in the group)--must pass-->Middleware-->Function )
        https://laravel.com/docs/5.3/routing  */
 Route::group(['middleware' => 'schedule'], function (){
@@ -193,9 +195,8 @@ Route::group(['middleware' => 'schedule'], function (){
     */
 });
 
-
-
-
+Route::get('/dispensation', 'TreatmentController@getDispensationPage');
+Route::post('/dispensation', 'TreatmentController@editPrescription');
 
 
 Route::get('/testCurlMessage/', 'DiagnosisHistoryController@sendSms');
@@ -210,9 +211,6 @@ Route::post('/manageAccount2', 'FirstAdminController@edit_user');
 Route::get('/blank', 'OtherController@blankPage');
 Route::get('/test', 'OtherController@testPage');
 
-//========================================================================================================
-//=========================== เอา Route ทั้งหมด ไว้ข้างบน เท่านั้น !!! =======================================
-//========================================================================================================
 
 Route::any('{catchall}', function () {
     return Response::view('errors.404', array(), 404);

@@ -52,7 +52,8 @@
     <script>
         $(function () {
             $("#datepicker1").datepicker({
-                dateFormat: "dd/mm/yy"
+                dateFormat: "mm/dd/yy",
+                maxDate: "+0d"
             });
         });
     </script>

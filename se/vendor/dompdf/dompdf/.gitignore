@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .DS_Store
 composer.phar
 composer.lock
@@ -7,4 +8,15 @@ vendor
 .project
 lib/fonts/*.afm.php
 lib/fonts/*.ufm.php
+=======
+.DS_Store
+composer.phar
+composer.lock
+phpunit.xml
+vendor
+.idea
+.project
+lib/fonts/*.afm.php
+lib/fonts/*.ufm.php
+>>>>>>> origin/Final0.1
 lib/fonts/log.htm

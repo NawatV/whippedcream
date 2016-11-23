@@ -24,6 +24,22 @@
             });
         </script>
     @endif
+<<<<<<< HEAD
+=======
+    @if(session('errorSameAppointment'))
+        <script>
+            swal({
+                title: "ไม่สามารถทำนัดซ้ำได้",
+                text: "คุณได้ทำการนัดในวันที่คุณเลือกไปแล้ว",
+                type: "error",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "ย้อนกลับ",
+                closeOnConfirm: true
+            });
+            {{session()->forget('errorSameAppointment')}}
+        </script>
+    @endif
+>>>>>>> origin/Final0.1
 
     <!-- BASIC FORM ELELEMNTS -->
     <div class="row mt">

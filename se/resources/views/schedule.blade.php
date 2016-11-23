@@ -6,332 +6,251 @@
 
 @section('content')
 
-    <?php
-  //---- for transfering the data into symbols  
-  //Schedule
-if($pack != NULL){
-  $mon = $pack['sche'] -> monPeriod;
-  $tue = $pack['sche'] -> tuePeriod;
-  $wed = $pack['sche'] -> wedPeriod;
-  $thu = $pack['sche'] -> thuPeriod;
-  $fri = $pack['sche'] -> friPeriod;
-  $sat = $pack['sche'] -> satPeriod;
-  $sun = $pack['sche'] -> sunPeriod;
 
-  $weektmp = array();
-  $weektmp[0] = $mon;
-  $weektmp[1] = $tue;
-  $weektmp[2] = $wed;
-  $weektmp[3] = $thu;
-  $weektmp[4] = $fri;
-  $weektmp[5] = $sat;
-  $weektmp[6] = $sun;
+    @if (session('alertConfirmAbsent'))
+        <script>
+            swal("ทำการลาสำเร็จ", "", "success");
+            {{session()->forget('alertConfirmAbsent')}}
+        </script>
+    @endif
+    @if (session('errorSameLeave'))
+        <script>
+            swal("ไม่สามารถทำการลาได้", "วันที่ต้องการลา มีการถูกลาเรียบร้อยแล้ว กรุณาแก้ไขบันทึกนั้น แทนการทำลาครั้งใหม่", "error");
+            {{session()->forget('errorSameLeave')}}
+        </script>
+    @endif
 
-  $week = array();
 
-  for($i=0; $i<=6; $i++){
-      if($weektmp[$i]==0){
-          $week[$i][0] = " ";
-          $week[$i][1] = " ";
-      }
-      else if($weektmp[$i]==1){
-          $week[$i][0] = "+"; 
-          $week[$i][1] = " ";
-      }
-      else if($weektmp[$i]==2){
-          $week[$i][0] = " ";
-          $week[$i][1] = "+";
-      }
-      else if($weektmp[$i]==3){
-          $week[$i][0] = "+";
-          $week[$i][1] = "+";
-      }
-
-  }
-
-  $abs = $pack['abs'];  //Haven't check error cases yet
-  $c =0 ;
-  foreach($pack['abs'] as $i) {
-    if($i->leavePeriod == "1") $abs[$c] -> leavePeriod = "morning"; 
-    else if($i->leavePeriod == "2") $abs[$c] -> leavePeriod = "afternoon";
-    else if($i->leavePeriod =="3") $abs[$c] -> leavePeriod = "the whole day";
-    $c ++;
-  }
-
-}
-
-else {
-  $week = array();
-  for($i=0; $i<=6; $i++){
-    $week[$i][0]=" ";
-    $week[$i][1]=" "; 
-  }
-
-  //here----
-  /*
-  $abs = $pack['abs'];  //Haven't check error cases yet
-  $c =0 ;
-  foreach($pack['abs'] as $i) {
-    if($i->leavePeriod == "1") $abs[$c] -> leavePeriod = "morning"; 
-    else if($i->leavePeriod == "2") $abs[$c] -> leavePeriod = "afternoon";
-    else if($i->leavePeriod =="3") $abs[$c] -> leavePeriod = "the whole day";
-    $c ++;
-  }*/
-  $abs = array();
-
-}
-
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-      <!--for calendar-->
-      <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-      <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Dashboard">
-    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-
-    <title>Hospital OPD System</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <!--external css-->
-    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="assets/js/bootstrap-datepicker/css/datepicker.css" />
-    <link rel="stylesheet" type="text/css" href="assets/js/bootstrap-daterangepicker/daterangepicker.css" />
-
-    <!-- Custom styles for this template -->
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link href="assets/css/style-responsive.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
     <script>
-        $(function () {
-            $("#datepicker").datepicker();
+        var sss = <?php echo $sche ?>;
+        //        console.log(sss);
+
+        $(function (workday) {
+            $("#datepicker").datepicker({
+                dateFormat: "yy/mm/dd",
+                minDate: "+1d",
+                beforeShowDay: function (date) {
+                    var day = date.getDay();
+                    var dd = date.getDate();
+                    var mm = date.getMonth() + 1;
+                    var yy = date.getFullYear();
+                    //ทำให้ format ตรง จาก วันที่ 3 ให้เป็น  03
+                    if (dd < 10) dd = '0' + dd;
+                    if (mm < 10) mm = '0' + mm;
+
+                    var thisDate = yy + '-' + mm + '-' + dd;
+//                    console.log(day);
+
+                    if (day == 0 && sss.sunPeriod != 0) return [true, ''];
+                    else if (day == 1 && sss.monPeriod != 0) return [true, ''];
+                    else if (day == 2 && sss.tuePeriod != 0) return [true, ''];
+                    else if (day == 3 && sss.wedPeriod != 0) return [true, ''];
+                    else if (day == 4 && sss.thuPeriod != 0) return [true, ''];
+                    else if (day == 5 && sss.friPeriod != 0) return [true, ''];
+                    else if (day == 6 && sss.satPeriod != 0) return [true, ''];
+                    return [false, ''];
+
+                },
+                onSelect: function (date) {
+                    $.ajax({
+                        url: "/queryAbsentPeriod",
+                        data: {
+                            day: $("#datepicker").datepicker("getDate").getDay(),
+                            date: $("#datepicker").datepicker("getDate").getDate(),
+                            month: $("#datepicker").datepicker("getDate").getMonth() + 1,
+                            year: $("#datepicker").datepicker("getDate").getFullYear()
+                        },
+                        success: function (result) {
+                            console.log(result)
+                            $("#time").empty();
+                            if (result == "1") {
+                                $("#time").append('<input type="radio" name="absentperiod" value="1" checked="checked"> Morning<br>');
+                                $("#time").append('<input type="radio" name="absentperiod" value="2" disabled> Afternoon<br>');
+                                $("#time").append('<input type="radio" name="absentperiod" value="3" disabled> The whole day<br>');
+                            } else if (result == "2") {
+                                $("#time").append('<input type="radio" name="absentperiod" value="1" disabled> Morning<br>');
+                                $("#time").append('<input type="radio" name="absentperiod" value="2" checked="checked"> Afternoon<br>');
+                                $("#time").append('<input type="radio" name="absentperiod" value="3" disabled> The whole day<br>');
+                            } else if (result == "3") {
+                                $("#time").append('<input type="radio" name="absentperiod" value="1"> Morning<br>');
+                                $("#time").append('<input type="radio" name="absentperiod" value="2"> Afternoon<br>');
+                                $("#time").append('<input type="radio" name="absentperiod" value="3"> The whole day<br>');
+                            }
+                        }
+                    });
+                }
+            });
         });
+
+        $
+
     </script>
 
-  </head>
 
-  <body>
+    <?php
+    //---- for transfering the data into symbols
+    //Schedule
+    if ($pack != NULL) {
+        $mon = $pack['sche']->monPeriod;
+        $tue = $pack['sche']->tuePeriod;
+        $wed = $pack['sche']->wedPeriod;
+        $thu = $pack['sche']->thuPeriod;
+        $fri = $pack['sche']->friPeriod;
+        $sat = $pack['sche']->satPeriod;
+        $sun = $pack['sche']->sunPeriod;
 
-  <section id="container" >
-      <!-- **********************************************************************************************************************************************************
-      TOP BAR CONTENT & NOTIFICATIONS
-      *********************************************************************************************************************************************************** -->
-     
+        $weektmp = array();
+        $weektmp[0] = $mon;
+        $weektmp[1] = $tue;
+        $weektmp[2] = $wed;
+        $weektmp[3] = $thu;
+        $weektmp[4] = $fri;
+        $weektmp[5] = $sat;
+        $weektmp[6] = $sun;
 
-     <!-- **********************************************************************************************************************************************************
-      MAIN SIDEBAR MENU
-      *********************************************************************************************************************************************************** -->
+        $week = array();
 
+        for ($i = 0; $i <= 6; $i++) {
+            if ($weektmp[$i] == 0) {
+                $week[$i][0] = " ";
+                $week[$i][1] = " ";
+            } else if ($weektmp[$i] == 1) {
+                $week[$i][0] = "+";
+                $week[$i][1] = " ";
+            } else if ($weektmp[$i] == 2) {
+                $week[$i][0] = " ";
+                $week[$i][1] = "+";
+            } else if ($weektmp[$i] == 3) {
+                $week[$i][0] = "+";
+                $week[$i][1] = "+";
+            }
 
-      <!-- **********************************************************************************************************************************************************
-      MAIN CONTENT
-      *********************************************************************************************************************************************************** -->
-      <!--main content start-->
-    <section id="main-content">
-          <section class="wrapper">
+        }
 
-          <div class="row mt">
+        $abs = $pack['abs'];  //Haven't check error cases yet
+        $c = 0;
+        foreach ($pack['abs'] as $i) {
+            if ($i->leavePeriod == "1") $abs[$c]->leavePeriod = "morning";
+            else if ($i->leavePeriod == "2") $abs[$c]->leavePeriod = "afternoon";
+            else if ($i->leavePeriod == "3") $abs[$c]->leavePeriod = "the whole day";
+            $c++;
+        }
+
+    } else {
+        $week = array();
+        for ($i = 0; $i <= 6; $i++) {
+            $week[$i][0] = " ";
+            $week[$i][1] = " ";
+        }
+
+        //here----
+        /*
+        $abs = $pack['abs'];  //Haven't check error cases yet
+        $c =0 ;
+        foreach($pack['abs'] as $i) {
+          if($i->leavePeriod == "1") $abs[$c] -> leavePeriod = "morning";
+          else if($i->leavePeriod == "2") $abs[$c] -> leavePeriod = "afternoon";
+          else if($i->leavePeriod =="3") $abs[$c] -> leavePeriod = "the whole day";
+          $c ++;
+        }*/
+        $abs = array();
+
+    }
+
+    ?>
+
+    <div class="paddingFormCreate">
+
+        <div class="row mt">
             <div class="col-lg-12">
-                      <div class="content-panel">
-                      <h4><i class="fa fa-angle-right"></i> Daily Schedule</h4>
-                          <section id="unseen">
-                            <table class="table table-bordered table-striped table-condensed">
-                              <thead>
-                              <tr>
-                                  <th>Time</th>
-                                  <th>Monday</th>
-                                  <th>Tuesday</th>
-                                  <th>Wednesday</th>
-                                  <th>Thursday</th>
-                                  <th>Friday</th>
-                                  <th>Saturday</th>
-                                  <th>Sunday</th>
+                <div class="content-panel">
+                    <h4><i class="fa fa-angle-right"></i> Daily Schedule</h4>
+                    <section id="unseen">
+                        <table class="table table-bordered table-striped table-condensed">
+                            <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Monday</th>
+                                <th>Tuesday</th>
+                                <th>Wednesday</th>
+                                <th>Thursday</th>
+                                <th>Friday</th>
+                                <th>Saturday</th>
+                                <th>Sunday</th>
 
-                              </tr>
-                              </thead>
-                              <tbody>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                              <tr>
-                                  <td>Morning</td>
-                                  <td class = "centered">{{$week[0][0]}}</td>
-                                  <td class = "centered">{{$week[1][0]}}</td>
-                                  <td class = "centered">{{$week[2][0]}}</td>
-                                  <td class = "centered">{{$week[3][0]}}</td>
-                                  <td class = "centered">{{$week[4][0]}}</td>
-                                  <td class = "centered">{{$week[5][0]}}</td>
-                                  <td class = "centered">{{$week[6][0]}}</td>
+                            <tr>
+                                <td>Morning</td>
+                                <td class="centered">{{$week[0][0]}}</td>
+                                <td class="centered">{{$week[1][0]}}</td>
+                                <td class="centered">{{$week[2][0]}}</td>
+                                <td class="centered">{{$week[3][0]}}</td>
+                                <td class="centered">{{$week[4][0]}}</td>
+                                <td class="centered">{{$week[5][0]}}</td>
+                                <td class="centered">{{$week[6][0]}}</td>
 
-                              </tr>
-                              <tr>
-                                  <td>Afternoon</td>
-                                  <<td class = "centered">{{$week[0][1]}}</td>
-                                  <td class = "centered">{{$week[1][1]}}</td>
-                                  <td class = "centered">{{$week[2][1]}}</td>
-                                  <td class = "centered">{{$week[3][1]}}</td>
-                                  <td class = "centered">{{$week[4][1]}}</td>
-                                  <td class = "centered">{{$week[5][1]}}</td>
-                                  <td class = "centered">{{$week[6][1]}}</td>
-                              </tr>
-                            
-                              </tbody>
-                          </table>
-                          </section>
+                            </tr>
+                            <tr>
+                                <td>Afternoon</td>
+                                <
+                                <td class="centered">{{$week[0][1]}}</td>
+                                <td class="centered">{{$week[1][1]}}</td>
+                                <td class="centered">{{$week[2][1]}}</td>
+                                <td class="centered">{{$week[3][1]}}</td>
+                                <td class="centered">{{$week[4][1]}}</td>
+                                <td class="centered">{{$week[5][1]}}</td>
+                                <td class="centered">{{$week[6][1]}}</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </section>
 
 
-
-                  </div><!-- /content-panel -->
-               </div><!-- /col-lg-4 -->
+                </div><!-- /content-panel -->
+            </div><!-- /col-lg-4 -->
         </div><!-- /row -->
 
-        <!--Add absentDate (for Doctor)-->
-         <div class="row mt">
+        <div class="row mt">
             <div class="col-lg-10">
                 <div class="form-panel">
-                      <h4 class="mb"><i class="fa fa-angle-right"></i> Absent</h4>
-                      <div class="form-group">
+                    <h4 class="mb"><i class="fa fa-angle-right"></i> Absent</h4>
+                    <div class="form-group">
 
-                    @foreach ($abs as $d)
-                        <h5>Absent Date {{$d -> leaveDate}} - {{$d-> leavePeriod }}</h5>
-                    @endforeach
+                        @foreach ($abs as $d)
+                            <h5>Absent Date {{$d -> leaveDate}} - {{$d-> leavePeriod }}</h5>
+                        @endforeach
 
-                <div class="col-lg-10">
+                        <div class="col-lg-10">
 
-                    <form class="form-login "method="post" action="/schedule" > 
+                            <form class="form-login " method="post" action="/schedule">
 
-                      <!--<div class="form-group">-->
-                      <!--<div class=col-md-6>-->
+                                <!--MUST HAVE IT"S AN EXCEPTION-->
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
 
-                              <!--MUST HAVE IT"S AN EXCEPTION-->
-                              <input type="hidden" name="_token" value="{{csrf_token()}}">
-                            
-                              <input type="text" class="form-control" placeholder="absentDate" name="absentdate" id="datepicker">
-                            <!--
-                            <div class="input-group">
-                              <input type="text" class="form-control" placeholder="absentPeriod" name="absentdate" id="option1">
+                                <input type="text" class="form-control" placeholder="เลือกวันที่ต้องการลา" name="absentdate"
+                                       id="datepicker">
 
-                              <input type="text" class="form-control" placeholder="absentPeriod" name="absentdate" id="option2">
+                                <div class="col-sm-9 radio"   id="time"></div>
+                                {{--<input id="time" type="radio" name="absentperiod" value="1"> Morning<br>--}}
+                                {{--<input type="radio" name="absentperiod" value="2"> Afternoon<br>--}}
+                                {{--<input type="radio" name="absentperiod" value="3"> The whole day<br>--}}
+                                <button class="btn btn-theme col-sm-5" type="submit"></i>add</button>
 
-                              <div id="option1" class="form-control group">morning</div>
-                              <div id="option2" class="form-control group">afternoon</div>
-                              <select id="selectMe">
-                                <option value="option1">morning</option>
-                                <option value="option2">afternoon</option>
-                              </select>
-                              
-                            </div>                        
-                            -->
 
-                                <input type="checkbox" name="absentperiod" value="1">Morning<br>
-                                <input type="checkbox" name="absentperiod" value="2">Afternoon<br>
-                                <input type="checkbox" name="absentperiod" value="3">The whole day<br>
-                                 <button class="btn btn-theme col-sm-5" type="submit"></i>add</button>                        
+                            </form>
+                        </div>
 
-                        <!--</div>-->
-                    <!--
-                    <div class=col-md-5>
-                         <div class="form-group">
-                            <button class="btn btn-theme col-sm-5" type="submit"></i>add</button>
-                         </div>
+
                     </div>
-                    -->
-                    </form>
-                  </div>
 
-
-                      </div>
-                        
                 </div><!-- /form-panel -->
-          </div><!-- /col-lg-12 -->
+            </div><!-- /col-lg-12 -->
         </div>
 
-
-        </section> 
-
-      </section><!-- /MAIN CONTENT -->
-
-      <!--main content end-->
-      <!--footer start-->
-
-      <!--footer end-->
-  </section>
-
-<!-- for dropdownlist and change content -->
-  <script type="text/javascript">
-    $(document).ready(function () {
-  $('.group').hide();
-  $('#option1').show();
-  $('#selectMe').change(function () {
-    $('.group').hide();
-    $('#'+$(this).val()).show();
-  })
-});
-</script>
-
-<!-- force to choose at most 1 (checkbox) -->
-<script type="text/javascript">
-$('input[type="checkbox"]').on('change', function() {
-   $(this).siblings('input[type="checkbox"]').prop('checked', false);
-});
-</script>
-
-    <!-- js placed at the end of the document so the pages load faster -->
-    <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="assets/js/jquery.scrollTo.min.js"></script>
-    <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
-
-
-    <!--common script for all pages-->
-    <script src="assets/js/common-scripts.js"></script>
-
-    <!--script for this page-->
-    <script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
-
-    <!--custom switch-->
-    <script src="assets/js/bootstrap-switch.js"></script>
-
-    <!--custom tagsinput-->
-    <script src="assets/js/jquery.tagsinput.js"></script>
-
-    <!--custom checkbox & radio-->
-
-    <script type="text/javascript" src="assets/js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-    <script type="text/javascript" src="assets/js/bootstrap-daterangepicker/date.js"></script>
-    <script type="text/javascript" src="assets/js/bootstrap-daterangepicker/daterangepicker.js"></script>
-
-    <script type="text/javascript" src="assets/js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
-
-
-    <script src="assets/js/form-component.js"></script>
-
-
-  <script>
-      //custom select box
-
-      $(function(){
-          $('select.styled').customSelect();
-      });
-
-  </script>
-
-  </body>
-</html>
-
-
-
+    </div>
 @endsection

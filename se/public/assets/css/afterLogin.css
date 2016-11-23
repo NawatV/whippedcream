@@ -38,7 +38,11 @@
 
 }
 
+<<<<<<< HEAD
 .textareaControl{
+=======
+.textareaControl {
+>>>>>>> origin/Final0.1
     resize: vertical;
     height: auto;
 }

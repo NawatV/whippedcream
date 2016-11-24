@@ -95,6 +95,17 @@ class TreatmentController extends Controller
         } else if (count($diagnosisForm) > 3) {
             $num = (count($diagnosisForm) - 3) / 3;
 
+            for($i = 1; $i <= $num-1; $i++)
+            {
+                for($j = $i+1; $j <= $num; $j++)
+                {
+                    if($diagnosisForm['drug'.$i] == $diagnosisForm['drug'.$j])
+                    {
+                        return redirect()->back()->withInput()->withErrors([$diagnosisForm['drug' . $i] . ' มีการระบุซ้ำ']);
+                    }
+                }
+            }
+
             for ($i = 1; $i <= $num; $i++) {
                 if (empty($diagnosisForm['quantity' . $i]) && empty($diagnosisForm['usage' . $i])) {
                     return redirect()->back()->withInput()->withErrors(['โปรดระบุปริมาณและวิธีใช้ยา ' . $diagnosisForm['drug' . $i]]);
@@ -102,6 +113,8 @@ class TreatmentController extends Controller
                     return redirect()->back()->withInput()->withErrors(['โปรดระบุปริมาณยา ' . $diagnosisForm['drug' . $i]]);
                 } else if (!is_numeric($diagnosisForm['quantity' . $i])) {
                     return redirect()->back()->withInput()->withErrors(['โปรดระบุปริมาณยา ' . $diagnosisForm['drug' . $i] . ' เป็นตัวเลข']);
+                } else if($diagnosisForm['quantity' . $i] <= 0){
+                    return redirect()->back()->withInput()->withErrors(['โปรดระบุปริมาณยา ' . $diagnosisForm['drug' . $i] . ' ให้ถูกต้อง']);
                 } else if (empty($diagnosisForm['usage' . $i])) {
                     return redirect()->back()->withInput()->withErrors(['โปรดระบุวิธีใช้ยา ' . $diagnosisForm['drug' . $i]]);
                 }

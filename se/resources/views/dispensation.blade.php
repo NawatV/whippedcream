@@ -4,7 +4,7 @@
   <style>
     .dispensation-content div:hover
     {
-        background-color: #F5F5F5;
+      background-color: #F5F5F5;
     }
 
     .dispensation-list-wait
@@ -12,53 +12,40 @@
       border-left: solid #78CD51 3px;
       margin-bottom: 2px;
       padding: 15px 0 15px 15px;
-     }
+    }
 
-     .dispensation-list-success
-     {
-       border-left: solid #41CAC0 3px;
-       margin-bottom: 2px;
-       padding: 15px 0 15px 15px;
-      }
+    .dispensation-list-success
+    {
+      border-left: solid #41CAC0 3px;
+      margin-bottom: 2px;
+      padding: 15px 0 15px 15px;
+    }
 
-      .dispensation-list-cancel
-      {
-        border-left: solid #ff6c60 3px;
-        margin-bottom: 2px;
-        padding: 15px 0 15px 15px;
-       }
+    .dispensation-list-cancel
+    {
+      border-left: solid #ff6c60 3px;
+      margin-bottom: 2px;
+      padding: 15px 0 15px 15px;
+    }
 
-     .ml
-     {
-       margin-left: 15px;
-     }
+    .ml
+    {
+      margin-left: 15px;
+    }
 
-     .mr
-     {
-       margin-right: 15px;
-     }
+    .mr
+    {
+      margin-right: 15px;
+    }
   </style>
 @endsection
 
 @section('name')
-  {{session('name')}}
-@endsection
-
-@section('leftnav')
-  <li class="sub-menu">
-    <a class = "active"  href="{{url('dispention')}}" >
-      <i class="fa fa-plus-square"></i><span>จ่ายยา</span>
-    </a>
-  </li>
-
-  <li class="sub-menu">
-    <a  href="javascript:;" >
-      <i class="fa fa-info-circle"></i><span>ข้อมูลผู้ป่วย</span>
-    </a>
-  </li>
+  {{$name}}
 @endsection
 
 @section('content')
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <div class="row mt">
     <div class="col-lg-12">
       <div class="form-panel" style="height: 80vh">
@@ -173,12 +160,12 @@
 
       var num  = $('.dispensation-content > div').length;
 
-      @php
-        $index_list = [];
-        foreach($dispense_list as $list){
-          if(is_null($list['status'])) array_push($index_list, $list['index']);
-        }
-      @endphp
+              @php
+                $index_list = [];
+                foreach($dispense_list as $list){
+                  if(is_null($list['status'])) array_push($index_list, $list['index']);
+                }
+              @endphp
 
       var list = {{json_encode($index_list)}};
 
@@ -207,7 +194,7 @@
               var i = list.indexOf(parseInt(prescriptionId));
 
               if(i != -1){
-                  list.splice(i,1);
+                list.splice(i,1);
               }
 
             }else {

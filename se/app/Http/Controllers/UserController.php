@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\SeeEditedMyPatientInformationRequest;
 use Illuminate\Support\Facades\Hash;
 
 use App\Model\Appointment;
@@ -160,9 +161,10 @@ class UserController extends Controller
         return view('myEditedPatientInformation', compact('patients', 'patients2'));
     }
 
-    public function seeEditedMyPatientInformation(Request $request)
+    public function seeEditedMyPatientInformation(SeeEditedMyPatientInformationRequest $request)
     {
-        $patients_hn = $request->input('userId');
+
+        $patients_hn = session('userId');
         $patients = User::where('userId', $patients_hn)->first();
         $patients2 = Patient::where('patientId', $patients_hn)->first();
         $patients->firstname = $request->firstname;
@@ -176,8 +178,12 @@ class UserController extends Controller
         $patients2->bloodType = $request->bloodType;
         $patients2->allergen = $request->allergen;
 
+//        dd($patients);
+
         $patients->save();
         $patients2->save();
+
+//        return dd($patients);
 
         return view('myPatientInformation', compact('patients', 'patients2'));
     }

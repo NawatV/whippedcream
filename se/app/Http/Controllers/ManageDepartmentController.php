@@ -41,6 +41,9 @@ class ManageDepartmentController extends Controller
                 session()->flash('edit_dep_error', 1);
                 return redirect('manageDepartment');
             }
+            if($input['new_name'] = ' '){
+                return redirect('manageDepartment');
+            }
             $target_dep = Department::where('departmentName', $input['old_name'])->first();
             $target_dep->departmentName = $input['new_name'];
             $target_dep->save();

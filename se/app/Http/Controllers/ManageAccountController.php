@@ -178,43 +178,53 @@ class ManageAccountController extends Controller
         return $input;
     }
 
-    public function edit_user()
-    {
+    public function edit_user(){
         $input = Request::all();
-        if ($input['operation'] == 'change_right') {
+        if($input['operation'] == 'change_right'){
             /*code change right*/
-        } else if ($input['operation'] == 'delete') {
+        }
+        else if($input['operation'] == 'delete'){
 
             $target_user = User::where('username', $input['username'])->first();
             $target_userType = '';
-            if ($target_user->userType == 'patient') {
+            if($target_user->userType == 'patient'){
                 $target_userType = $target_user->patient;
-            } elseif ($target_user->userType == 'staff') {
+                $patient_app = $target_userType->appointment;
+                if(count($patient_app) > 0){
+                    session()->flash('delete_error', 1);
+                    return redirect('manageAccount');
+                }
+            }
+            elseif ($target_user->userType == 'staff') {
                 $target_userType = $target_user->staff;
-            } elseif ($target_user->userType == 'doctor') {
+            }
+            elseif ($target_user->userType == 'doctor') {
                 date_default_timezone_set('Asia/Bangkok');
                 $today = new \DateTime('now');
                 $today = $today->format('Y-m-d');
                 $all_app = $target_user->doctor->appointment;
-                if (count($all_app) > 0) {
-                    for ($i = 0; $i < count($all_app); $i++) {
-                        if ($all_app[$i]['appDate'] == $today) {
-                            session()->flash('delete_doc_error', 1);
+                if(count($all_app) > 0){
+                    for($i = 0; $i < count($all_app); $i++){
+                        if($all_app[$i]['appDate'] == $today){
+                            session()->flash('delete_error', 2);
                             return redirect('manageAccount');
                         }
                     }
-                    for ($i = 0; $i < count($all_app); $i++) {
-                        /*PostponeAppointmentController::postponeAppointment($all_app[$i]);*/
+                    for($i = 0; $i < count($all_app); $i++){
+                        PostponeAppointmentController::postponeAppointment($all_app[$i]);
                     }
                 }
                 $target_userType = $target_user->doctor;
                 $target_schedule = $target_user->doctor->schedule;
                 $target_schedule->delete();
-            } elseif ($target_user->userType == 'nurse') {
+            }
+            elseif ($target_user->userType == 'nurse') {
                 $target_userType = $target_user->nurse;
-            } elseif ($target_user->userType == 'pharmacist') {
+            }
+            elseif ($target_user->userType == 'pharmacist') {
                 $target_userType = $target_user->pharmacist;
-            } elseif ($target_user->userType == 'admin') {
+            }
+            elseif ($target_user->userType == 'admin') {
                 $target_userType = $target_user->admin;
             }
             $target_userType->delete();

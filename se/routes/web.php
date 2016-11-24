@@ -118,6 +118,13 @@ Route::group(['middleware' => 'login'], function () {
     Route::post('/diagnosis', 'TreatmentController@saveDiagnosisForm');
 
 
+    Route::get('/dispensation', 'TreatmentController@getDispensationPage');
+    Route::post('/dispensation', 'TreatmentController@editPrescription');
+    Route::get('/dispensation/list', 'TreatmentController@getNumberPrescription');
+    Route::get('/dispensation/{id}', 'TreatmentController@getPrescription');
+    Route::get('/dispensation/confirm/{id}', 'TreatmentController@confirmPrescription');
+
+
 //    ===================================================================================================
 //    ===================================================================================================
 //    ===================================================================================================
@@ -172,24 +179,29 @@ Route::group(['middleware' => 'login'], function () {
 //    ===================================================================================================
 //    ===================================================================================================
 
+//-------------- Schedule -----------------------------------------
+    Route::get('/schedule', 'ScheduleController@viewSchedule');
+    Route::post('/schedule', 'ScheduleController@addAbsent');
+    Route::post('/schedule/staff', 'ScheduleController@viewScheduleStaff');
+
+//Ajax
+    Route::get('/queryAbsentPeriod', 'ScheduleController@queryAbsentPeriod');
+
+
+
+
+
+
+
+
+
+
 
 });
 
-//-------------- Schedule -----------------------------------------
-Route::get('/schedule', 'ScheduleController@viewSchedule');
-Route::post('/schedule', 'ScheduleController@addAbsent');
-Route::post('/schedule/staff', 'ScheduleController@viewScheduleStaff');
-
-//Ajax
-Route::get('/queryAbsentPeriod', 'ScheduleController@queryAbsentPeriod');
 
 
 
-
-
-
-Route::get('/dispensation', 'TreatmentController@getDispensationPage');
-Route::post('/dispensation', 'TreatmentController@editPrescription');
 
 
 

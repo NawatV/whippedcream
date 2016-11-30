@@ -25,15 +25,23 @@ class CreateAppointmentRequest extends FormRequest
     {
         return [
             //
-            'patientId' => 'required|digits:13'
+            'patientId' => 'required|digits:13',
+            'doctorId' => 'required',
+            'appDate' => 'required',
+            'appTime' => 'required',
+            'symptom' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'patientId.required' => 'noId',
-            'patientId.digits' => 'idWrongFormat'
+            'patientId.required' => 'โปรดระบุเลขรหัสประจำตัวประชาชน',
+            'patientId.digits' => 'รหัสเลขประจำตัวประชาชนผิด กรุณาตรวจสอบอีกครั้ง',
+            'doctorId.required' => 'โปรดเลือกหมดที่ต้องการพบ',
+            'appDate.required' => 'โปรดเลือกวันที่ต้องการจะนัดหมาย',
+            'appTime.required' => 'โปรดเลือกเวลา',
+            'symptom.required' => 'โปรดระบุอาการ'
         ];
     }
 }

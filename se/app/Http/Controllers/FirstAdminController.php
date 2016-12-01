@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Admin;
+use App\Model\User;
 use Illuminate\Http\Request;
 
 class FirstAdminController extends Controller
@@ -11,9 +13,9 @@ class FirstAdminController extends Controller
         session(['userType' => 'admin']);
         return view('admin.createAdmin');
     }
-    public function create_admin()
+    public function create_admin(Request $request)
     {
-        $input = Request::all();
+        $input = $request;
         if($input['firstname'] == '' or $input['lastname'] == '' or $input['ssn'] == '' or $input['adminNumber'] == ''){
             session()->flash('create_admin_error', 1);
             return redirect('createAdmin');
@@ -106,9 +108,9 @@ class FirstAdminController extends Controller
         return redirect('manageAccount2');
     }
 
-    public function display_users()
+    public function display_users(Request $request)
     {
-        $input = Request::all();
+        $input = $request;
         $users = User::all();
         if (count($input) == 0) {
             $name = '';
@@ -122,7 +124,7 @@ class FirstAdminController extends Controller
 
             return view('admin.manageAccount', compact('users', 'name', 'dep', 'ssn', 'id', 'wanted_userType') );
         }
-        $input = self::clearNull($input);
+//        $input = self::clearNull($input);
         $name = strtolower($input['name']);
         $dep = strtolower($input['department']);
         $ssn = $input['ssn'];

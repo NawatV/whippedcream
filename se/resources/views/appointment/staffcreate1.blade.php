@@ -12,6 +12,19 @@
 
 
 @section('content')
+    @if(count($errors)>0)
+        <script>
+            swal({
+                title: "ไม่สามารถทำนัดได้",
+                text: "กรุณาใส่ข้อมูลให้ครบและถูกต้องทุกช่อง",
+                type: "error",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "แก้ไข",
+                closeOnConfirm: true
+            });
+        </script>
+    @endif
+
     <!-- BASIC FORM ELELEMNTS -->
     <div class="row mt">
         <div class="col-lg-12">

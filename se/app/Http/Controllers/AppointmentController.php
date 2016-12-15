@@ -173,7 +173,7 @@ class AppointmentController extends Controller
         ]);
     }
 
-    public function staffStore(Request $request)
+    public function staffStore(CreateAppointmentRequest $request)
     {
 //        return dd($request->all());
         $patient = User::where('idNumber', $request->patientId)->first();
@@ -258,7 +258,7 @@ class AppointmentController extends Controller
         ]);
     }
 
-    public function walkInStore(Request $request)
+    public function walkInStore(CreateAppointmentRequest $request)
     {
 //        return dd($request->all());
         $patient = User::where('idNumber', $request->patientId)->first();
